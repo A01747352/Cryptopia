@@ -1,0 +1,13 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/MainManu.uss?fileID=7433441132597879392&amp;guid=9d41f38c6232fbe4fae08b0432a9f4ef&amp;type=3#MainManu" />
+    <engine:VisualElement name="screen" style="flex-grow: 1; height: 100px; margin-right: 50px; background-image: url(&quot;project://database/Assets/UI/Menu_BG_Gradient.png?fileID=2800000&amp;guid=24f351e0869e83c49bd13bf31f28cd2c&amp;type=3#Menu_BG_Gradient&quot;);">
+        <engine:VisualElement name="container" class="container" style="flex-grow: 1;">
+            <engine:VisualElement name="title" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/UI/Menu_Logov2.png?fileID=2800000&amp;guid=cd43eb6929f5c3f49861678d45b6c80d&amp;type=3#Menu_Logov2&quot;); background-size: 753px 283px; margin-top: 75px; margin-left: 50px; margin-bottom: 0; margin-right: 50px; -unity-background-scale-mode: scale-to-fit;" />
+            <engine:VisualElement name="buttons" class="buttons" style="flex-grow: 1;">
+                <engine:Button name="play" class="button" style="background-image: url(&quot;project://database/Assets/UI/Menu_Play_Btn.png?fileID=2800000&amp;guid=cefc8988f86120e47acb383087c59f90&amp;type=3#Menu_Play_Btn&quot;);" />
+                <engine:Button name="credits" class="button" style="background-image: url(&quot;project://database/Assets/UI/Menu_Credits_Btn.png?fileID=2800000&amp;guid=ffd4300b20c8bee4b8d89a32815f8e49&amp;type=3#Menu_Credits_Btn&quot;);" />
+                <engine:Button name="exit" class="button" style="background-image: url(&quot;project://database/Assets/UI/Menu_Exit_Btn.png?fileID=2800000&amp;guid=fe2bdb96cc40d82408f512fba58cd911&amp;type=3#Menu_Exit_Btn&quot;);" />
+            </engine:VisualElement>
+        </engine:VisualElement>
+    </engine:VisualElement>
+</engine:UXML>

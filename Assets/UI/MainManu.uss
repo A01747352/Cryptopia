@@ -1,0 +1,27 @@
+.container {
+    width: 44%;
+}
+
+.buttons {
+    width: 100%;
+    justify-content: space-evenly;
+}
+
+.button {
+    width: 37.87%;
+    height: 17%;
+    align-self: center;
+    -unity-background-scale-mode: scale-to-fit;
+    transition-timing-function: ease-out-bounce;
+    transition-duration: 0.1s;
+    transition-property: initial;
+}
+
+.button:hover {
+    transition-timing-function: ease-in-bounce;
+    scale: 1.15 1.15;
+}
+
+.button:active {
+    -unity-background-image-tint-color: rgb(255, 255, 255);
+}
