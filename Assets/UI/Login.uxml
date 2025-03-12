@@ -1,0 +1,13 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/Login.uss?fileID=7433441132597879392&amp;guid=1a8a9e37acf7b59498ae33a598ec6c37&amp;type=3#Login" />
+    <engine:VisualElement name="screen" style="flex-grow: 1; background-color: rgb(16, 19, 64); align-items: center;">
+        <engine:VisualElement name="container2" class="container2" style="flex-grow: 1;">
+            <engine:VisualElement name="logo" class="logo" style="flex-grow: 1;" />
+        </engine:VisualElement>
+        <engine:VisualElement name="container" class="container" style="flex-grow: 1;">
+            <engine:TextField label="User" placeholder-text="user123" name="user" class="textfield" />
+            <engine:TextField label="Password" placeholder-text="password123" name="password" class="textfield" />
+            <engine:Button text="LOGIN" name="button" class="button" style="background-image: url(&quot;project://database/Assets/Sprites%20UI.psd?fileID=1322269772748154755&amp;guid=62e23b6e7c6ab3944a50a3fbe783e045&amp;type=3#Button_01&quot;); background-color: rgba(255, 255, 255, 0);" />
+        </engine:VisualElement>
+    </engine:VisualElement>
+</engine:UXML>
