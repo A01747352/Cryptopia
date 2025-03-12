@@ -1,0 +1,51 @@
+.screen {
+    flex-direction: row;
+}
+
+.topBar {
+    height: 15%;
+    flex-direction: row;
+}
+
+.pauseBox {
+    margin-top: 25px;
+    margin-left: 25px;
+}
+
+.pauseButton {
+    background-image: url("project://database/Assets/Sprites%20UI.psd?fileID=-3904189391918081324&guid=62e23b6e7c6ab3944a50a3fbe783e045&type=3#Pause_Menu_Button_03");
+    background-size: 100% 100%;
+    width: 48px;
+    height: 44px;
+    -unity-background-scale-mode: scale-to-fit;
+}
+
+.statsBox {
+    flex-direction: column;
+    left: 0;
+    flex-wrap: wrap-reverse;
+}
+
+.photo {
+    background-image: url("project://database/Assets/Sprites%20UI.psd?fileID=-7588396863020668561&guid=62e23b6e7c6ab3944a50a3fbe783e045&type=3#Character_Icon");
+    -unity-background-scale-mode: scale-to-fit;
+    width: 125px;
+}
+
+.bar1 {
+    background-image: url("project://database/Assets/Sprites%20UI.psd?fileID=1724060519768228849&guid=62e23b6e7c6ab3944a50a3fbe783e045&type=3#Health_Bar_Outline");
+    -unity-background-scale-mode: scale-to-fit;
+    width: 116px;
+    height: 23px;
+    margin-top: -35px;
+    margin-left: 3px;
+}
+
+.bar2 {
+    background-image: url("project://database/Assets/Sprites%20UI.psd?fileID=-9169309945536998235&guid=62e23b6e7c6ab3944a50a3fbe783e045&type=3#Health_Bar_Bar");
+    -unity-background-scale-mode: scale-to-fit;
+    width: 111px;
+    height: 23px;
+    margin-bottom: 2px;
+    margin-left: 2px;
+}
