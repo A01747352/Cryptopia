@@ -1,10 +1,11 @@
 using UnityEngine;
 
-public class movement_girl : MonoBehaviour
+public class MovementGirl : MonoBehaviour
 {
     public float moveSpeed = 5f;
     public Rigidbody2D rb;
     private Vector2 movement;
+
 
     void Start()
     {

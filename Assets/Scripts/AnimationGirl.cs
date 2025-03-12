@@ -1,15 +1,15 @@
 using UnityEngine;
 
-public class animation_girl : MonoBehaviour
+public class AnimationGirl : MonoBehaviour
 {
     private Animator animator;
-    private movement_girl movementScript;
+    private MovementGirl movementScript;
     private SpriteRenderer spriteRenderer;
 
     void Start()
     {
         animator = GetComponent<Animator>();
-        movementScript = GetComponent<movement_girl>();
+        movementScript = GetComponent<MovementGirl>();
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
