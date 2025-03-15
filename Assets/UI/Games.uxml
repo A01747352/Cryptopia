@@ -1,0 +1,18 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/ui/Gamess.uss?fileID=7433441132597879392&amp;guid=9de099c74a9a43747a19be0b794a926b&amp;type=3#Gamess" />
+    <engine:VisualElement name="Screen" class="Screen" style="flex-grow: 1; flex-direction: row;">
+        <engine:VisualElement name="topBar" class="topBar" style="flex-grow: 1;">
+            <engine:VisualElement name="pauseBox" class="pauseBox" style="flex-grow: 1;">
+                <engine:Button name="pauseButton" parse-escape-sequences="false" class="pauseButton" />
+            </engine:VisualElement>
+            <engine:VisualElement name="statsBox" class="statsBox">
+                <engine:VisualElement name="cont1" class="cont1" style="flex-grow: 1;">
+                    <engine:VisualElement name="photo" class="photo" style="flex-grow: 1;" />
+                    <engine:VisualElement name="bar2" class="bar2" style="flex-grow: 1;">
+                        <engine:VisualElement name="bar1" class="bar1" style="flex-grow: 1; width: 200px; top: 1px; left: 5px;" />
+                    </engine:VisualElement>
+                </engine:VisualElement>
+            </engine:VisualElement>
+        </engine:VisualElement>
+    </engine:VisualElement>
+</engine:UXML>

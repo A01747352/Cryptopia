@@ -1,0 +1,60 @@
+.Screen {
+}
+
+.topBar {
+    height: 15%;
+    flex-direction: row;
+}
+
+.pauseButton {
+    background-image: url("project://database/Assets/CRYPTOChiks/NSFW_V40f23ae_New_Races_9000_Diff_Poses.psd?fileID=-1601840805022339554&guid=fffd872ad522c814cb3bdecf903bf27b&type=3#Pause_Menu_Button_03");
+    font-size: 0;
+    -unity-background-scale-mode: scale-to-fit;
+    width: 48px;
+    height: 44px;
+}
+
+.pauseBox {
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    align-items: stretch;
+    align-content: flex-start;
+    padding-top: 50px;
+    padding-right: 50px;
+    padding-bottom: 50px;
+    padding-left: 50px;
+}
+
+.photo {
+    background-image: url("project://database/Assets/CRYPTOChiks/NSFW_V40f23ae_New_Races_9000_Diff_Poses.psd?fileID=3511212877819488441&guid=fffd872ad522c814cb3bdecf903bf27b&type=3#Character_Icon");
+    -unity-background-scale-mode: scale-to-fit;
+    width: 28px;
+    align-self: flex-end;
+    opacity: 1;
+    display: flex;
+    visibility: visible;
+    overflow: visible;
+    right: 10px;
+}
+
+.bar1 {
+    background-image: url("project://database/Assets/CRYPTOChiks/NSFW_V40f23ae_New_Races_9000_Diff_Poses.psd?fileID=3284954173409972862&guid=fffd872ad522c814cb3bdecf903bf27b&type=3#Health_Bar_Bar");
+    -unity-background-scale-mode: scale-to-fit;
+    width: 220px;
+}
+
+.bar2 {
+    background-image: url("project://database/Assets/CRYPTOChiks/NSFW_V40f23ae_New_Races_9000_Diff_Poses.psd?fileID=9212350936277324358&guid=fffd872ad522c814cb3bdecf903bf27b&type=3#Health_Bar_Outline");
+    -unity-background-scale-mode: scale-to-fit;
+    width: 220px;
+}
+
+.cont1 {
+    width: auto;
+}
+
+.statsBox {
+    flex-direction: row;
+}
