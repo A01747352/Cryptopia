@@ -1,5 +1,5 @@
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 using Cryptopia.Problema;
 using System.Collections;
@@ -16,15 +16,21 @@ public class Cryptography : MonoBehaviour
     private  Label displayLabel;
     private Label scoreLabel;
     private UIDocument Game;
-     
     private int problemIndex;
     private System.Random randomIndex = new System.Random();
+
+    // Variables for loading the problems
     private string jsonProblemas;
-    //private ProblemaWrapper problemaWrapper;
     private static Problema[] bancoProblemas;
     private Problema problema;
-    private static int score = 0;
 
+    // Variables to keep track of the game
+    private int score = 0;
+    private int questionsNum = 0;
+    private int mistakes = 0;
+
+    
+    
     
     void OnEnable()
     {
@@ -55,9 +61,21 @@ public class Cryptography : MonoBehaviour
     private IEnumerator NextQuestion()
     {
         yield return new WaitForSeconds(1f);
-        problemIndex = randomIndex.Next(0, bancoProblemas.Length);
-        problema = bancoProblemas[problemIndex];
-        displayLabel.text = problema.incognita;
+        questionsNum += 1;
+        if (questionsNum == 5 && mistakes < 3) 
+        {
+            SceneManager.LoadScene("Victoria");
+        }
+        else if (mistakes == 3)
+        {
+            SceneManager.LoadScene("Derrota");
+        }
+        else
+        {
+            problemIndex = randomIndex.Next(0, bancoProblemas.Length);
+            problema = bancoProblemas[problemIndex];
+            displayLabel.text = problema.incognita;
+        }
     }
     void EnterText(KeyUpEvent evt)
     {
@@ -65,14 +83,14 @@ public class Cryptography : MonoBehaviour
         {
             if (problema.ValidarRespuesta(inputUsuario.value) == true)
             {
-                displayLabel.text = "Correcto!";
+                displayLabel.text = "Correct!";
                 score += problema.puntaje; 
                 scoreLabel.text = score.ToString() + "pts";
             }
             else 
             {
-                displayLabel.text = "Incorrecto :(";
-                
+                displayLabel.text = "Incorrect :(";
+                mistakes += 1;
 
             }
             StartCoroutine(NextQuestion());

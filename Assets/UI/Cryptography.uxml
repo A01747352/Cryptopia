@@ -4,10 +4,10 @@
         <engine:VisualElement name="ComputerScreen" class="computerScreen" style="flex-grow: 1; background-color: rgb(0, 0, 0);">
             <engine:Label text="Score" name="Score" emoji-fallback-support="false" class="score" style="height: 39px;" />
             <engine:VisualElement name="ProblemScreen" class="problemScreen" style="flex-grow: 1;">
-                <engine:Label text="Label" name="Problem" />
+                <engine:Label text="Cryptography" name="Problem" />
             </engine:VisualElement>
             <engine:VisualElement name="InputContainer" class="inputContainer" style="flex-grow: 1; justify-content: center;">
-                <engine:TextField placeholder-text="filler text" name="InputUsuario" class="inputUser" style="background-color: rgba(0, 255, 255, 0);" />
+                <engine:TextField placeholder-text="Type your answer" name="InputUsuario" hide-placeholder-on-focus="true" class="inputUser" style="background-color: rgba(0, 255, 255, 0); -unity-text-align: upper-left;" />
             </engine:VisualElement>
         </engine:VisualElement>
     </engine:VisualElement>

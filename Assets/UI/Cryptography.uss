@@ -26,7 +26,7 @@
     font-size: 28px;
     color: rgb(0, 0, 0);
     -unity-font-definition: url("project://database/Assets/UI%20Toolkit/UnityThemes/UnityDefaultRuntimeTheme.tss?fileID=2230732570650464555&guid=cc32060f134d9bc469c4b7202f7d415b&type=3#NotInter-Regular");
-    -unity-text-align: upper-left;
+    -unity-text-align: upper-center;
     -unity-background-image-tint-color: rgb(173, 183, 174);
     background-color: rgba(226, 22, 22, 0);
 }
