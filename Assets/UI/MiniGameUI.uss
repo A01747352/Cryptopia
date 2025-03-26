@@ -1,0 +1,20 @@
+.upperUI {
+}
+
+.pauseButton {
+    align-self: flex-start;
+    background-image: url("project://database/Assets/Sprites%20UI.psd?fileID=-3904189391918081324&guid=62e23b6e7c6ab3944a50a3fbe783e045&type=3#Pause_Menu_Button_03");
+    height: 150px;
+    width: 150px;
+    margin-top: 25px;
+    margin-left: 25px;
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.pauseButton:hover {
+    -unity-background-image-tint-color: rgb(158, 163, 164);
+}
+
+.pauseButton:active {
+    -unity-background-image-tint-color: rgb(121, 216, 241);
+}
