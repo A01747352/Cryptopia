@@ -2,12 +2,18 @@
     <Style src="project://database/Assets/UI/Cryptography.uss?fileID=7433441132597879392&amp;guid=1712523d38b134a1fa341ad524bc4a5f&amp;type=3#Cryptography" />
     <engine:VisualElement name="Window" class="window" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Cryptography/ZoomComputadora.png?fileID=21300000&amp;guid=11b3a149d98d342c2949d896bce09b92&amp;type=3#ZoomComputadora&quot;);">
         <engine:VisualElement name="ComputerScreen" class="computerScreen" style="flex-grow: 1; background-color: rgb(0, 0, 0);">
+            <engine:Label text="1/10" name="QuestionCount" class="questionCount" />
             <engine:Label text="Score" name="Score" emoji-fallback-support="false" class="score" style="height: 39px;" />
             <engine:VisualElement name="ProblemScreen" class="problemScreen" style="flex-grow: 1;">
                 <engine:Label text="Cryptography" name="Problem" />
             </engine:VisualElement>
             <engine:VisualElement name="InputContainer" class="inputContainer" style="flex-grow: 1; justify-content: center;">
                 <engine:TextField placeholder-text="Type your answer" name="InputUsuario" hide-placeholder-on-focus="true" class="inputUser" style="background-color: rgba(0, 255, 255, 0); -unity-text-align: upper-left;" />
+            </engine:VisualElement>
+            <engine:VisualElement name="LiveContainer" class="lives liveContainer" style="flex-grow: 1; position: absolute; flex-direction: row;">
+                <engine:VisualElement name="Live1" enabled="true" class="live" style="flex-grow: 1;" />
+                <engine:VisualElement name="Live2" class="live" style="flex-grow: 1;" />
+                <engine:VisualElement name="Live3" class="live" style="flex-grow: 1;" />
             </engine:VisualElement>
         </engine:VisualElement>
     </engine:VisualElement>

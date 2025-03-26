@@ -12,12 +12,20 @@ using Newtonsoft.Json;
 public class Cryptography : MonoBehaviour
 {
     
-    private TextField inputUsuario;
-    private  Label displayLabel;
-    private Label scoreLabel;
+    // UI Elements
     private UIDocument Game;
+    private TextField inputUsuario;
+    private Label displayLabel;
+    private Label scoreLabel;
+    private Label qCountLabel;
+    private VisualElement live1;
+    private VisualElement live2;
+    private VisualElement live3;
+
+    // Utility Variabels
     private int problemIndex;
     private System.Random randomIndex = new System.Random();
+    
 
     // Variables for loading the problems
     private string jsonProblemas;
@@ -26,8 +34,9 @@ public class Cryptography : MonoBehaviour
 
     // Variables to keep track of the game
     private int score = 0;
-    private int questionsNum = 0;
+    private int questionsNum = 1;
     private int mistakes = 0;
+    private int totalQuestions = 10;
 
     
     
@@ -41,7 +50,10 @@ public class Cryptography : MonoBehaviour
         inputUsuario = root.Q<TextField>("InputUsuario");
         displayLabel = root.Q<Label>("Problem");
         scoreLabel = root.Q<Label>("Score");
-
+        live1 = root.Q<VisualElement>("Live1");
+        live2 = root.Q<VisualElement>("Live2");
+        live3 = root.Q<VisualElement>("Live3");
+        qCountLabel = root.Q<Label>("QuestionCount");
         
 
         // Loading the Problem from JSON file
@@ -62,7 +74,8 @@ public class Cryptography : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
         questionsNum += 1;
-        if (questionsNum == 5 && mistakes < 3) 
+        qCountLabel.text = questionsNum.ToString() + "/" + totalQuestions.ToString();
+        if (questionsNum == totalQuestions && mistakes < 3) 
         {
             SceneManager.LoadScene("Victoria");
         }
@@ -91,6 +104,18 @@ public class Cryptography : MonoBehaviour
             {
                 displayLabel.text = "Incorrect :(";
                 mistakes += 1;
+                if (mistakes == 1)
+                {
+                    live1.style.visibility = Visibility.Hidden;
+                } 
+                else if (mistakes == 2)
+                {
+                    live2.style.visibility = Visibility.Hidden;
+                }
+                else 
+                {
+                    live3.style.visibility = Visibility.Hidden;
+                }
 
             }
             StartCoroutine(NextQuestion());
