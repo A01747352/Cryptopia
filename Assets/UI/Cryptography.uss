@@ -13,6 +13,7 @@
 .inputContainer {
     align-items: center;
     justify-content: center;
+    height: 200px;
 }
 
 .inputUser {
@@ -29,10 +30,17 @@
     -unity-text-align: upper-center;
     -unity-background-image-tint-color: rgb(173, 183, 174);
     background-color: rgba(226, 22, 22, 0);
+    transition-duration: 0.3s;
+    transition-timing-function: ease-in-out-sine;
 }
 
 .inputUser:focus > TextInput {
     -unity-background-image-tint-color: rgb(21, 255, 0);
+}
+
+.inputUser:hover > TextInput {
+    scale: 1.1 1.1;
+    -unity-background-image-tint-color: rgb(2, 241, 21);
 }
 
 .problemScreen {
@@ -41,12 +49,6 @@
     width: 1127px;
     background-color: rgba(0, 209, 14, 0);
     height: 319px;
-    color: rgb(0, 241, 21);
-    -unity-text-align: upper-center;
-    -unity-font-definition: url("project://database/Assets/Fonts/GrapeSoda.ttf?fileID=12800000&guid=588e280439f4369489b80237dabae9ff&type=3#GrapeSoda");
-    font-size: 120px;
-    -unity-text-outline-width: 0;
-    -unity-text-outline-color: rgb(15, 253, 59);
 }
 
 .score {
@@ -61,13 +63,12 @@
 }
 
 .live {
-    width: 33%;
     height: 100%;
     background-image: url("project://database/Assets/Cryptography/Green-Heart.png?fileID=21300000&guid=4226634b475564afeb752a5adac5b811&type=3#Green-Heart");
 }
 
 .liveContainer {
-    width: 260px;
+    width: 220px;
     height: 70px;
     align-self: center;
     top: 0;
@@ -86,4 +87,22 @@
     -unity-font-definition: url("project://database/Assets/Fonts/GrapeSoda.ttf?fileID=12800000&guid=588e280439f4369489b80237dabae9ff&type=3#GrapeSoda");
     font-size: 60px;
     color: rgb(2, 241, 21);
+}
+
+.problemText {
+    font-size: 120px;
+    -unity-font-definition: url("project://database/Assets/Fonts/GrapeSoda.ttf?fileID=12800000&guid=588e280439f4369489b80237dabae9ff&type=3#GrapeSoda");
+    color: rgb(2, 241, 21);
+    -unity-text-align: upper-center;
+}
+
+.gainedPoints {
+    -unity-font-definition: url("project://database/Assets/Fonts/GrapeSoda.ttf?fileID=12800000&guid=588e280439f4369489b80237dabae9ff&type=3#GrapeSoda");
+    -unity-text-align: upper-right;
+    color: rgb(2, 241, 21);
+    font-size: 50px;
+    width: 900px;
+    position: absolute;
+    bottom: 123px;
+    display: none;
 }

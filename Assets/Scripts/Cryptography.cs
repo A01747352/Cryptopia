@@ -16,8 +16,17 @@ public class Cryptography : MonoBehaviour
     private UIDocument Game;
     private TextField inputUsuario;
     private Label displayLabel;
-    private Label scoreLabel;
     private Label qCountLabel;
+    private Label scoreLabel;
+    private Label totalScoreLabel;
+    private Label gainedPoints;
+
+    private Button restartVSButton;
+    private Button backToMainVSButton;
+    private Button restartDSButton;
+    private Button backToMainDSButton;
+    private VisualElement victoryScreen;
+    private VisualElement defeatScreen;
     private VisualElement live1;
     private VisualElement live2;
     private VisualElement live3;
@@ -36,7 +45,7 @@ public class Cryptography : MonoBehaviour
     private int score = 0;
     private int questionsNum = 1;
     private int mistakes = 0;
-    private int totalQuestions = 10;
+    private int totalQuestions = 5;
 
     
     
@@ -47,13 +56,33 @@ public class Cryptography : MonoBehaviour
         var root = Game.rootVisualElement;
 
         // Initializing uxml variables
+
+        // Victory Screen UI Elements
+        victoryScreen = root.Q<VisualElement>("VictoryScreen");
+        totalScoreLabel = root.Q<Label>("TotalPointsLabel");
+        restartVSButton = victoryScreen.Q<Button>("RestartButton");
+        restartVSButton.RegisterCallback<ClickEvent>(RestartGame);
+        backToMainVSButton = victoryScreen.Q<Button>("BackToMainButton");
+        backToMainVSButton.RegisterCallback<ClickEvent>(BackToMain);
+
+        // Defeat Screen UI Elements
+        defeatScreen = root.Q<VisualElement>("DefeatScreen");
+        restartDSButton = defeatScreen.Q<Button>("RestartButton");
+        restartDSButton.RegisterCallback<ClickEvent>(RestartGame);
+        backToMainDSButton = defeatScreen.Q<Button>("BackToMainButton");
+        backToMainDSButton.RegisterCallback<ClickEvent>(BackToMain);
+
+
+        // Main Game UI Elements
         inputUsuario = root.Q<TextField>("InputUsuario");
         displayLabel = root.Q<Label>("Problem");
         scoreLabel = root.Q<Label>("Score");
+        qCountLabel = root.Q<Label>("QuestionCount");
+        gainedPoints = root.Q<Label>("GainedPoints");
         live1 = root.Q<VisualElement>("Live1");
         live2 = root.Q<VisualElement>("Live2");
         live3 = root.Q<VisualElement>("Live3");
-        qCountLabel = root.Q<Label>("QuestionCount");
+        
         
 
         // Loading the Problem from JSON file
@@ -62,6 +91,7 @@ public class Cryptography : MonoBehaviour
 
         NextQuestion();
         scoreLabel.text = score.ToString() + "pts";
+        qCountLabel.text = questionsNum.ToString() + "/" + totalQuestions.ToString();
         
         inputUsuario.RegisterCallback<KeyUpEvent>(EnterText);
         problemIndex = randomIndex.Next(0, bancoProblemas.Length);
@@ -75,13 +105,15 @@ public class Cryptography : MonoBehaviour
         yield return new WaitForSeconds(1f);
         questionsNum += 1;
         qCountLabel.text = questionsNum.ToString() + "/" + totalQuestions.ToString();
-        if (questionsNum == totalQuestions && mistakes < 3) 
+        if (questionsNum == (totalQuestions + 1) && mistakes < 3) 
         {
-            SceneManager.LoadScene("Victoria");
+            totalScoreLabel.text = "Final Score: " + score.ToString() + "pts";
+            victoryScreen.style.display = DisplayStyle.Flex;
         }
         else if (mistakes == 3)
         {
-            SceneManager.LoadScene("Derrota");
+            totalScoreLabel.text = "Lost Score: -" + score.ToString() + "pts";
+            defeatScreen.style.display = DisplayStyle.Flex;
         }
         else
         {
@@ -97,6 +129,8 @@ public class Cryptography : MonoBehaviour
             if (problema.ValidarRespuesta(inputUsuario.value) == true)
             {
                 displayLabel.text = "Correct!";
+                gainedPoints.text = "+" + problema.puntaje.ToString() + "pts";
+                gainedPoints.style.display = DisplayStyle.Flex;
                 score += problema.puntaje; 
                 scoreLabel.text = score.ToString() + "pts";
             }
@@ -120,6 +154,16 @@ public class Cryptography : MonoBehaviour
             }
             StartCoroutine(NextQuestion());
         }
+    }
+
+    private void BackToMain(ClickEvent evt)
+    {
+        SceneManager.LoadScene("City");
+    }
+
+    private void RestartGame(ClickEvent evt)
+    {
+        SceneManager.LoadScene("Cryptography");
     }
 
     

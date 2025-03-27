@@ -1,0 +1,74 @@
+.victoryScreen {
+    align-self: center;
+    justify-content: center;
+    flex-grow: 1;
+    width: 1920px;
+    height: 1080px;
+}
+
+.mainContainer {
+    width: 800px;
+    height: 85%;
+    background-image: url("project://database/Assets/Sprites%20UI.psd?fileID=6969808719853940402&guid=62e23b6e7c6ab3944a50a3fbe783e045&type=3#Container_01");
+    justify-content: flex-start;
+    flex-direction: column;
+    align-self: center;
+}
+
+.titleContainer {
+    align-self: center;
+    height: 155px;
+    width: 100%;
+    justify-content: center;
+}
+
+.summaryContainer {
+    width: 583px;
+    align-self: center;
+    height: 800px;
+}
+
+.title {
+    align-self: center;
+    -unity-text-align: middle-left;
+    bottom: 15px;
+    font-size: 120px;
+    -unity-font-definition: url("project://database/Assets/Fonts/GrapeSoda.ttf?fileID=12800000&guid=588e280439f4369489b80237dabae9ff&type=3#GrapeSoda");
+}
+
+.summaryLabel {
+    -unity-text-align: middle-center;
+    margin-top: 30px;
+    -unity-font-definition: url("project://database/Assets/Fonts/GrapeSoda.ttf?fileID=12800000&guid=588e280439f4369489b80237dabae9ff&type=3#GrapeSoda");
+    font-size: 50px;
+    color: rgb(255, 255, 255);
+}
+
+.totalPointsLabel {
+    -unity-font-definition: url("project://database/Assets/Fonts/GrapeSoda.ttf?fileID=12800000&guid=588e280439f4369489b80237dabae9ff&type=3#GrapeSoda");
+    -unity-font-style: normal;
+    -unity-text-align: middle-left;
+    font-size: 30px;
+    width: 370px;
+    align-self: center;
+    color: rgb(255, 255, 255);
+}
+
+.summaryLowerContainer {
+    flex-direction: row;
+    height: 337px;
+    width: 465px;
+    align-self: center;
+    top: 140px;
+    justify-content: space-around;
+}
+
+.summaryButton {
+    height: 90px;
+    align-self: flex-end;
+    width: 105px;
+}
+
+.character {
+    width: 170px;
+}
