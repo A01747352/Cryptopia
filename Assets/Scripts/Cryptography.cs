@@ -18,13 +18,15 @@ public class Cryptography : MonoBehaviour
     private Label displayLabel;
     private Label qCountLabel;
     private Label scoreLabel;
-    private Label totalScoreLabel;
+    
     private Label gainedPoints;
 
     private Button restartVSButton;
     private Button backToMainVSButton;
+    private Label totalScoreVSLabel;
     private Button restartDSButton;
     private Button backToMainDSButton;
+    private Label totalScoreDSLabel;
     private VisualElement victoryScreen;
     private VisualElement defeatScreen;
     private VisualElement live1;
@@ -59,7 +61,7 @@ public class Cryptography : MonoBehaviour
 
         // Victory Screen UI Elements
         victoryScreen = root.Q<VisualElement>("VictoryScreen");
-        totalScoreLabel = root.Q<Label>("TotalPointsLabel");
+        totalScoreVSLabel = root.Q<Label>("TotalPointsLabel");
         restartVSButton = victoryScreen.Q<Button>("RestartButton");
         restartVSButton.RegisterCallback<ClickEvent>(RestartGame);
         backToMainVSButton = victoryScreen.Q<Button>("BackToMainButton");
@@ -67,6 +69,7 @@ public class Cryptography : MonoBehaviour
 
         // Defeat Screen UI Elements
         defeatScreen = root.Q<VisualElement>("DefeatScreen");
+        totalScoreDSLabel = defeatScreen.Q<Label>("TotalPointsLabel");
         restartDSButton = defeatScreen.Q<Button>("RestartButton");
         restartDSButton.RegisterCallback<ClickEvent>(RestartGame);
         backToMainDSButton = defeatScreen.Q<Button>("BackToMainButton");
@@ -103,17 +106,19 @@ public class Cryptography : MonoBehaviour
     private IEnumerator NextQuestion()
     {
         yield return new WaitForSeconds(1f);
+
         questionsNum += 1;
         qCountLabel.text = questionsNum.ToString() + "/" + totalQuestions.ToString();
-        if (questionsNum == (totalQuestions + 1) && mistakes < 3) 
+        gainedPoints.style.display = DisplayStyle.None;
+        if (mistakes == 3)
         {
-            totalScoreLabel.text = "Final Score: " + score.ToString() + "pts";
-            victoryScreen.style.display = DisplayStyle.Flex;
-        }
-        else if (mistakes == 3)
-        {
-            totalScoreLabel.text = "Lost Score: -" + score.ToString() + "pts";
+            totalScoreDSLabel.text = "Lost Score: -" + score.ToString() + "pts";
             defeatScreen.style.display = DisplayStyle.Flex;
+        }
+        else if (questionsNum == (totalQuestions + 1) && mistakes < 3) 
+        {
+            totalScoreVSLabel.text = "Final Score: " + score.ToString() + "pts";
+            victoryScreen.style.display = DisplayStyle.Flex;
         }
         else
         {
@@ -137,7 +142,7 @@ public class Cryptography : MonoBehaviour
             else 
             {
                 displayLabel.text = "Incorrect :(";
-                mistakes += 1;
+                ++mistakes;
                 if (mistakes == 1)
                 {
                     live1.style.visibility = Visibility.Hidden;

@@ -109,9 +109,9 @@
         "puntaje": 300
       },
       {
-        "incognita": "4ddr3",
+        "incognita": "4ddr322",
         "algoritmo": ["leetspeak"],
-        "solucion": "adder",
+        "solucion": "address",
         "puntaje": 100
       },
       {
@@ -277,9 +277,9 @@
         "puntaje": 200
       },
       {
-        "incognita": "4ddr3",
+        "incognita": "4ddr322",
         "algoritmo": ["leetspeak", "caesar"],
-        "solucion": "adder",
+        "solucion": "address",
         "puntaje": 200
       },
       {

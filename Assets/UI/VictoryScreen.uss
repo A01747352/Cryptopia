@@ -67,6 +67,19 @@
     height: 90px;
     align-self: flex-end;
     width: 105px;
+    font-size: 0;
+    background-color: rgba(0, 0, 0, 0);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    transition-timing-function: ease-out-sine;
+    transition-duration: 0.3s;
+}
+
+.summaryButton:hover {
+    scale: 1.1 1.1;
+    -unity-background-image-tint-color: rgb(155, 195, 255);
 }
 
 .character {
