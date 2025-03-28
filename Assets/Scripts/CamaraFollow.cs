@@ -31,7 +31,7 @@ public class CameraFollow : MonoBehaviour
             float clampedY = Mathf.Clamp(smoothedPosition.y, minPosition.y + camHalfHeight, maxPosition.y - camHalfHeight);
 
             // Alinear la posición de la cámara a la cuadrícula de píxeles
-            float pixelPerUnit =128f; // Ajusta esto según los valores de tu proyecto
+            float pixelPerUnit =258f; // Ajusta esto según los valores de tu proyecto
             clampedX = Mathf.Round(clampedX * pixelPerUnit) / pixelPerUnit;
             clampedY = Mathf.Round(clampedY * pixelPerUnit) / pixelPerUnit;
 
