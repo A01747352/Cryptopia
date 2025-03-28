@@ -36,6 +36,7 @@
 
 .inputUser:focus > TextInput {
     -unity-background-image-tint-color: rgb(21, 255, 0);
+    scale: 1.1 1.1;
 }
 
 .inputUser:hover > TextInput {

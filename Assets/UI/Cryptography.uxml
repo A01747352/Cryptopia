@@ -35,7 +35,7 @@
             </engine:VisualElement>
         </engine:VisualElement>
     </engine:VisualElement>
-    <engine:VisualElement name="DefeatScreen" class="victoryScreen" style="flex-grow: 1; display: flex; background-color: rgba(166, 57, 63, 0.4); position: absolute;">
+    <engine:VisualElement name="DefeatScreen" class="victoryScreen" style="flex-grow: 1; display: none; background-color: rgba(166, 57, 63, 0.4); position: absolute;">
         <engine:VisualElement name="MainContainer" class="mainContainer" style="flex-grow: 0;">
             <engine:VisualElement name="TitleContainer" class="titleContainer" style="flex-grow: 0;">
                 <engine:Label text="Defeat" name="Title" class="title" style="color: rgb(255, 255, 255);" />

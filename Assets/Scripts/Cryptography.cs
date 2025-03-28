@@ -12,32 +12,33 @@ using Newtonsoft.Json;
 public class Cryptography : MonoBehaviour
 {
     
-    // UI Elements
-    private UIDocument Game;
+// UI Elements
+    private UIDocument game;
     private TextField inputUsuario;
     private Label displayLabel;
     private Label qCountLabel;
     private Label scoreLabel;
-    
+    private VisualElement live1;
+    private VisualElement live2;
+    private VisualElement live3;
     private Label gainedPoints;
 
+    // Elementos de Victory Screen
     private Button restartVSButton;
     private Button backToMainVSButton;
     private Label totalScoreVSLabel;
+
+    // Elementos de Defeat Screen
     private Button restartDSButton;
     private Button backToMainDSButton;
     private Label totalScoreDSLabel;
     private VisualElement victoryScreen;
     private VisualElement defeatScreen;
-    private VisualElement live1;
-    private VisualElement live2;
-    private VisualElement live3;
 
     // Utility Variabels
     private int problemIndex;
     private System.Random randomIndex = new System.Random();
     
-
     // Variables for loading the problems
     private string jsonProblemas;
     private static Problema[] bancoProblemas;
@@ -54,10 +55,10 @@ public class Cryptography : MonoBehaviour
     
     void OnEnable()
     {
-        Game = GetComponent<UIDocument>();
-        var root = Game.rootVisualElement;
+        game = GetComponent<UIDocument>();
+        var root = game.rootVisualElement;
 
-        // Initializing uxml variables
+    // Initializing uxml variables
 
         // Victory Screen UI Elements
         victoryScreen = root.Q<VisualElement>("VictoryScreen");

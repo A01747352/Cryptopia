@@ -1,0 +1,66 @@
+.powerUpWindow {
+    height: 300px;
+    width: 800px;
+    align-self: flex-end;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.mainContainer {
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.powerUp {
+    background-color: rgba(0, 0, 0, 0.67);
+    width: 142px;
+    height: 140px;
+    align-self: center;
+}
+
+.drillContainer {
+    width: 945px;
+    height: 628px;
+    align-self: flex-end;
+    justify-content: center;
+}
+
+.mineButton {
+    width: 218px;
+    height: 208px;
+    align-self: center;
+}
+
+.hud {
+    height: 80px;
+    flex-direction: row;
+}
+
+.scoreBox {
+    width: 710px;
+    flex-direction: row;
+}
+
+.coin {
+    width: 279px;
+}
+
+.scoreContainer {
+    justify-content: space-around;
+}
+
+.scoreLabels {
+    color: rgb(159, 159, 159);
+    -unity-font-definition: url("project://database/Assets/Fonts/GrapeSoda.ttf?fileID=12800000&guid=588e280439f4369489b80237dabae9ff&type=3#GrapeSoda");
+    font-size: 40px;
+}
+
+.scoreValues {
+    -unity-text-align: upper-left;
+    -unity-font-definition: url("project://database/Assets/Fonts/GrapeSoda.ttf?fileID=12800000&guid=588e280439f4369489b80237dabae9ff&type=3#GrapeSoda");
+    font-size: 30px;
+    color: rgb(255, 255, 255);
+}
+
+.scoreLabelContainers {
+}
