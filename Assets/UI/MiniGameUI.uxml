@@ -1,4 +1,4 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/MiniGameUI.uss?fileID=7433441132597879392&amp;guid=c0cae22cce0f1418f8b4c5d1806b8092&amp;type=3#MiniGameUI" />
-    <engine:Button name="pauseButton" class="PauseButton pauseButton" />
+    <engine:Button name="pauseButton" class="PauseButton pauseButton" style="-unity-background-image-tint-color: rgb(255, 255, 255); border-left-color: rgba(149, 149, 149, 0); border-right-color: rgba(149, 149, 149, 0); border-top-color: rgba(149, 149, 149, 0); border-bottom-color: rgba(149, 149, 149, 0);" />
 </engine:UXML>
