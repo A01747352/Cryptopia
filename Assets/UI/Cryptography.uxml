@@ -1,13 +1,53 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/Cryptography.uss?fileID=7433441132597879392&amp;guid=1712523d38b134a1fa341ad524bc4a5f&amp;type=3#Cryptography" />
-    <engine:VisualElement name="Window" class="window" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Cryptography/ZoomComputadora.png?fileID=21300000&amp;guid=11b3a149d98d342c2949d896bce09b92&amp;type=3#ZoomComputadora&quot;);">
+    <Style src="project://database/Assets/UI/VictoryScreen.uss?fileID=7433441132597879392&amp;guid=f4a66aa55a20e4031940b8fc3e5dc725&amp;type=3#VictoryScreen" />
+    <engine:VisualElement name="Window" class="window" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Cryptography/ZoomComputadora.png?fileID=21300000&amp;guid=11b3a149d98d342c2949d896bce09b92&amp;type=3#ZoomComputadora&quot;); display: flex;">
         <engine:VisualElement name="ComputerScreen" class="computerScreen" style="flex-grow: 1; background-color: rgb(0, 0, 0);">
+            <engine:Label text="1/10" name="QuestionCount" class="questionCount" />
             <engine:Label text="Score" name="Score" emoji-fallback-support="false" class="score" style="height: 39px;" />
             <engine:VisualElement name="ProblemScreen" class="problemScreen" style="flex-grow: 1;">
-                <engine:Label text="Cryptography" name="Problem" />
+                <engine:Label text="Cryptography" name="Problem" class="problemText" />
+                <engine:Label text="+ 100" name="GainedPoints" enabled="true" class="gainedPoints" />
             </engine:VisualElement>
-            <engine:VisualElement name="InputContainer" class="inputContainer" style="flex-grow: 1; justify-content: center;">
+            <engine:VisualElement name="InputContainer" class="inputContainer" style="flex-grow: 0; justify-content: center;">
                 <engine:TextField placeholder-text="Type your answer" name="InputUsuario" hide-placeholder-on-focus="true" class="inputUser" style="background-color: rgba(0, 255, 255, 0); -unity-text-align: upper-left;" />
+            </engine:VisualElement>
+            <engine:VisualElement name="LiveContainer" class="lives liveContainer" style="flex-grow: 1; position: absolute; flex-direction: row;">
+                <engine:VisualElement name="Live1" enabled="true" class="live" style="flex-grow: 1;" />
+                <engine:VisualElement name="Live2" class="live" style="flex-grow: 1;" />
+                <engine:VisualElement name="Live3" class="live" style="flex-grow: 1;" />
+            </engine:VisualElement>
+        </engine:VisualElement>
+    </engine:VisualElement>
+    <engine:VisualElement name="VictoryScreen" class="victoryScreen" style="flex-grow: 1; display: none; background-color: rgba(104, 161, 105, 0.4); position: absolute;">
+        <engine:VisualElement name="MainContainer" class="mainContainer" style="flex-grow: 0;">
+            <engine:VisualElement name="TitleContainer" class="titleContainer" style="flex-grow: 0;">
+                <engine:Label text="Victory!" name="Title" class="title" style="color: rgb(255, 255, 255);" />
+            </engine:VisualElement>
+            <engine:VisualElement name="SummaryContainer" class="summaryContainer" style="flex-grow: 0; height: 714px;">
+                <engine:Label text="Summary" name="SummaryLabel" class="summaryText summaryLabel" />
+                <engine:Label text="Total Points:" name="TotalPointsLabel" class="totalPointsLabel" />
+                <engine:VisualElement name="SummaryLowerContainer" class="summaryLowerContainer" style="flex-grow: 0;">
+                    <engine:Button text="Button" name="BackToMainButton" class="summaryButton" style="background-image: url(&quot;project://database/Assets/Sprites%20UI.psd?fileID=-3248817540606541918&amp;guid=62e23b6e7c6ab3944a50a3fbe783e045&amp;type=3#Pause_Menu_Button_02&quot;);" />
+                    <engine:VisualElement name="Character" class="character" style="flex-grow: 0; background-image: url(&quot;project://database/Assets/Characters/Idle.png?fileID=-2834552850196481573&amp;guid=a6d7d65e18178a24eac1b764c624c85d&amp;type=3#Idle_5&quot;);" />
+                    <engine:Button text="Button" name="RestartButton" class="summaryButton" style="background-image: url(&quot;project://database/Assets/Sprites%20UI.psd?fileID=3720184069377556504&amp;guid=62e23b6e7c6ab3944a50a3fbe783e045&amp;type=3#Pause_Menu_Button_01&quot;);" />
+                </engine:VisualElement>
+            </engine:VisualElement>
+        </engine:VisualElement>
+    </engine:VisualElement>
+    <engine:VisualElement name="DefeatScreen" class="victoryScreen" style="flex-grow: 1; display: none; background-color: rgba(166, 57, 63, 0.4); position: absolute;">
+        <engine:VisualElement name="MainContainer" class="mainContainer" style="flex-grow: 0;">
+            <engine:VisualElement name="TitleContainer" class="titleContainer" style="flex-grow: 0;">
+                <engine:Label text="Defeat" name="Title" class="title" style="color: rgb(255, 255, 255);" />
+            </engine:VisualElement>
+            <engine:VisualElement name="SummaryContainer" class="summaryContainer" style="flex-grow: 0; height: 714px;">
+                <engine:Label text="Summary" name="SummaryLabel" class="summaryText summaryLabel" />
+                <engine:Label text="Total Points: &#10;" name="TotalPointsLabel" class="totalPointsLabel" />
+                <engine:VisualElement name="SummaryLowerContainer" class="summaryLowerContainer" style="flex-grow: 0;">
+                    <engine:Button text="Button" name="BackToMainButton" class="summaryButton" style="background-image: url(&quot;project://database/Assets/Sprites%20UI.psd?fileID=-3248817540606541918&amp;guid=62e23b6e7c6ab3944a50a3fbe783e045&amp;type=3#Pause_Menu_Button_02&quot;);" />
+                    <engine:VisualElement name="Character" class="character" style="flex-grow: 0; background-image: url(&quot;project://database/Assets/Characters/Attack.png?fileID=-2238382357930459393&amp;guid=fd2e33d6d5c475b47958f36d44a920fd&amp;type=3#Attack_8&quot;);" />
+                    <engine:Button text="Button" name="RestartButton" class="summaryButton" style="background-image: url(&quot;project://database/Assets/Sprites%20UI.psd?fileID=3720184069377556504&amp;guid=62e23b6e7c6ab3944a50a3fbe783e045&amp;type=3#Pause_Menu_Button_01&quot;);" />
+                </engine:VisualElement>
             </engine:VisualElement>
         </engine:VisualElement>
     </engine:VisualElement>

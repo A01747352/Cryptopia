@@ -1,0 +1,32 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/UICryptoMine.uss?fileID=7433441132597879392&amp;guid=af1c8aaab62db421bae6d78047159b0d&amp;type=3#UICryptoMine" />
+    <engine:VisualElement name="HUD" class="hud" style="flex-grow: 1;">
+        <engine:VisualElement name="ScoreBox" class="scoreBox" style="flex-grow: 0;">
+            <engine:VisualElement name="Coin" class="coin" style="flex-grow: 0;" />
+            <engine:VisualElement name="ScoreContaienr" class="scoreContainer" style="flex-grow: 1;">
+                <engine:VisualElement name="CryptoMinedContainer" class="scoreLabelContainers" style="flex-grow: 1;">
+                    <engine:Label text="Crypto:" name="CryptoMinedLabel" class="scoreLabels" />
+                    <engine:Label text="Label" name="CryptoMinedValue" class="scoreValues" />
+                </engine:VisualElement>
+                <engine:VisualElement name="BlocksMinedContainer" class="scoreLabelContainers" style="flex-grow: 1;">
+                    <engine:Label text="Blocks Mined:" name="BlocksMinedLabel" class="scoreLabels" />
+                    <engine:Label text="Label" name="BlocksMinedValue" class="scoreValues" />
+                </engine:VisualElement>
+                <engine:VisualElement name="TotalScoreContainer" class="scoreLabelContainers" style="flex-grow: 1;">
+                    <engine:Label text="Total Score:" name="TotalScoreLabel" class="scoreLabels" />
+                    <engine:Label text="Label" name="TotalScoreValue" class="scoreValues" />
+                </engine:VisualElement>
+            </engine:VisualElement>
+        </engine:VisualElement>
+    </engine:VisualElement>
+    <engine:VisualElement name="MainContainer" class="mainContainer" style="flex-grow: 1;">
+        <engine:VisualElement name="PowerUpWindow" class="powerUpWindow" style="flex-grow: 0;">
+            <engine:VisualElement name="PowerUp1" class="powerUp" style="flex-grow: 0;" />
+            <engine:VisualElement name="PowerUp2" class="powerUp" style="flex-grow: 0;" />
+            <engine:VisualElement name="PowerUp3" class="powerUp" style="flex-grow: 0;" />
+        </engine:VisualElement>
+        <engine:VisualElement name="DrillContainer" class="drillContainer" style="flex-grow: 0;">
+            <engine:Button text="Button" name="MineButton" class="mineButton" />
+        </engine:VisualElement>
+    </engine:VisualElement>
+</engine:UXML>
