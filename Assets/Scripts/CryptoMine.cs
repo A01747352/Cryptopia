@@ -10,12 +10,19 @@ public class CryptoMine : MonoBehaviour
     private double totalCrypto;
     private int totalBlocks;
     private int score;
+    private int totalClicks;
+    private HashSet<int> hashTarget;
+    private HashSet<int> hashAttempts;
+    private int hashUser;
     private Dictionary<string, Func<double, double>> powerUps;
     private string[] userPowerUps;
+    private System.Random randomizer = new System.Random();
 
     
     // Units
-    private double clickValue = 0.1;
+    private double hashReward = 1;
+    private int hashProbability = 5;
+    private int hashPool = 100;
 
     // UI Elements
     private UIDocument game;
@@ -57,48 +64,89 @@ public class CryptoMine : MonoBehaviour
         score = 0;
         powerUps = new Dictionary<string, Func<double, double>>()
         {
-            {"doubleTrouble", doubleTrouble}
+            {"DoubleTrouble", DoubleTrouble}
         };
-        userPowerUps = new string[] {"doubleTrouble"};
+        userPowerUps = new string[] {"DoubleTrouble"};
+        hashAttempts = new HashSet<int>();
+        hashTarget = new HashSet<int>(); 
+        GenerateHashTarget();
+        print(100 * 0.5);
     }
 
+    
+
+    private double ApplyPowerUps(int index, double points)
+    {
+        if (index == 0)
+        {
+            return points;
+        }
+        else
+        {
+            points = powerUps[userPowerUps[index]](points);
+            return ApplyPowerUps(--index, points);
+        }
+    }
+    private double ApplyPowerUps(double points)
+    {
+        return ApplyPowerUps(userPowerUps.Length-1, points);
+    }
     private void MineCrypto()
     {
-    
-        switch(userPowerUps.Length)
+        ++totalClicks;
+        GenerateUserHash();
+        double potentialReward = ApplyPowerUps(hashReward);
+        if (hashTarget.Contains(hashUser))
         {
-            case 0:
-                totalCrypto += clickValue;
-                break;
-            case 1:
-                totalCrypto += powerUps[userPowerUps[0]](clickValue);
-                break;
-            
-            case 2:
-                totalCrypto += powerUps[userPowerUps[1]]
-                                                (powerUps[userPowerUps[0]](clickValue));
-                break;
-            
-            case 3:
-                totalCrypto += powerUps[userPowerUps[2]]
-                                    (powerUps[userPowerUps[1]]
-                                                (powerUps[userPowerUps[0]](clickValue)));
-                break;
-
-            default:
-                break;
+            totalCrypto += potentialReward;
+            hashAttempts.Clear();
+            GenerateHashTarget();
         }
-        
-        
-        cryptoMinedValue.text = totalCrypto.ToString();
+        else
+        {
+            hashAttempts.Add(hashUser);
+        }
+        print(hashUser);
+        cryptoMinedValue.text = totalCrypto.ToString("F5");
     }
     private void MineCrypto(ClickEvent evt)
     {
         MineCrypto();
     }
 
-    private double doubleTrouble(double points)
+    private double DoubleTrouble(double points)
     {
         return points*2;
+    }
+    private double EveryTenth(double points)
+    {
+        if (totalClicks % 10 ==0)
+        {
+            return points*10;
+        }
+        else
+        {
+            return points;
+        }
+    }
+
+   private void GenerateHashTarget()
+    {
+        hashTarget.Clear();
+        while (hashTarget.Count < hashProbability)
+        {
+            hashTarget.Add(randomizer.Next(0, hashPool));
+        }
+        Debug.LogWarning($"Generated Hash Target: {string.Join(", ", hashTarget)}");
+    }
+
+    
+    
+    private void GenerateUserHash()
+    {
+        while (hashAttempts.Contains(hashUser) == true)
+        {
+            hashUser = randomizer.Next(0, hashPool);
+        }
     }
 }
