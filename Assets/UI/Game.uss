@@ -15,8 +15,8 @@
 .pauseButton {
     background-image: url("project://database/Assets/Sprites%20UI.psd?fileID=-3904189391918081324&guid=62e23b6e7c6ab3944a50a3fbe783e045&type=3#Pause_Menu_Button_03");
     background-size: 100% 100%;
-    width: 48px;
-    height: 44px;
+    width: 62.4px;
+    height: 57.2px;
     -unity-background-scale-mode: scale-to-fit;
 }
 
