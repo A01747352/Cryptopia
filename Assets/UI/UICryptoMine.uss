@@ -64,3 +64,9 @@
 
 .scoreLabelContainers {
 }
+
+.hashLabel {
+    -unity-text-align: upper-center;
+    align-self: center;
+    width: 218px;
+}

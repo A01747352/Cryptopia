@@ -26,6 +26,7 @@
             <engine:VisualElement name="PowerUp3" class="powerUp" style="flex-grow: 0;" />
         </engine:VisualElement>
         <engine:VisualElement name="DrillContainer" class="drillContainer" style="flex-grow: 0;">
+            <engine:Label text="Label" name="HashLabel" class="hashLabel" />
             <engine:Button text="Button" name="MineButton" class="mineButton" />
         </engine:VisualElement>
     </engine:VisualElement>

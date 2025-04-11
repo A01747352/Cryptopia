@@ -22,20 +22,23 @@ public class CryptoMine : MonoBehaviour
     // Units
     private double hashReward = 1;
     private int hashProbability = 5;
-    private int hashPool = 100;
+    private int hashPool = 1000100;
 
     // UI Elements
     private UIDocument game;
         // HUD Elements
-        private Label cryptoMinedValue;
-        private Label blocksMinedValue;
-        private Label totalScoreValue;
+        private Label cryptoMinedLabel;
+        private Label blocksMinedLabel;
+        private Label totalScoreLabel;
 
         // Main Container Elements
         private VisualElement powerUp1;
         private VisualElement powerUp2;
         private VisualElement powerUp3;
         private Button mineButton;
+
+        // Drill
+        private Label hashLabel;
 
 
     void OnEnable()
@@ -46,17 +49,20 @@ public class CryptoMine : MonoBehaviour
     // Initializing uxml variables
 
         // HUD Elements
-        cryptoMinedValue = root.Q<Label>("CryptoMinedValue");
-        blocksMinedValue = root.Q<Label>("BlocksMinedValue");
-        totalScoreValue = root.Q<Label>("TOtalScoreValue");
+        cryptoMinedLabel = root.Q<Label>("CryptoMinedValue");
+        blocksMinedLabel = root.Q<Label>("BlocksMinedValue");
+        totalScoreLabel = root.Q<Label>("TotalScoreValue");
 
         // Main Container Elements
         powerUp1 = root.Q<VisualElement>("PowerUp1");
         powerUp2 = root.Q<VisualElement>("PowerUp2");
         powerUp3 = root.Q<VisualElement>("PowerUp3");
 
+
+        // Drill
         mineButton = root.Q<Button>("MineButton");
         mineButton.RegisterCallback<ClickEvent>(MineCrypto);
+        hashLabel = root.Q<Label>("HashLabel");
 
         // Game Variables
         totalCrypto = 0;
@@ -95,19 +101,24 @@ public class CryptoMine : MonoBehaviour
     {
         ++totalClicks;
         GenerateUserHash();
+        hashLabel.text = Convert.ToString(hashUser, 16);
         double potentialReward = ApplyPowerUps(hashReward);
         if (hashTarget.Contains(hashUser))
         {
             totalCrypto += potentialReward;
             hashAttempts.Clear();
             GenerateHashTarget();
+            ++totalBlocks;
+            score += 100;
+            blocksMinedLabel.text = totalBlocks.ToString();
+            totalScoreLabel.text = score.ToString() + "pts";
         }
         else
         {
             hashAttempts.Add(hashUser);
         }
         print(hashUser);
-        cryptoMinedValue.text = totalCrypto.ToString("F5");
+        cryptoMinedLabel.text = totalCrypto.ToString("F5");
     }
     private void MineCrypto(ClickEvent evt)
     {
@@ -135,7 +146,7 @@ public class CryptoMine : MonoBehaviour
         hashTarget.Clear();
         while (hashTarget.Count < hashProbability)
         {
-            hashTarget.Add(randomizer.Next(0, hashPool));
+            hashTarget.Add(randomizer.Next(1000000, hashPool));
         }
         Debug.LogWarning($"Generated Hash Target: {string.Join(", ", hashTarget)}");
     }
@@ -146,7 +157,7 @@ public class CryptoMine : MonoBehaviour
     {
         while (hashAttempts.Contains(hashUser) == true)
         {
-            hashUser = randomizer.Next(0, hashPool);
+            hashUser = randomizer.Next(1000000, hashPool);
         }
     }
 }
