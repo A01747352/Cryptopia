@@ -11,7 +11,7 @@ using Newtonsoft.Json;
 
 public class Cryptography : MonoBehaviour
 {
-    
+   
 // UI Elements
     private UIDocument game;
     private TextField inputUsuario;
@@ -35,16 +35,19 @@ public class Cryptography : MonoBehaviour
     private VisualElement victoryScreen;
     private VisualElement defeatScreen;
 
-    // Utility Variabels
+// Sound Variables
+
+
+// Utility Variabels
     private int problemIndex;
     private System.Random randomIndex = new System.Random();
     
-    // Variables for loading the problems
+// Variables for loading the problems
     private string jsonProblemas;
     private static Problema[] bancoProblemas;
     private Problema problema;
 
-    // Variables to keep track of the game
+// Variables to keep track of the game
     private int score = 0;
     private int questionsNum = 1;
     private int mistakes = 0;
@@ -134,6 +137,7 @@ public class Cryptography : MonoBehaviour
         {
             if (problema.ValidarRespuesta(inputUsuario.value) == true)
             {
+                GameObject.Find("SoundCorrect").GetComponent<AudioSource>().Play();
                 displayLabel.text = "Correct!";
                 gainedPoints.text = "+" + problema.puntaje.ToString() + "pts";
                 gainedPoints.style.display = DisplayStyle.Flex;
@@ -142,6 +146,7 @@ public class Cryptography : MonoBehaviour
             }
             else 
             {
+                GameObject.Find("SoundIncorrect").GetComponent<AudioSource>().Play();
                 displayLabel.text = "Incorrect :(";
                 ++mistakes;
                 if (mistakes == 1)
