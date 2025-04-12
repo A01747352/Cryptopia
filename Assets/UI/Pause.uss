@@ -1,0 +1,80 @@
+.screen {
+    -unity-background-image-tint-color: rgb(255, 255, 255);
+    background-color: rgba(255, 255, 255, 0.29);
+    align-items: center;
+}
+
+.container {
+    width: 50%;
+    height: 50%;
+    align-items: center;
+}
+
+.bkg {
+    background-image: url("project://database/Assets/Sprites%20UI.psd?fileID=-4728711202863039818&guid=62e23b6e7c6ab3944a50a3fbe783e045&type=3#Container_02");
+    -unity-background-scale-mode: scale-to-fit;
+    width: 75%;
+    height: auto;
+    position: relative;
+}
+
+.text {
+    overflow: visible;
+    visibility: visible;
+    display: flex;
+    position: absolute;
+    align-self: center;
+    color: rgb(255, 255, 255);
+    font-size: 110px;
+    -unity-font-definition: url("project://database/Assets/Fonts/GrapeSoda.ttf?fileID=12800000&guid=588e280439f4369489b80237dabae9ff&type=3#GrapeSoda");
+    letter-spacing: 10px;
+    -unity-text-align: middle-center;
+    margin-top: 100px;
+}
+
+.buttons {
+    position: absolute;
+    bottom: 20%;
+    background-color: rgba(0, 0, 0, 0);
+    width: 80%;
+    flex-direction: row;
+    align-self: center;
+    justify-content: space-around;
+}
+
+.back {
+    background-image: url("project://database/Assets/Sprites%20UI.psd?fileID=-3248817540606541918&guid=62e23b6e7c6ab3944a50a3fbe783e045&type=3#Pause_Menu_Button_02");
+    align-self: center;
+    -unity-background-scale-mode: scale-to-fit;
+    width: 97px;
+    height: 90px;
+    background-color: rgba(0, 0, 0, 0);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+}
+
+.play {
+    background-image: url("project://database/Assets/Sprites%20UI.psd?fileID=3720184069377556504&guid=62e23b6e7c6ab3944a50a3fbe783e045&type=3#Pause_Menu_Button_01");
+    -unity-background-scale-mode: scale-to-fit;
+    width: 97px;
+    height: 90px;
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.mute {
+    -unity-background-scale-mode: scale-to-fit;
+    background-image: url("project://database/Assets/Sprites%20UI.psd?fileID=-3904189391918081324&guid=62e23b6e7c6ab3944a50a3fbe783e045&type=3#Pause_Menu_Button_03");
+    width: 97px;
+    height: 90px;
+    background-color: rgba(255, 255, 255, 0);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+}

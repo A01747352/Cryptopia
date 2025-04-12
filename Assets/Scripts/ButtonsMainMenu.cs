@@ -34,6 +34,7 @@ public class ButtonsMainMenu : MonoBehaviour
 
     private void PlayGame(ClickEvent evt)
     {
+        Time.timeScale = 1f;
         SceneManager.LoadScene("City");
     }
 
