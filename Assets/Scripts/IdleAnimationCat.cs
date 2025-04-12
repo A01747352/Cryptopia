@@ -2,9 +2,10 @@ using UnityEngine;
 
 public class IdleAnimationCat : MonoBehaviour
 {
+    [SerializeField] private string catId; // Identificador único para cada gato (Cat1, Cat2, etc.)
     private Animator animator;
     private float timeInState = 0f;
-    private float timeToStretch = 0f;  // Para controlar el tiempo antes de hacer Stretch después de Laying
+    private float timeToStretch = 0f; // Para controlar el tiempo antes de hacer Stretch después de Laying
 
     private void Start()
     {
@@ -15,96 +16,95 @@ public class IdleAnimationCat : MonoBehaviour
     {
         // Incrementamos el tiempo en el estado actual
         timeInState += Time.deltaTime;
-        timeToStretch += Time.deltaTime;  // Aumentamos el contador para Stretch
+        timeToStretch += Time.deltaTime;
 
         // Transiciones entre estados de animación
-        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Cat1-Idle"))
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName($"{catId}-Idle"))
         {
             // Prioridad 1: Laying
-            if (!animator.GetBool("isLayingDone") && timeInState > 8f)
+            if (!animator.GetBool($"{catId}isLayingDone") && timeInState > 8f)
             {
-                animator.SetTrigger("ToLaying");
+                animator.SetTrigger($"{catId}ToLaying");
                 timeInState = 0f;
                 timeToStretch = 0f;
             }
             // Prioridad 2: Meow
-            else if (!animator.GetBool("isMeowDone") && timeInState > 5f)
+            else if (!animator.GetBool($"{catId}isMeowDone") && timeInState > 5f)
             {
-                animator.SetTrigger("ToMeow");
+                animator.SetTrigger($"{catId}ToMeow");
                 timeInState = 0f;
                 timeToStretch = 0f;
             }
             // Prioridad 3: Licking
-            else if (!animator.GetBool("isLickingDone") && timeInState > 4f)
+            else if (!animator.GetBool($"{catId}isLickingDone") && timeInState > 4f)
             {
-                animator.SetTrigger("ToLicking");
+                animator.SetTrigger($"{catId}ToLicking");
                 timeInState = 0f;
                 timeToStretch = 0f;
             }
-
             // Condición para pasar a Stretch después de Laying y estar en Idle
-            else if (animator.GetBool("isLayingDone") && timeToStretch >= 0.5f)  // Menos de un segundo después de Idle
+            else if (animator.GetBool($"{catId}isLayingDone") && timeToStretch >= 0.5f)
             {
-                animator.SetTrigger("ToStretch");
-                timeToStretch = 0f;  // Resetear tiempo para el siguiente ciclo
+                animator.SetTrigger($"{catId}ToStretch");
+                timeToStretch = 0f;
             }
         }
-        else if (animator.GetCurrentAnimatorStateInfo(0).IsName("Cat1-Licking"))
+        else if (animator.GetCurrentAnimatorStateInfo(0).IsName($"{catId}-Licking"))
         {
-            if (timeInState > 2f) // 2 segundos en licking
+            if (timeInState > 2f)
             {
-                animator.SetBool("isLickingDone", true);  // Marcamos que Licking ha terminado
-                animator.SetTrigger("ToIdle");
+                animator.SetBool($"{catId}isLickingDone", true);
+                animator.SetTrigger($"{catId}ToIdle");
                 timeInState = 0f;
                 timeToStretch = 0f;
             }
         }
-        else if (animator.GetCurrentAnimatorStateInfo(0).IsName("Cat1-Meow"))
+        else if (animator.GetCurrentAnimatorStateInfo(0).IsName($"{catId}-Meow"))
         {
-            if (timeInState > 0.6f) // 0.5 segundos en meow
+            if (timeInState > 0.6f)
             {
-                animator.SetBool("isMeowDone", true);  // Marcamos que Meow ha terminado
-                animator.SetTrigger("ToIdle");  // Pasamos a Idle, evitando repetir Meow
+                animator.SetBool($"{catId}isMeowDone", true);
+                animator.SetTrigger($"{catId}ToIdle");
                 timeInState = 0f;
                 timeToStretch = 0f;
             }
         }
-        else if (animator.GetCurrentAnimatorStateInfo(0).IsName("Cat1-Laying"))
+        else if (animator.GetCurrentAnimatorStateInfo(0).IsName($"{catId}-Laying"))
         {
-            if (timeInState > 6f) // 6 segundos en laying
+            if (timeInState > 6f)
             {
-                animator.SetBool("isLayingDone", true);  // Marcamos que Laying ha terminado
-                animator.SetTrigger("ToIdle"); // Regresamos a Idle antes de pasar a Stretch
+                animator.SetBool($"{catId}isLayingDone", true);
+                animator.SetTrigger($"{catId}ToIdle");
                 timeInState = 0f;
                 timeToStretch = 0f;
             }
         }
-        else if (animator.GetCurrentAnimatorStateInfo(0).IsName("Cat1-Stretch"))
+        else if (animator.GetCurrentAnimatorStateInfo(0).IsName($"{catId}-Stretch"))
         {
-            if (timeInState > 1.5f) // 1.5 segundos en stretch
+            if (timeInState > 1.5f)
             {
-                animator.SetBool("isStretchDone", true);  // Marcamos que Stretch ha terminado
-                animator.SetTrigger("ToIdle");
+                animator.SetBool($"{catId}isStretchDone", true);
+                animator.SetTrigger($"{catId}ToIdle");
                 timeInState = 0f;
                 timeToStretch = 0f;
             }
         }
 
         // Reiniciar ciclo después de Stretching
-        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Cat1-Idle") && 
-            animator.GetBool("isStretchDone")) 
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName($"{catId}-Idle") &&
+            animator.GetBool($"{catId}isStretchDone"))
         {
-            ResetCycle(); // Reiniciar el ciclo de animaciones
+            ResetCycle();
         }
     }
 
     // Función para reiniciar el ciclo de animaciones
     private void ResetCycle()
     {
-        animator.SetBool("isLickingDone", false);
-        animator.SetBool("isMeowDone", false);
-        animator.SetBool("isLayingDone", false);
-        animator.SetBool("isStretchDone", false);
+        animator.SetBool($"{catId}isLickingDone", false);
+        animator.SetBool($"{catId}isMeowDone", false);
+        animator.SetBool($"{catId}isLayingDone", false);
+        animator.SetBool($"{catId}isStretchDone", false);
     }
 }
 
