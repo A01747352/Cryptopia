@@ -19,14 +19,25 @@
             </engine:VisualElement>
         </engine:VisualElement>
     </engine:VisualElement>
-    <engine:VisualElement name="VictoryScreen" class="victoryScreen" style="flex-grow: 1; display: none; background-color: rgba(104, 161, 105, 0.4); position: absolute;">
+    <engine:VisualElement name="VictoryScreen" class="victoryScreen" style="flex-grow: 1; background-color: rgba(104, 161, 105, 0.4); position: absolute; display: none;">
         <engine:VisualElement name="MainContainer" class="mainContainer" style="flex-grow: 0;">
             <engine:VisualElement name="TitleContainer" class="titleContainer" style="flex-grow: 0;">
                 <engine:Label text="Victory!" name="Title" class="title" style="color: rgb(255, 255, 255);" />
             </engine:VisualElement>
             <engine:VisualElement name="SummaryContainer" class="summaryContainer" style="flex-grow: 0; height: 714px;">
                 <engine:Label text="Summary" name="SummaryLabel" class="summaryText summaryLabel" />
-                <engine:Label text="Total Points:" name="TotalPointsLabel" class="totalPointsLabel" />
+                <engine:VisualElement name="TotalPointsContainer" class="summaryStatsContaiener" style="flex-grow: 0;">
+                    <engine:Label text="Total Points:" name="TotalPointsKey" class="totalPointsLabel summaryStats summaryStatsKeys" />
+                    <engine:Label text="Label" name="TotalPointsValue" class="summaryStatsValues" />
+                </engine:VisualElement>
+                <engine:VisualElement name="TKNsContainer" class="summaryStatsContaiener">
+                    <engine:Label text="TKN&apos;s:" name="TKNsKey" class="summaryStats summaryStatsKeys" style="width: 114px; margin-right: -3px;" />
+                    <engine:Label text="Label" name="TKNsValue" class="summaryStatsValues" />
+                </engine:VisualElement>
+                <engine:VisualElement name="FinalResultContainer" class="summaryStatsContaiener" style="flex-grow: 0;">
+                    <engine:Label text="Mistakes:" name="FinalResultKey" class="summaryStats summaryStatsKeys" style="width: 152px; margin-right: 13px;" />
+                    <engine:Label text="Label" name="FinalResultValue" class="summaryStatsValues" />
+                </engine:VisualElement>
                 <engine:VisualElement name="SummaryLowerContainer" class="summaryLowerContainer" style="flex-grow: 0;">
                     <engine:Button text="Button" name="BackToMainButton" class="summaryButton" style="background-image: url(&quot;project://database/Assets/Sprites%20UI.psd?fileID=-3248817540606541918&amp;guid=62e23b6e7c6ab3944a50a3fbe783e045&amp;type=3#Pause_Menu_Button_02&quot;);" />
                     <engine:VisualElement name="Character" class="character" style="flex-grow: 0; background-image: url(&quot;project://database/Assets/Characters/Idle.png?fileID=-2834552850196481573&amp;guid=a6d7d65e18178a24eac1b764c624c85d&amp;type=3#Idle_5&quot;);" />
@@ -42,10 +53,17 @@
             </engine:VisualElement>
             <engine:VisualElement name="SummaryContainer" class="summaryContainer" style="flex-grow: 0; height: 714px;">
                 <engine:Label text="Summary" name="SummaryLabel" class="summaryText summaryLabel" />
-                <engine:Label text="Total Points: &#10;" name="TotalPointsLabel" class="totalPointsLabel" />
+                <engine:VisualElement name="TotalPointsContainer" class="summaryStatsContaiener" style="flex-grow: 0;">
+                    <engine:Label text="Lost Points:" name="TotalPointsKey" class="totalPointsLabel summaryStats summaryStatsKeys" />
+                    <engine:Label text="Label" name="TotalPointsValue" class="summaryStatsValues" />
+                </engine:VisualElement>
+                <engine:VisualElement name="FinalResultContainer" class="summaryStatsContaiener" style="flex-grow: 0;">
+                    <engine:Label text="Result:" name="FinalResultKey" class="summaryStats summaryStatsKeys" style="width: 116px; margin-right: 13px;" />
+                    <engine:Label text="Label" name="FinalResultValue" class="summaryStatsValues" />
+                </engine:VisualElement>
                 <engine:VisualElement name="SummaryLowerContainer" class="summaryLowerContainer" style="flex-grow: 0;">
                     <engine:Button text="Button" name="BackToMainButton" class="summaryButton" style="background-image: url(&quot;project://database/Assets/Sprites%20UI.psd?fileID=-3248817540606541918&amp;guid=62e23b6e7c6ab3944a50a3fbe783e045&amp;type=3#Pause_Menu_Button_02&quot;);" />
-                    <engine:VisualElement name="Character" class="character" style="flex-grow: 0; background-image: url(&quot;project://database/Assets/Characters/Attack.png?fileID=-2238382357930459393&amp;guid=fd2e33d6d5c475b47958f36d44a920fd&amp;type=3#Attack_8&quot;);" />
+                    <engine:VisualElement name="Character" class="character" style="flex-grow: 0; background-image: url(&quot;project://database/Assets/Characters/Idle.png?fileID=-2834552850196481573&amp;guid=a6d7d65e18178a24eac1b764c624c85d&amp;type=3#Idle_5&quot;);" />
                     <engine:Button text="Button" name="RestartButton" class="summaryButton" style="background-image: url(&quot;project://database/Assets/Sprites%20UI.psd?fileID=3720184069377556504&amp;guid=62e23b6e7c6ab3944a50a3fbe783e045&amp;type=3#Pause_Menu_Button_01&quot;);" />
                 </engine:VisualElement>
             </engine:VisualElement>

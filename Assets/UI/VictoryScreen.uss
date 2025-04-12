@@ -40,18 +40,9 @@
     -unity-text-align: middle-center;
     margin-top: 30px;
     -unity-font-definition: url("project://database/Assets/Fonts/GrapeSoda.ttf?fileID=12800000&guid=588e280439f4369489b80237dabae9ff&type=3#GrapeSoda");
-    font-size: 50px;
+    font-size: 75px;
     color: rgb(255, 255, 255);
-}
-
-.totalPointsLabel {
-    -unity-font-definition: url("project://database/Assets/Fonts/GrapeSoda.ttf?fileID=12800000&guid=588e280439f4369489b80237dabae9ff&type=3#GrapeSoda");
     -unity-font-style: normal;
-    -unity-text-align: middle-left;
-    font-size: 30px;
-    width: 370px;
-    align-self: center;
-    color: rgb(255, 255, 255);
 }
 
 .summaryLowerContainer {
@@ -59,8 +50,9 @@
     height: 337px;
     width: 465px;
     align-self: center;
-    top: 140px;
+    top: 344px;
     justify-content: space-around;
+    position: absolute;
 }
 
 .summaryButton {
@@ -75,6 +67,31 @@
     border-bottom-color: rgba(0, 0, 0, 0);
     transition-timing-function: ease-out-sine;
     transition-duration: 0.3s;
+}
+
+.summaryStatsContaiener {
+    flex-direction: row;
+    width: 400px;
+    justify-content: flex-start;
+    align-self: center;
+    left: 39px;
+}
+
+.summaryStatsKeys {
+    -unity-font-definition: url("project://database/Assets/Fonts/GrapeSoda.ttf?fileID=12800000&guid=588e280439f4369489b80237dabae9ff&type=3#GrapeSoda");
+    -unity-font-style: normal;
+    font-size: 40px;
+    width: 184px;
+    align-self: center;
+    color: rgb(0, 0, 0);
+    margin-right: 28px;
+}
+
+.summaryStatsValues {
+    -unity-font-definition: url("project://database/Assets/Fonts/GrapeSoda.ttf?fileID=12800000&guid=588e280439f4369489b80237dabae9ff&type=3#GrapeSoda");
+    -unity-text-align: middle-left;
+    color: rgb(255, 255, 255);
+    font-size: 45px;
 }
 
 .summaryButton:hover {

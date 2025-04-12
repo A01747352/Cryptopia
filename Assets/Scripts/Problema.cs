@@ -12,14 +12,16 @@ namespace Cryptopia.Problema {
         public Problema(string Incognita, string[] Algoritmo, string Solucion, int Puntaje)
             => (incognita, algoritmo, solucion, puntaje) = (Incognita, Algoritmo, Solucion, Puntaje);*/
 
-    public string incognita;
-    public string[] algoritmo;
-    public string solucion;
-    public int puntaje;
+    public int idPalabra;
+    public string palabra;
+    public string encriptacion;
+    public string respuestaCorrecta;
+    public int puntos;
+    public int idMinijuego;
 
         public bool ValidarRespuesta (string respuesta)
         {
-            if (respuesta == solucion)
+            if (respuesta == respuestaCorrecta)
             {
                 return true;
             }
@@ -27,10 +29,6 @@ namespace Cryptopia.Problema {
         }
     }
 
-    public class ProblemaWrapper
-    {
-        public Problema[] bancoProblemas;
-    }
-
+   
    
 }
