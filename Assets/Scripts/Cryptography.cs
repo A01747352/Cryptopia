@@ -5,7 +5,9 @@ using Cryptopia.Problema;
 using System.Collections;
 using System.IO;
 
+
 using Newtonsoft.Json;
+using UnityEngine.Networking;
 
 
 
@@ -27,11 +29,14 @@ public class Cryptography : MonoBehaviour
     private Button restartVSButton;
     private Button backToMainVSButton;
     private Label totalScoreVSLabel;
+    private Label totalTknVSLabel;
+    private Label summaryVSResult;
 
     // Elementos de Defeat Screen
     private Button restartDSButton;
     private Button backToMainDSButton;
     private Label totalScoreDSLabel;
+    private Label summaryDSResult;
     private VisualElement victoryScreen;
     private VisualElement defeatScreen;
 
@@ -40,47 +45,47 @@ public class Cryptography : MonoBehaviour
 
 // Utility Variabels
     private int problemIndex;
-    private System.Random randomIndex = new System.Random();
+    
     
 // Variables for loading the problems
     private string jsonProblemas;
-    private static Problema[] bancoProblemas;
+    private int problemsCount;
     private Problema problema;
 
-// Variables to keep track of the game
-    private int score = 0;
+// Variables game variables
+    private static int score = 0;
     private int questionsNum = 1;
     private int mistakes = 0;
     private int totalQuestions = 5;
 
     
+    static string idGame;
     
+   string url = "http://localhost:8080";
     
     void OnEnable()
     {
         game = GetComponent<UIDocument>();
         var root = game.rootVisualElement;
 
-    // Initializing uxml variables
-
-        // Victory Screen UI Elements
+        // Initialize UI elements
         victoryScreen = root.Q<VisualElement>("VictoryScreen");
-        totalScoreVSLabel = root.Q<Label>("TotalPointsLabel");
+        totalScoreVSLabel = victoryScreen.Q<Label>("TotalPointsValue");
+        totalTknVSLabel = victoryScreen.Q<Label>("TKNsValue");
+        summaryVSResult = victoryScreen.Q<Label>("FinalResultValue");
         restartVSButton = victoryScreen.Q<Button>("RestartButton");
         restartVSButton.RegisterCallback<ClickEvent>(RestartGame);
         backToMainVSButton = victoryScreen.Q<Button>("BackToMainButton");
         backToMainVSButton.RegisterCallback<ClickEvent>(BackToMain);
 
-        // Defeat Screen UI Elements
         defeatScreen = root.Q<VisualElement>("DefeatScreen");
-        totalScoreDSLabel = defeatScreen.Q<Label>("TotalPointsLabel");
+        totalScoreDSLabel = defeatScreen.Q<Label>("TotalPointsValue");
+        summaryDSResult = defeatScreen.Q<Label>("FinalResultValue");
         restartDSButton = defeatScreen.Q<Button>("RestartButton");
         restartDSButton.RegisterCallback<ClickEvent>(RestartGame);
         backToMainDSButton = defeatScreen.Q<Button>("BackToMainButton");
         backToMainDSButton.RegisterCallback<ClickEvent>(BackToMain);
 
-
-        // Main Game UI Elements
         inputUsuario = root.Q<TextField>("InputUsuario");
         displayLabel = root.Q<Label>("Problem");
         scoreLabel = root.Q<Label>("Score");
@@ -89,46 +94,88 @@ public class Cryptography : MonoBehaviour
         live1 = root.Q<VisualElement>("Live1");
         live2 = root.Q<VisualElement>("Live2");
         live3 = root.Q<VisualElement>("Live3");
-        
-        
 
-        // Loading the Problem from JSON file
-        jsonProblemas = File.ReadAllText(Application.streamingAssetsPath + "/Cryptography.json");
-        bancoProblemas = JsonConvert.DeserializeObject<Problema[]>(jsonProblemas);
+        // Start the game by registering a new game in the database
+        StartCoroutine(RegisterNewGame());
 
-        NextQuestion();
-        scoreLabel.text = score.ToString() + "pts";
-        qCountLabel.text = questionsNum.ToString() + "/" + totalQuestions.ToString();
-        
-        inputUsuario.RegisterCallback<KeyUpEvent>(EnterText);
-        problemIndex = randomIndex.Next(0, bancoProblemas.Length);
-        problema = bancoProblemas[problemIndex];
-        displayLabel.text = problema.incognita;
-        
     }
 
-    private IEnumerator NextQuestion()
+private IEnumerator RegisterNewGame()
+{
+    UnityWebRequest webRequest = UnityWebRequest.Get($"{url}/cryptography/newGame");
+    yield return webRequest.SendWebRequest();
+
+    if (webRequest.result == UnityWebRequest.Result.Success)
+    {
+        idGame = webRequest.downloadHandler.text;
+        Debug.Log($"New game registered with ID: {idGame}");
+
+        // Load the first problem from the database
+        StartCoroutine(LoadProblem());
+    }
+    else
+    {
+        Debug.LogError($"Error registering new game: {webRequest.error}");
+    }
+}
+
+private IEnumerator LoadProblem()
+{
+    
+    UnityWebRequest webRequest = UnityWebRequest.Get($"{url}/cryptography/loadEncryption");
+    yield return webRequest.SendWebRequest();
+
+    if (webRequest.result == UnityWebRequest.Result.Success)
+    {
+        string response = webRequest.downloadHandler.text;
+        problema = JsonConvert.DeserializeObject<Problema>(response);
+
+        // Update the UI with the loaded problem
+        displayLabel.text = problema.palabra;
+        scoreLabel.text = score.ToString() + "pts";
+        qCountLabel.text = questionsNum.ToString() + "/" + totalQuestions.ToString();
+    }
+    else
+    {
+        Debug.LogError($"Error loading problem: {webRequest.error}");
+    }
+}
+
+    private IEnumerator NextQuestion(bool isCorrect)
     {
         yield return new WaitForSeconds(1f);
 
-        questionsNum += 1;
-        qCountLabel.text = questionsNum.ToString() + "/" + totalQuestions.ToString();
+        if (isCorrect)
+        {
+            questionsNum += 1;
+            
+            print(totalQuestions);
+        }
+        print(questionsNum);
         gainedPoints.style.display = DisplayStyle.None;
         if (mistakes == 3)
         {
-            totalScoreDSLabel.text = "Lost Score: -" + score.ToString() + "pts";
+            totalScoreDSLabel.text = score.ToString() + "pts";
+            summaryDSResult.text = questionsNum.ToString() + "/" + totalQuestions.ToString();
             defeatScreen.style.display = DisplayStyle.Flex;
         }
         else if (questionsNum == (totalQuestions + 1) && mistakes < 3) 
         {
-            totalScoreVSLabel.text = "Final Score: " + score.ToString() + "pts";
+            GameObject.Find("CryptographySoundTrack").GetComponent<AudioSource>().Stop();
+            totalScoreVSLabel.text = score.ToString() + "pts";
+            totalTknVSLabel.text = (score * 0.003f).ToString("F2");
+            summaryVSResult.text = mistakes.ToString();
             victoryScreen.style.display = DisplayStyle.Flex;
+            int previousScore = PlayerPrefs.GetInt("TotalScore", 0);
+            PlayerPrefs.SetInt("TotalScore", previousScore + score);
+            PlayerPrefs.SetFloat("TKNs", PlayerPrefs.GetFloat("TKNs", 0) + score * 0.003f);
+            PlayerPrefs.Save();
         }
         else
         {
-            problemIndex = randomIndex.Next(0, bancoProblemas.Length);
-            problema = bancoProblemas[problemIndex];
-            displayLabel.text = problema.incognita;
+            GameObject.Find("CryptographySoundTrack").GetComponent<AudioSource>().Stop();
+            qCountLabel.text = questionsNum.ToString() + "/" + totalQuestions.ToString();
+            StartCoroutine(LoadProblem());
         }
     }
     void EnterText(KeyUpEvent evt)
@@ -139,10 +186,11 @@ public class Cryptography : MonoBehaviour
             {
                 GameObject.Find("SoundCorrect").GetComponent<AudioSource>().Play();
                 displayLabel.text = "Correct!";
-                gainedPoints.text = "+" + problema.puntaje.ToString() + "pts";
+                gainedPoints.text = "+" + problema.puntos.ToString() + "pts";
                 gainedPoints.style.display = DisplayStyle.Flex;
-                score += problema.puntaje; 
+                score += problema.puntos; 
                 scoreLabel.text = score.ToString() + "pts";
+                StartCoroutine(NextQuestion(true));
             }
             else 
             {
@@ -161,9 +209,10 @@ public class Cryptography : MonoBehaviour
                 {
                     live3.style.visibility = Visibility.Hidden;
                 }
+                StartCoroutine(NextQuestion(false));
 
             }
-            StartCoroutine(NextQuestion());
+            
         }
     }
 
