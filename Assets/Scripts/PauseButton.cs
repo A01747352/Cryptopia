@@ -2,12 +2,13 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
+using UnityEngine.UI;
 
 public class PauseButton : MonoBehaviour
 {
     [SerializeField] private UIDocument gameUIDocument;     // Main in-game UI
     [SerializeField] private GameObject pauseUI;            // Pause menu UI (with buttons)
-    [SerializeField] private GameObject pauseCat;           // UI-based animated cat (Image under Canvas)
+    [SerializeField] private GameObject pauseCat;           // PauseCat canvas (con animaciones)
 
     private bool isPaused = false;
     private bool isMuted = false;
@@ -18,15 +19,19 @@ public class PauseButton : MonoBehaviour
 
         var root = gameUIDocument.rootVisualElement;
 
-        var pauseButton = root.Q<Button>("pauseButton");
+        var pauseButton = root.Q<UnityEngine.UIElements.Button>("pauseButton");
         if (pauseButton != null)
         {
             pauseButton.clicked += TogglePause;
         }
 
-        // Hide pause UI and cat on start
+        // Hide pause UI and PauseCat on start
         pauseUI.SetActive(false);
-        if (pauseCat != null) pauseCat.SetActive(false);
+        if (pauseCat != null)
+        {
+            pauseCat.SetActive(false);
+            DisablePauseCatClicks();
+        }
     }
 
     private bool ValidateReferences()
@@ -46,7 +51,13 @@ public class PauseButton : MonoBehaviour
             if (pauseCat != null)
             {
                 pauseCat.SetActive(true);
-                StartCoroutine(PlayCatAnimationDelayed());
+
+                // Forzar que los animators usen tiempo no escalado para que animaciones sigan
+                var animators = pauseCat.GetComponentsInChildren<Animator>(true);
+                foreach (var animator in animators)
+                {
+                    animator.updateMode = AnimatorUpdateMode.UnscaledTime;
+                }
             }
 
             StartCoroutine(SetupPauseMenuButtonsNextFrame());
@@ -56,21 +67,7 @@ public class PauseButton : MonoBehaviour
             ResumeGame();
         }
     }
-
-    private IEnumerator PlayCatAnimationDelayed()
-    {
-        yield return null; // Wait one frame so Animator reinitializes
-
-        var animator = pauseCat.GetComponent<Animator>();
-        if (animator != null)
-        {
-            animator.Rebind();             // Reset animator state
-            animator.Update(0f);           // Apply immediately
-            animator.Play("Cat", 0, 0f);   // Replace "Cat" if your state has a different name
-        }
-    }
-
-    private IEnumerator SetupPauseMenuButtonsNextFrame()
+        private IEnumerator SetupPauseMenuButtonsNextFrame()
     {
         yield return null;
         SetupPauseMenuButtons();
@@ -81,15 +78,15 @@ public class PauseButton : MonoBehaviour
         var pauseUIDocument = pauseUI.GetComponent<UIDocument>();
         var pauseRoot = pauseUIDocument.rootVisualElement;
 
-        var backButton = pauseRoot.Q<Button>("back");
+        var backButton = pauseRoot.Q<UnityEngine.UIElements.Button>("back");
         if (backButton != null)
             backButton.clicked += GoToMainMenu;
 
-        var playButton = pauseRoot.Q<Button>("play");
+        var playButton = pauseRoot.Q<UnityEngine.UIElements.Button>("play");
         if (playButton != null)
             playButton.clicked += ResumeGame;
 
-        var muteButton = pauseRoot.Q<Button>("mute");
+        var muteButton = pauseRoot.Q<UnityEngine.UIElements.Button>("mute");
         if (muteButton != null)
             muteButton.clicked += ToggleMute;
     }
@@ -100,14 +97,16 @@ public class PauseButton : MonoBehaviour
         Time.timeScale = 1f;
 
         pauseUI.SetActive(false);
-        if (pauseCat != null) pauseCat.SetActive(false);
+
+        if (pauseCat != null)
+        {
+            pauseCat.SetActive(false);
+        }
     }
 
     private void GoToMainMenu()
     {
         Time.timeScale = 1f;
-
-        if (pauseCat != null) pauseCat.SetActive(false);
         SceneManager.LoadScene("MainMenu");
     }
 
@@ -115,5 +114,14 @@ public class PauseButton : MonoBehaviour
     {
         isMuted = !isMuted;
         AudioListener.volume = isMuted ? 0f : 1f;
+    }
+
+    private void DisablePauseCatClicks()
+    {
+        var raycaster = pauseCat.GetComponent<GraphicRaycaster>();
+        if (raycaster != null)
+        {
+            raycaster.enabled = false;
+        }
     }
 }
