@@ -6,6 +6,7 @@ public class IdleAnimationCat : MonoBehaviour
     private Animator animator;
     private float timeInState = 0f;
     private float timeToStretch = 0f; // Para controlar el tiempo antes de hacer Stretch después de Laying
+    public bool isCycleComplete = false; // Flag que indica si el ciclo de Idle ha terminado
 
     private void Start()
     {
@@ -94,7 +95,8 @@ public class IdleAnimationCat : MonoBehaviour
         if (animator.GetCurrentAnimatorStateInfo(0).IsName($"{catId}-Idle") &&
             animator.GetBool($"{catId}isStretchDone"))
         {
-            ResetCycle();
+            ResetCycle();  // Reiniciar el ciclo de animaciones
+            isCycleComplete = true;  // Marcamos que el ciclo ha terminado
         }
     }
 
