@@ -895,95 +895,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e12a89b9f7bc3ef4689e56258093ed8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  questions:
-  - questionText: "\xBFQu\xE9 es una blockchain?"
-    answers:
-    - "Un lenguaje de programaci\xF3n"
-    - Un tipo de base de datos distribuida
-    - Un videojuego
-    - Una red social
-    feedbacks:
-    - "Blockchain no es un lenguaje de programaci\xF3n, aunque para su desarrollo
-      se pueden usar lenguajes como Solidity o Python."
-    - "Una blockchain es un tipo de base de datos que almacena informaci\xF3n de
-      manera descentralizada y segura, permitiendo la verificaci\xF3n de transacciones
-      sin necesidad de una autoridad central.  "
-    - "Aunque hay videojuegos que utilizan blockchain para activos digitales, la
-      blockchain en s\xED es una tecnolog\xEDa de almacenamiento y validaci\xF3n
-      de datos."
-    - "Aunque algunas plataformas sociales usan blockchain para descentralizar la
-      informaci\xF3n, blockchain en s\xED es una base de datos distribuida y segura.  "
-    correctAnswerIndex: 1
-    backgroundImage: {fileID: 3301111849194120939, guid: 6dd9e6b5f672e8148a8410fbae1c40b4, type: 3}
-    petImage: {fileID: 5379824893481949807, guid: 58146efca56a3d847bc18b26e6ec77e1, type: 3}
-  - questionText: "\xBFCu\xE1l es la primera criptomoneda basada en blockchain?"
-    answers:
-    - Ethereum
-    - Bitcoin
-    - Dogecoin
-    - Litecoin
-    feedbacks:
-    - "Ethereum es una criptomoneda importante que introdujo los contratos inteligentes,
-      pero fue lanzada en 2015, a\xF1os despu\xE9s de Bitcoin."
-    - "Bitcoin fue la primera criptomoneda basada en blockchain, creada en 2009 por
-      una persona o grupo bajo el seud\xF3nimo de Satoshi Nakamoto."
-    - "Dogecoin es una criptomoneda basada en Litecoin que naci\xF3 como un meme
-      en 2013, mucho despu\xE9s de Bitcoin."
-    - "Litecoin es una criptomoneda m\xE1s r\xE1pida que Bitcoin, pero fue lanzada
-      en 2011, despu\xE9s de la creaci\xF3n de Bitcoin."
-    correctAnswerIndex: 1
-    backgroundImage: {fileID: 3301111849194120939, guid: 6dd9e6b5f672e8148a8410fbae1c40b4, type: 3}
-    petImage: {fileID: 5379824893481949807, guid: 58146efca56a3d847bc18b26e6ec77e1, type: 3}
-  - questionText: "\xBFQu\xE9 es una clave privada en criptograf\xEDa?"
-    answers:
-    - "Una contrase\xF1a que desbloquea correos electr\xF3nicos"
-    - "Un identificador p\xFAblico en la blockchain"
-    - Una clave secreta utilizada para firmar transaccione
-    - "Un n\xFAmero aleatorio sin importancia"
-    feedbacks:
-    - La clave privada se usa para firmar y acceder a criptomonedas, no para correos.
-    - "La clave p\xFAblica es la que sirve como identificador, no la privada."
-    - La clave privada permite a un usuario firmar transacciones y acceder a sus
-      criptomonedas.
-    - "La clave privada es crucial para la seguridad de las criptomonedas y su p\xE9rdida
-      implica la p\xE9rdida de acceso a los fondos."
-    correctAnswerIndex: 2
-    backgroundImage: {fileID: 3301111849194120939, guid: 6dd9e6b5f672e8148a8410fbae1c40b4, type: 3}
-    petImage: {fileID: 5379824893481949807, guid: 58146efca56a3d847bc18b26e6ec77e1, type: 3}
-  - questionText: "\xBFQu\xE9 tecnolog\xEDa permite que las transacciones en blockchain
-      sean seguras?"
-    answers:
-    - Algoritmos de hash
-    - Servidores centralizados
-    - "C\xF3digos QR"
-    - Conexiones VPN
-    feedbacks:
-    - Los algoritmos de hash aseguran la integridad de los datos en la blockchain.
-    - Blockchain es descentralizada, no depende de servidores centralizados.
-    - "Aunque pueden usarse para facilitar pagos, los c\xF3digos QR no son la base
-      de seguridad de blockchain."
-    - Las VPN protegen la privacidad, pero no aseguran la blockchain.
-    correctAnswerIndex: 0
-    backgroundImage: {fileID: 3301111849194120939, guid: 6dd9e6b5f672e8148a8410fbae1c40b4, type: 3}
-    petImage: {fileID: 5379824893481949807, guid: 58146efca56a3d847bc18b26e6ec77e1, type: 3}
-  - questionText: "\xBFQu\xE9 funci\xF3n tiene la miner\xEDa en blockchain?"
-    answers:
-    - Validar y registrar transacciones
-    - Crear nuevas computadoras
-    - Almacenar criptomonedas en una billetera
-    - "Hacer m\xE1s r\xE1pido el internet"
-    feedbacks:
-    - "La miner\xEDa es el proceso mediante el cual se verifican transacciones y
-      se agregan nuevos bloques a la blockchain."
-    - "La miner\xEDa se basa en c\xE1lculos computacionales para asegurar la red,
-      no en fabricar hardware."
-    - "Las billeteras almacenan criptomonedas, pero la miner\xEDa se encarga de validar
-      transacciones."
-    - "La miner\xEDa no est\xE1 relacionada con la velocidad del internet, sino con
-      la seguridad de la blockchain."
-    correctAnswerIndex: 0
-    backgroundImage: {fileID: 3301111849194120939, guid: 6dd9e6b5f672e8148a8410fbae1c40b4, type: 3}
-    petImage: {fileID: 5379824893481949807, guid: 58146efca56a3d847bc18b26e6ec77e1, type: 3}
+  questions: []
   questionText: {fileID: 254010156}
   answerButtons:
   - {fileID: 875877476}
@@ -1793,6 +1705,217 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 510434283}
   m_CullTransparentMesh: 1
+--- !u!1001 &680733839
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 779761292803173066, guid: fc18d1535bb58c641b1069025b21cb53, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 779761292803173066, guid: fc18d1535bb58c641b1069025b21cb53, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 779761292803173066, guid: fc18d1535bb58c641b1069025b21cb53, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 779761292803173066, guid: fc18d1535bb58c641b1069025b21cb53, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 779761292803173066, guid: fc18d1535bb58c641b1069025b21cb53, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 779761292803173066, guid: fc18d1535bb58c641b1069025b21cb53, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 779761292803173066, guid: fc18d1535bb58c641b1069025b21cb53, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 779761292803173066, guid: fc18d1535bb58c641b1069025b21cb53, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 779761292803173066, guid: fc18d1535bb58c641b1069025b21cb53, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 779761292803173066, guid: fc18d1535bb58c641b1069025b21cb53, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4490023300335514256, guid: fc18d1535bb58c641b1069025b21cb53, type: 3}
+      propertyPath: m_Name
+      value: MainUI
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: fc18d1535bb58c641b1069025b21cb53, type: 3}
+--- !u!1001 &738006601
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 17525374135820132, guid: fbb0139ebbef6df4aa7bef518c9985f3, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 17525374135820132, guid: fbb0139ebbef6df4aa7bef518c9985f3, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 17525374135820132, guid: fbb0139ebbef6df4aa7bef518c9985f3, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 17525374135820132, guid: fbb0139ebbef6df4aa7bef518c9985f3, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 17525374135820132, guid: fbb0139ebbef6df4aa7bef518c9985f3, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 17525374135820132, guid: fbb0139ebbef6df4aa7bef518c9985f3, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 17525374135820132, guid: fbb0139ebbef6df4aa7bef518c9985f3, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 17525374135820132, guid: fbb0139ebbef6df4aa7bef518c9985f3, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 17525374135820132, guid: fbb0139ebbef6df4aa7bef518c9985f3, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 17525374135820132, guid: fbb0139ebbef6df4aa7bef518c9985f3, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 17525374135820132, guid: fbb0139ebbef6df4aa7bef518c9985f3, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 17525374135820132, guid: fbb0139ebbef6df4aa7bef518c9985f3, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 17525374135820132, guid: fbb0139ebbef6df4aa7bef518c9985f3, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 17525374135820132, guid: fbb0139ebbef6df4aa7bef518c9985f3, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 17525374135820132, guid: fbb0139ebbef6df4aa7bef518c9985f3, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 17525374135820132, guid: fbb0139ebbef6df4aa7bef518c9985f3, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 17525374135820132, guid: fbb0139ebbef6df4aa7bef518c9985f3, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 17525374135820132, guid: fbb0139ebbef6df4aa7bef518c9985f3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 17525374135820132, guid: fbb0139ebbef6df4aa7bef518c9985f3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 17525374135820132, guid: fbb0139ebbef6df4aa7bef518c9985f3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1506470097575741122, guid: fbb0139ebbef6df4aa7bef518c9985f3, type: 3}
+      propertyPath: m_Name
+      value: PauseCat
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: fbb0139ebbef6df4aa7bef518c9985f3, type: 3}
+--- !u!1001 &828794783
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 808309877815961280, guid: bfa3204edb400914687be4aee2055f23, type: 3}
+      propertyPath: m_Name
+      value: PauseUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 8562920467441460286, guid: bfa3204edb400914687be4aee2055f23, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8562920467441460286, guid: bfa3204edb400914687be4aee2055f23, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8562920467441460286, guid: bfa3204edb400914687be4aee2055f23, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8562920467441460286, guid: bfa3204edb400914687be4aee2055f23, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8562920467441460286, guid: bfa3204edb400914687be4aee2055f23, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8562920467441460286, guid: bfa3204edb400914687be4aee2055f23, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8562920467441460286, guid: bfa3204edb400914687be4aee2055f23, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8562920467441460286, guid: bfa3204edb400914687be4aee2055f23, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8562920467441460286, guid: bfa3204edb400914687be4aee2055f23, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8562920467441460286, guid: bfa3204edb400914687be4aee2055f23, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: bfa3204edb400914687be4aee2055f23, type: 3}
 --- !u!1 &851854927
 GameObject:
   m_ObjectHideFlags: 0
@@ -2075,6 +2198,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 878876134}
   m_CullTransparentMesh: 1
+--- !u!114 &1005212521 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8290401464885734902, guid: fc18d1535bb58c641b1069025b21cb53, type: 3}
+  m_PrefabInstance: {fileID: 680733839}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1013290274
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2132,6 +2266,16 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: af61164cdcd6c0b419db609b70a09f94, type: 3}
+--- !u!1 &1027959955 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 808309877815961280, guid: bfa3204edb400914687be4aee2055f23, type: 3}
+  m_PrefabInstance: {fileID: 828794783}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1058913851 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1506470097575741122, guid: fbb0139ebbef6df4aa7bef518c9985f3, type: 3}
+  m_PrefabInstance: {fileID: 738006601}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1097490809
 GameObject:
   m_ObjectHideFlags: 0
@@ -3044,6 +3188,75 @@ RectTransform:
   m_AnchoredPosition: {x: 1.5, y: 1.5}
   m_SizeDelta: {x: 1919.8, y: 1095}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1001 &1621683775
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 6921334117524067372, guid: 5abc73726c24be441a9e6425226f9dec, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6921334117524067372, guid: 5abc73726c24be441a9e6425226f9dec, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6921334117524067372, guid: 5abc73726c24be441a9e6425226f9dec, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6921334117524067372, guid: 5abc73726c24be441a9e6425226f9dec, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6921334117524067372, guid: 5abc73726c24be441a9e6425226f9dec, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6921334117524067372, guid: 5abc73726c24be441a9e6425226f9dec, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6921334117524067372, guid: 5abc73726c24be441a9e6425226f9dec, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6921334117524067372, guid: 5abc73726c24be441a9e6425226f9dec, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6921334117524067372, guid: 5abc73726c24be441a9e6425226f9dec, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6921334117524067372, guid: 5abc73726c24be441a9e6425226f9dec, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6927562760707381715, guid: 5abc73726c24be441a9e6425226f9dec, type: 3}
+      propertyPath: pauseUI
+      value: 
+      objectReference: {fileID: 1027959955}
+    - target: {fileID: 6927562760707381715, guid: 5abc73726c24be441a9e6425226f9dec, type: 3}
+      propertyPath: pauseCat
+      value: 
+      objectReference: {fileID: 1058913851}
+    - target: {fileID: 6927562760707381715, guid: 5abc73726c24be441a9e6425226f9dec, type: 3}
+      propertyPath: gameUIDocument
+      value: 
+      objectReference: {fileID: 1005212521}
+    - target: {fileID: 7003348806223125555, guid: 5abc73726c24be441a9e6425226f9dec, type: 3}
+      propertyPath: m_Name
+      value: UIController
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5abc73726c24be441a9e6425226f9dec, type: 3}
 --- !u!1 &1673167296
 GameObject:
   m_ObjectHideFlags: 0
@@ -3725,3 +3938,7 @@ SceneRoots:
   - {fileID: 153207747}
   - {fileID: 1097490811}
   - {fileID: 1013290274}
+  - {fileID: 680733839}
+  - {fileID: 738006601}
+  - {fileID: 828794783}
+  - {fileID: 1621683775}
