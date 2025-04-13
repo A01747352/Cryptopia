@@ -1,5 +1,5 @@
 using System.Collections;
-using NUnit.Framework.Interfaces;
+using System.Collections.Generic;
 using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -67,11 +67,18 @@ public class LoginUIHandler : MonoBehaviour
 
         if (webRequest.result == UnityWebRequest.Result.Success)
         {
-            Debug.Log("VAMO");
-        }
-        else
-        {
-            Debug.LogError($"CHUPAME LA VERGA: {webRequest.error}");
-        }
+            Dictionary<string, bool> response = JsonConvert.DeserializeObject<Dictionary<string, bool>>(webRequest.downloadHandler.text);
+            if (response["result"])
+            {
+                Debug.Log("VAMO");
+                SceneManager.LoadScene("MainMenu");
+            }
+            else
+            {
+                Debug.LogError("Login failed: Invalid credentials.");
+                Debug.LogError($"CHUPAME LA VERGA: {webRequest.error}");
+            }
+            
         }
     }
+}

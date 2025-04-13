@@ -43,14 +43,11 @@ async function loginVerification(user,password){
 
         if (rows.length > 0) {
             if (correctPassword === password) {
-                return {result: "Correct Login"}; 
+                return {result: True}; 
             } 
             else {
-                return {result: "Invalid Password"};
+                return {result: False};
             }
-        }
-        else {
-            return {result: "Invalid Credentials"}; 
         }
 
     } catch (err){
