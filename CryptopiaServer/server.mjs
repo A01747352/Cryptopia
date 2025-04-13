@@ -38,15 +38,15 @@ async function loginVerification(user,password){
             password: process.env.LOCALHOST_MYSQL_PASSWORD,
             database: 'Cryptopia',
         });
-        const [rows] = await connection.query('SELECT contrasena FROM Usuario WHERE id = ?;', [user]);
-        const correctPassword = rows[0][0].contrasena;
+        const [rows] = await connection.query('SELECT contrasena FROM Usuario WHERE username = ?;', [user]);
+        const correctPassword = rows[0].contrasena;
 
         if (rows.length > 0) {
             if (correctPassword === password) {
-                return {result: True}; 
+                return {result: "True"}; 
             } 
             else {
-                return {result: False};
+                return {result: "False"};
             }
         }
 

@@ -68,8 +68,8 @@ public class LoginUIHandler : MonoBehaviour
 
         if (webRequest.result == UnityWebRequest.Result.Success)
         {
-            Dictionary<string, bool> response = JsonConvert.DeserializeObject<Dictionary<string, bool>>(webRequest.downloadHandler.text);
-            if (response["result"])
+            Dictionary<string, string> response = JsonConvert.DeserializeObject<Dictionary<string, string>>(webRequest.downloadHandler.text);
+            if (response["result"] == "True")
             {
                 Debug.Log("VAMO");
                 SceneManager.LoadScene("MainMenu");
