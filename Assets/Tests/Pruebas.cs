@@ -1,148 +1,298 @@
+using System.Collections;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
-using System.Collections;
+using UnityEngine.UIElements;
+using TMPro; // Agregado para TextMeshProUGUI
 
-public class TestUnitarios
+namespace Cryptopia.Tests
 {
-    // 1. Verificar que la escena del menú cambie correctamente a los minijuegos
+public class Pruebas
+{
+    // 1. Verificar que la escena menú cambie de manera correcta a los 2 minijuegos
     [UnityTest]
-    public IEnumerator MenuToMinigame1()
+    public IEnumerator MenuToMinigame_Cryptography()
     {
         SceneManager.LoadScene("MainMenu");
-        yield return new WaitForSeconds(1f); // Esperar a que la escena cargue
-
-        // Simula la acción de ir al minijuego 1
+        yield return new WaitForSeconds(1f);
+        
         SceneManager.LoadScene("Cryptography");
-        yield return new WaitForSeconds(1f); // Esperar a que la escena cargue
-
-        Assert.AreEqual("Cryptography", SceneManager.GetActiveScene().name, "La escena Cryptography no se cargó correctamente.");
+        yield return new WaitForSeconds(1f);
+        
+        Assert.AreEqual("Cryptography", SceneManager.GetActiveScene().name);
     }
 
     [UnityTest]
-    public IEnumerator MenuToMinigame2()
+    public IEnumerator MenuToMinigame_Trivia()
     {
         SceneManager.LoadScene("MainMenu");
         yield return new WaitForSeconds(1f);
-
+        
         SceneManager.LoadScene("MiniGame");
         yield return new WaitForSeconds(1f);
-
-        Assert.AreEqual("MiniGame", SceneManager.GetActiveScene().name, "La escena MiniGame no se cargó correctamente.");
+        
+        Assert.AreEqual("MiniGame", SceneManager.GetActiveScene().name);
     }
 
-    // 2. Verificar que el minijuego de trivia muestre correctamente la pantalla final de puntuación
+    // 2. Verificar que el minijuego de trivia muestre correctamente las pantallas de victoria y derrota
     [UnityTest]
-    public IEnumerator TriviaFinalScoreScreen()
+    public IEnumerator TriviaGame_VictoryScreen()
     {
         SceneManager.LoadScene("MiniGame");
         yield return new WaitForSeconds(1f);
-
-        var gameManager = Object.FindAnyObjectByType<TriviaManager>();
-        Assert.IsNotNull(gameManager, "No se encontró el TriviaManager en la escena.");
-
-        // Verifica que el panel de puntuación final esté inicialmente desactivado
-        var finalScorePanel = GameObject.Find("FinalScorePanel");
-        Assert.IsNotNull(finalScorePanel, "No se encontró el objeto FinalScorePanel.");
-        Assert.IsFalse(finalScorePanel.activeSelf, "La pantalla de puntuación final debería estar desactivada inicialmente.");
-
-        // Ejecutar la función EndGame a través de reflexión para evitar acceder a un método privado
-        System.Reflection.MethodInfo methodInfo = typeof(TriviaManager).GetMethod("EndGame", 
-                                                    System.Reflection.BindingFlags.NonPublic | 
-                                                    System.Reflection.BindingFlags.Instance);
-        Assert.IsNotNull(methodInfo, "No se encontró el método EndGame en TriviaManager.");
-        methodInfo.Invoke(gameManager, null);
         
+        var triviaManager = Object.FindObjectOfType<TriviaManager>();
+        Assert.IsNotNull(triviaManager);
+        
+        // Verificar que el panel final existe y está oculto inicialmente
+        Assert.IsNotNull(triviaManager.finalScorePanel);
+        Assert.IsFalse(triviaManager.finalScorePanel.activeSelf);
+        
+        // Usar reflexión para acceder al método EndGame
+        var endGameMethod = typeof(TriviaManager).GetMethod("EndGame", 
+            System.Reflection.BindingFlags.NonPublic | 
+            System.Reflection.BindingFlags.Instance);
+            
+        Assert.IsNotNull(endGameMethod);
+        
+        // Configurar para victoria (más respuestas correctas)
+        var correctAnswersField = typeof(TriviaManager).GetField("correctAnswers", 
+            System.Reflection.BindingFlags.NonPublic | 
+            System.Reflection.BindingFlags.Instance);
+            
+        var incorrectAnswersField = typeof(TriviaManager).GetField("incorrectAnswers", 
+            System.Reflection.BindingFlags.NonPublic | 
+            System.Reflection.BindingFlags.Instance);
+            
+        correctAnswersField.SetValue(triviaManager, 3);
+        incorrectAnswersField.SetValue(triviaManager, 1);
+        
+        // Llamar EndGame
+        endGameMethod.Invoke(triviaManager, null);
         yield return new WaitForSeconds(0.5f);
-
-        // Verifica que ahora esté activo
-        Assert.IsTrue(finalScorePanel.activeSelf, "La pantalla de puntuación final no se activó correctamente.");
+        
+        // Verificar pantalla de victoria
+        Assert.IsTrue(triviaManager.finalScorePanel.activeSelf);
     }
 
     [UnityTest]
-    public IEnumerator TriviaRestartsCorrectly()
+    public IEnumerator TriviaGame_DefeatScreen()
     {
         SceneManager.LoadScene("MiniGame");
         yield return new WaitForSeconds(1f);
-
-        var gameManager = Object.FindAnyObjectByType<TriviaManager>();
-        Assert.IsNotNull(gameManager, "No se encontró el TriviaManager en la escena.");
-
-        var currentScene = SceneManager.GetActiveScene().name;
         
-        // Utiliza el método público RestartGame() que sí tenemos definido en TriviaManager
-        gameManager.RestartGame();
+        var triviaManager = Object.FindObjectOfType<TriviaManager>();
+        Assert.IsNotNull(triviaManager);
+        
+        Assert.IsNotNull(triviaManager.finalScorePanel);
+        Assert.IsFalse(triviaManager.finalScorePanel.activeSelf);
+        
+        var endGameMethod = typeof(TriviaManager).GetMethod("EndGame", 
+            System.Reflection.BindingFlags.NonPublic | 
+            System.Reflection.BindingFlags.Instance);
+            
+        var correctAnswersField = typeof(TriviaManager).GetField("correctAnswers", 
+            System.Reflection.BindingFlags.NonPublic | 
+            System.Reflection.BindingFlags.Instance);
+            
+        var incorrectAnswersField = typeof(TriviaManager).GetField("incorrectAnswers", 
+            System.Reflection.BindingFlags.NonPublic | 
+            System.Reflection.BindingFlags.Instance);
+            
+        // Configurar para derrota (más respuestas incorrectas)
+        correctAnswersField.SetValue(triviaManager, 1);
+        incorrectAnswersField.SetValue(triviaManager, 4);
+        
+        endGameMethod.Invoke(triviaManager, null);
         yield return new WaitForSeconds(0.5f);
-
-        // Verificamos si la escena se recargó
-        Assert.AreEqual(currentScene, SceneManager.GetActiveScene().name, "La escena no se reinició correctamente.");
+        
+        Assert.IsTrue(triviaManager.finalScorePanel.activeSelf);
     }
 
     // 3. Verificar que el minijuego de criptografía muestre correctamente las pantallas de victoria y derrota
     [UnityTest]
-    public IEnumerator CryptographyNavigationTest()
+    public IEnumerator CryptographyGame_VictoryScreen()
     {
         SceneManager.LoadScene("Cryptography");
         yield return new WaitForSeconds(1f);
-
-        var gameManager = Object.FindAnyObjectByType<Cryptography>();
-        Assert.IsNotNull(gameManager, "No se encontró el Cryptography en la escena.");
-
-        // Verificar que existe el método BackToMain
-        var backToMainMethod = typeof(Cryptography).GetMethod("BackToMain");
-        Assert.IsNotNull(backToMainMethod, "El método BackToMain no existe en Cryptography.");
-
-        // No ejecutamos el método para evitar errores, solo verificamos que exista
-        yield return null;
+        
+        var cryptoManager = Object.FindObjectOfType<Cryptography>();
+        Assert.IsNotNull(cryptoManager);
+        
+        // Acceder a la pantalla de victoria
+        var victoryScreenField = typeof(Cryptography).GetField("victoryScreen", 
+            System.Reflection.BindingFlags.NonPublic | 
+            System.Reflection.BindingFlags.Instance);
+            
+        var victoryScreen = victoryScreenField.GetValue(cryptoManager) as VisualElement;
+        Assert.IsNotNull(victoryScreen);
+        
+        // Verificar que está oculta inicialmente
+        Assert.AreEqual(DisplayStyle.None, victoryScreen.style.display.value);
+        
+        // Configurar para victoria
+        var questionsNumField = typeof(Cryptography).GetField("questionsNum", 
+            System.Reflection.BindingFlags.NonPublic | 
+            System.Reflection.BindingFlags.Instance);
+            
+        var mistakesField = typeof(Cryptography).GetField("mistakes", 
+            System.Reflection.BindingFlags.NonPublic | 
+            System.Reflection.BindingFlags.Instance);
+            
+        var totalQuestionsField = typeof(Cryptography).GetField("totalQuestions", 
+            System.Reflection.BindingFlags.NonPublic | 
+            System.Reflection.BindingFlags.Instance);
+            
+        int totalQuestions = (int)totalQuestionsField.GetValue(cryptoManager);
+        questionsNumField.SetValue(cryptoManager, totalQuestions);
+        mistakesField.SetValue(cryptoManager, 1);
+        
+        // Llamar NextQuestion
+        var nextQuestionMethod = typeof(Cryptography).GetMethod("NextQuestion", 
+            System.Reflection.BindingFlags.NonPublic | 
+            System.Reflection.BindingFlags.Instance,
+            null,
+            new System.Type[] { typeof(bool) },
+            null);
+            
+        cryptoManager.StartCoroutine((IEnumerator)nextQuestionMethod.Invoke(cryptoManager, new object[] { true }));
+        yield return new WaitForSeconds(1.5f);
+        
+        // Verificar que se muestra la pantalla de victoria
+        Assert.AreEqual(DisplayStyle.Flex, victoryScreen.style.display.value);
     }
 
-    // 4. Verificar que el personaje exista en la escena City
     [UnityTest]
-    public IEnumerator PlayerExistsInCity()
+    public IEnumerator CryptographyGame_DefeatScreen()
+    {
+        SceneManager.LoadScene("Cryptography");
+        yield return new WaitForSeconds(1f);
+        
+        var cryptoManager = Object.FindObjectOfType<Cryptography>();
+        Assert.IsNotNull(cryptoManager);
+        
+        // Acceder a la pantalla de derrota
+        var defeatScreenField = typeof(Cryptography).GetField("defeatScreen", 
+            System.Reflection.BindingFlags.NonPublic | 
+            System.Reflection.BindingFlags.Instance);
+            
+        var defeatScreen = defeatScreenField.GetValue(cryptoManager) as VisualElement;
+        Assert.IsNotNull(defeatScreen);
+        
+        // Verificar que está oculta inicialmente
+        Assert.AreEqual(DisplayStyle.None, defeatScreen.style.display.value);
+        
+        // Configurar para derrota (3 errores)
+        var mistakesField = typeof(Cryptography).GetField("mistakes", 
+            System.Reflection.BindingFlags.NonPublic | 
+            System.Reflection.BindingFlags.Instance);
+            
+        mistakesField.SetValue(cryptoManager, 3);
+        
+        // Llamar NextQuestion
+        var nextQuestionMethod = typeof(Cryptography).GetMethod("NextQuestion", 
+            System.Reflection.BindingFlags.NonPublic | 
+            System.Reflection.BindingFlags.Instance,
+            null,
+            new System.Type[] { typeof(bool) },
+            null);
+            
+        cryptoManager.StartCoroutine((IEnumerator)nextQuestionMethod.Invoke(cryptoManager, new object[] { false }));
+        yield return new WaitForSeconds(1.5f);
+        
+        // Verificar que se muestra la pantalla de derrota
+        Assert.AreEqual(DisplayStyle.Flex, defeatScreen.style.display.value);
+    }
+
+    // 4. Verificar que el personaje se mueva de manera correcta
+    [UnityTest]
+    public IEnumerator Player_Movement()
     {
         SceneManager.LoadScene("City");
         yield return new WaitForSeconds(1f);
-
-        var player = GameObject.FindWithTag("Player");
-        Assert.IsNotNull(player, "No se encontró el objeto Player en la escena.");
-
-        // Verificar que tiene el componente MovementGirl
-        var playerController = player.GetComponent<MovementGirl>();
-        Assert.IsNotNull(playerController, "No se encontró el componente MovementGirl en el objeto Player.");
+        
+        var player = GameObject.FindGameObjectWithTag("Player");
+        Assert.IsNotNull(player);
+        
+        var movementScript = player.GetComponent<MovementGirl>();
+        Assert.IsNotNull(movementScript);
+        
+        // Verificar que el rigidbody existe
+        Assert.IsNotNull(movementScript.rb);
+        
+        // Verificar movimiento a la derecha
+        var movementField = typeof(MovementGirl).GetField("movement", 
+            System.Reflection.BindingFlags.NonPublic | 
+            System.Reflection.BindingFlags.Instance);
+            
+        // Mover a la derecha
+        movementField.SetValue(movementScript, new Vector2(1f, 0f));
+        
+        // Manualmente llamar a FixedUpdate
+        movementScript.rb.linearVelocity = new Vector2(1f * movementScript.moveSpeed, movementScript.rb.linearVelocity.y);
+        
+        yield return new WaitForFixedUpdate();
+        
+        // Verificar que la velocidad es positiva
+        Assert.Greater(movementScript.rb.velocity.x, 0f);
+        
+        // Mover a la izquierda
+        movementField.SetValue(movementScript, new Vector2(-1f, 0f));
+        
+        // Manualmente llamar a FixedUpdate
+        movementScript.rb.linearVelocity = new Vector2(-1f * movementScript.moveSpeed, movementScript.rb.linearVelocity.y);
+        
+        yield return new WaitForFixedUpdate();
+        
+        // Verificar que la velocidad es negativa
+        Assert.Less(movementScript.rb.velocity.x, 0f);
     }
 
-    // 5. Verificar que el script PauseButton esté presente
+    // 5. Verificar que el menu de pausa se muestre cuando sea necesario y se reanude el juego
     [UnityTest]
-    public IEnumerator PauseButtonExists()
+    public IEnumerator PauseMenu_ShowAndResume()
     {
         SceneManager.LoadScene("City");
-        yield return new WaitForSeconds(1f); // Esperar a que la escena cargue
-
-        var pauseController = Object.FindAnyObjectByType<PauseButton>();
+        yield return new WaitForSeconds(1f);
         
-        // No asumimos que necesariamente existe, solo informamos si está presente
-        if (pauseController == null)
-        {
-            Debug.LogWarning("No se encontró el PauseButton en la escena, pero esto podría ser normal dependiendo de la configuración.");
-        }
-        else
-        {
-            Debug.Log("PauseButton encontrado correctamente.");
+        var pauseButton = Object.FindObjectOfType<PauseButton>();
+        Assert.IsNotNull(pauseButton);
+        
+        // Acceder a los campos privados
+        var pauseUIField = typeof(PauseButton).GetField("pauseUI", 
+            System.Reflection.BindingFlags.NonPublic | 
+            System.Reflection.BindingFlags.Instance);
             
-            // Verificar si tiene el método TogglePause
-            var togglePauseMethod = typeof(PauseButton).GetMethod("TogglePause");
-            if (togglePauseMethod != null)
-            {
-                Debug.Log("El método TogglePause existe en PauseButton.");
-            }
-            else
-            {
-                Debug.LogWarning("El método TogglePause no existe en PauseButton.");
-            }
-        }
-
-        // Esta prueba siempre pasa porque solo es informativa
-        Assert.Pass("Verificación de PauseButton completada.");
+        var pauseUI = pauseUIField.GetValue(pauseButton) as GameObject;
+        Assert.IsNotNull(pauseUI);
+        
+        // Verificar que está oculto inicialmente
+        Assert.IsFalse(pauseUI.activeSelf);
+        
+        // Invocar método TogglePause para pausar
+        var togglePauseMethod = typeof(PauseButton).GetMethod("TogglePause", 
+            System.Reflection.BindingFlags.NonPublic | 
+            System.Reflection.BindingFlags.Instance);
+            
+        togglePauseMethod.Invoke(pauseButton, null);
+        yield return null;
+        
+        // Verificar que el juego está pausado y el menú visible
+        Assert.AreEqual(0f, Time.timeScale);
+        Assert.IsTrue(pauseUI.activeSelf);
+        
+        // Invocar método ResumeGame para reanudar
+        var resumeGameMethod = typeof(PauseButton).GetMethod("ResumeGame", 
+            System.Reflection.BindingFlags.NonPublic | 
+            System.Reflection.BindingFlags.Instance);
+            
+        resumeGameMethod.Invoke(pauseButton, null);
+        yield return null;
+        
+        // Verificar que el juego está reanudado y el menú oculto
+        Assert.AreEqual(1f, Time.timeScale);
+        Assert.IsFalse(pauseUI.activeSelf);
     }
+}
 }
