@@ -33,13 +33,13 @@
     -unity-text-align: middle-left;
     bottom: 15px;
     font-size: 120px;
-    -unity-font-definition: url("project://database/Assets/Fonts/GrapeSoda.ttf?fileID=12800000&guid=588e280439f4369489b80237dabae9ff&type=3#GrapeSoda");
+    -unity-font-definition: url("project://database/Assets/Fonts/GrapeSoda%20SDF.asset?fileID=11400000&guid=d51c98973ae254cea92209cda6e50712&type=2#GrapeSoda SDF");
 }
 
 .summaryLabel {
     -unity-text-align: middle-center;
     margin-top: 30px;
-    -unity-font-definition: url("project://database/Assets/Fonts/GrapeSoda.ttf?fileID=12800000&guid=588e280439f4369489b80237dabae9ff&type=3#GrapeSoda");
+    -unity-font-definition: url("project://database/Assets/Fonts/GrapeSoda%20SDF.asset?fileID=11400000&guid=d51c98973ae254cea92209cda6e50712&type=2#GrapeSoda SDF");
     font-size: 75px;
     color: rgb(255, 255, 255);
     -unity-font-style: normal;
@@ -78,7 +78,7 @@
 }
 
 .summaryStatsKeys {
-    -unity-font-definition: url("project://database/Assets/Fonts/GrapeSoda.ttf?fileID=12800000&guid=588e280439f4369489b80237dabae9ff&type=3#GrapeSoda");
+    -unity-font-definition: url("project://database/Assets/Fonts/GrapeSoda%20SDF.asset?fileID=11400000&guid=d51c98973ae254cea92209cda6e50712&type=2#GrapeSoda SDF");
     -unity-font-style: normal;
     font-size: 40px;
     width: 184px;
@@ -88,7 +88,7 @@
 }
 
 .summaryStatsValues {
-    -unity-font-definition: url("project://database/Assets/Fonts/GrapeSoda.ttf?fileID=12800000&guid=588e280439f4369489b80237dabae9ff&type=3#GrapeSoda");
+    -unity-font-definition: url("project://database/Assets/Fonts/GrapeSoda%20SDF.asset?fileID=11400000&guid=d51c98973ae254cea92209cda6e50712&type=2#GrapeSoda SDF");
     -unity-text-align: middle-left;
     color: rgb(255, 255, 255);
     font-size: 45px;
