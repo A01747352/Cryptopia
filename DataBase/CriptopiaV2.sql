@@ -181,7 +181,6 @@ FOREIGN KEY (cryptoRecibido) REFERENCES Criptomoneda(idCriptomoneda)
 );
 
 -- S) Wallet
-DROP TABLE Wallet;
 CREATE TABLE Wallet (
 idUsuario INT NOT NULL,
 idCriptomoneda INT NOT NULL,
@@ -240,7 +239,8 @@ SELECT
 FROM Usuario u
 JOIN PartidaCriptografia pc ON pc.idUsuario = u.Id
 GROUP BY u.Id;
-DROP VIEW userprogress;
+
+
 CREATE VIEW UserProgress AS
 SELECT 
   u.Id,
