@@ -29,11 +29,8 @@ async function dbConnect()
     });
 }
 
-async function loginVerification(credentials) {
-    let user = credentials.user;
-    let password = credentials.password;
+async function loginVerification(user,password){
     let connection;
-
     try {
         connection = await mysql.createConnection({
             host: 'localhost',
@@ -42,25 +39,25 @@ async function loginVerification(credentials) {
             database: 'Cryptopia',
         });
         const [rows] = await connection.query('SELECT contrasena FROM Usuario WHERE id = ?;', [user]);
-        const correctPassword = rows.length > 0 ? rows[0].contrasena : null;
+        const correctPassword = rows[0][0].contrasena;
 
-        if (correctPassword === password) {
-            logInTimestamp = new Date();
-            return { result: "Correct Login" };
-        }
-
-        else if (contrasenaValida !== null) {
-            return { result: "Invalid Password" };
+        if (rows.length > 0) {
+            if (correctPassword === password) {
+                return {result: "Correct Login"}; 
+            } 
+            else {
+                return {result: "Invalid Password"};
+            }
         }
         else {
-            return { result: "Invalid Credentials" };
+            return {result: "Invalid Credentials"}; 
         }
 
-    } catch (err) {
+    } catch (err){
         console.error("Error al acceder a la base datos:", err);
         return { result: "errorServidor" };
     } finally {
-        if (connection) {
+        if (connection){
             await connection.end();
         }
     }
@@ -175,6 +172,23 @@ app.post('/cryptography/saveGame', async (req, res) =>
             }
         }
 });
+
+
+  // Login and Register Requests
+app.post("/login", async (req, res) => 
+{
+    let {user, password} = req.body;
+    try {
+        const result = await loginVerification(user, password);
+        res.status(200).json(result);
+
+    } catch (error) {
+        console.error("Error en el endpoint de autenticación:", error);
+        res.status(500).json({ result: "errorServidor" });
+    }
+});
+
+
 app.use((req, res) => {
     const url = req.originalUrl;
     res.status(404).render('not_found', { url });
@@ -183,45 +197,3 @@ app.use((req, res) => {
   app.listen(port, () => {
     console.log(`Servidor esperando en: http://${ ipAddress }:${ port }`);
   });
-
-  // Login and Register Requests
-app.post("/login", async (req, res) => {
-    try {
-        console.log("req.body:", req.body);
-        const credentials = req.body;
-        let resultAutentication = await loginVerification(credentials);
-
-        res.setHeader("Content-Type", "application/json");
-        res.json(resultAutentication);
-    } catch (error) {
-        console.error("Error en el endpoint de autenticación:", error);
-        res.status(500).json({ result: "errorServidor" });
-    }
-});
-
-
-
-app.post('/register', async (req, res) =>
-{
-    let {user, password} = req.body;
-    let connection;
-    try
-    {
-        connection = await dbConnect();
-        const [rows] = await connection.query('CALL Register(?, ?);', [user, password]);
-        const response = rows[0][0];
-        res.send(response);
-    }
-    catch (err)
-    {
-        const {name, message} = err;
-        res.status(500).send({error: name, message});
-    }
-    finally 
-    {
-        if (connection)
-        {
-            connection.end();
-        }
-    }
-});
