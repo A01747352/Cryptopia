@@ -49,3 +49,27 @@
     background-image: url("project://database/Assets/Sprites%20UI.psd?fileID=1322269772748154755&guid=62e23b6e7c6ab3944a50a3fbe783e045&type=3#Button_01");
     margin-top: 20px;
 }
+
+.dropdown {
+    background-color: rgb(255, 255, 255);
+    -unity-font-definition: url("project://database/Assets/Fonts/GrapeSoda.ttf?fileID=12800000&guid=588e280439f4369489b80237dabae9ff&type=3#GrapeSoda");
+    margin-bottom: 20px;
+}
+
+.backButton {
+    background-image: url("project://database/Assets/Sprites%20UI.psd?fileID=3323203286905999864&guid=62e23b6e7c6ab3944a50a3fbe783e045&type=3#Return_Button_01");
+    -unity-background-scale-mode: scale-to-fit;
+    width: 100px;
+    height: 51px;
+    background-color: rgba(0, 0, 0, 0);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+}
+
+.backButton:hover {
+    transition-timing-function: ease-out-bounce;
+    transition-duration: 0.2s;
+    scale: 1.1 1.1;
+}
