@@ -21,13 +21,13 @@
     </engine:VisualElement>
     <engine:VisualElement name="MainContainer" class="mainContainer" style="flex-grow: 1;">
         <engine:VisualElement name="PowerUpWindow" class="powerUpWindow" style="flex-grow: 0;">
-            <engine:VisualElement name="PowerUp1" class="powerUp" style="flex-grow: 0;" />
-            <engine:VisualElement name="PowerUp2" class="powerUp" style="flex-grow: 0;" />
-            <engine:VisualElement name="PowerUp3" class="powerUp" style="flex-grow: 0;" />
+            <engine:VisualElement name="PowerUp1" class="powerUp" style="flex-grow: 0; background-image: url(&quot;project://database/Assets/MuchoPixels/City_Street_Tileset_Pack/Art/Textures/Buildings/mp_cs_buildings.png?fileID=-702670410060219057&amp;guid=99a0526665290c14ab8e007005c34f1e&amp;type=3#mp_cs_buildings_181&quot;);" />
+            <engine:VisualElement name="PowerUp2" class="powerUp" style="flex-grow: 0; background-image: url(&quot;project://database/Assets/MuchoPixels/City_Street_Tileset_Pack/Art/Textures/Buildings/mp_cs_buildings.png?fileID=-702670410060219057&amp;guid=99a0526665290c14ab8e007005c34f1e&amp;type=3#mp_cs_buildings_181&quot;);" />
+            <engine:VisualElement name="PowerUp3" class="powerUp" style="flex-grow: 0; background-image: url(&quot;project://database/Assets/MuchoPixels/City_Street_Tileset_Pack/Art/Textures/Buildings/mp_cs_buildings.png?fileID=-702670410060219057&amp;guid=99a0526665290c14ab8e007005c34f1e&amp;type=3#mp_cs_buildings_181&quot;);" />
         </engine:VisualElement>
         <engine:VisualElement name="DrillContainer" class="drillContainer" style="flex-grow: 0;">
             <engine:Label text="Label" name="HashLabel" class="hashLabel" />
-            <engine:Button text="Button" name="MineButton" class="mineButton" />
+            <engine:Button text="Button" name="MineButton" class="mineButton" style="background-image: url(&quot;project://database/Assets/MuchoPixels/City_Street_Tileset_Pack/Art/Textures/Doors&amp;Windows/mp_cs_doors_windows.png?fileID=2678718475434535260&amp;guid=0e3c6f5bdb832144d843ce0bf0ba12ef&amp;type=3#mp_cs_doors_windows_261&quot;);" />
         </engine:VisualElement>
     </engine:VisualElement>
 </engine:UXML>
