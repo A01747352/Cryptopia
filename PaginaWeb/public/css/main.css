@@ -1,0 +1,298 @@
+/* Estilos principales para el Dashboard Educativo */
+
+/* Estilos generales */
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 
+      'Open Sans', 'Helvetica Neue', sans-serif;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  /* Scrollbar personalizada */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: rgba(31, 41, 55, 0.8);
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: rgba(79, 70, 229, 0.6);
+    border-radius: 3px;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(99, 102, 241, 0.8);
+  }
+  
+  /* Transiciones y animaciones */
+  .fadeIn {
+    animation: fadeIn 0.5s ease-in-out;
+  }
+  
+  .scaleIn {
+    animation: scaleIn 0.3s ease-in-out;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes scaleIn {
+    from {
+      transform: scale(0.95);
+      opacity: 0;
+    }
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+  
+  /* Efectos de hover y focus */
+  .hover-lift {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .hover-lift:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Estilos para tarjetas */
+  .card {
+    backdrop-filter: blur(12px);
+    transition: all 0.3s ease;
+  }
+  
+  .card:hover {
+    box-shadow: 0 0 20px rgba(99, 102, 241, 0.15);
+    border-color: rgba(129, 140, 248, 0.5);
+  }
+  
+  /* Fondos con degradados */
+  .bg-gradient-indigo {
+    background: linear-gradient(45deg, rgba(79, 70, 229, 0.8) 0%, rgba(99, 102, 241, 0.8) 100%);
+  }
+  
+  .bg-gradient-purple {
+    background: linear-gradient(45deg, rgba(124, 58, 237, 0.8) 0%, rgba(139, 92, 246, 0.8) 100%);
+  }
+  
+  .bg-gradient-blue {
+    background: linear-gradient(45deg, rgba(37, 99, 235, 0.8) 0%, rgba(59, 130, 246, 0.8) 100%);
+  }
+  
+  .bg-gradient-green {
+    background: linear-gradient(45deg, rgba(5, 150, 105, 0.8) 0%, rgba(16, 185, 129, 0.8) 100%);
+  }
+  
+  /* Efectos de luz y sombra */
+  .glow-indigo {
+    box-shadow: 0 0 15px rgba(99, 102, 241, 0.5);
+  }
+  
+  .glow-purple {
+    box-shadow: 0 0 15px rgba(139, 92, 246, 0.5);
+  }
+  
+  .glow-blue {
+    box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+  }
+  
+  .glow-green {
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.5);
+  }
+  
+  /* Bordes animados para elementos destacados */
+  .animated-border {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .animated-border::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, rgba(99, 102, 241, 1) 0%, rgba(139, 92, 246, 1) 100%);
+    transition: width 0.3s ease;
+  }
+  
+  .animated-border:hover::after {
+    width: 100%;
+  }
+  
+  /* Iconos y badges */
+  .icon-badge {
+    position: relative;
+  }
+  
+  .icon-badge::after {
+    content: attr(data-count);
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: rgba(239, 68, 68, 1);
+    color: white;
+    font-size: 10px;
+    font-weight: bold;
+    min-width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    padding: 0 4px;
+  }
+  
+  /* Elementos interactivos */
+  .interactive-element {
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .interactive-element:hover {
+    transform: scale(1.05);
+  }
+  
+  .interactive-element:active {
+    transform: scale(0.98);
+  }
+  
+  /* Tooltips */
+  .tooltip {
+    position: relative;
+  }
+  
+  .tooltip .tooltip-text {
+    visibility: hidden;
+    width: 120px;
+    background-color: rgba(17, 24, 39, 0.9);
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    font-size: 12px;
+  }
+  
+  .tooltip .tooltip-text::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: rgba(17, 24, 39, 0.9) transparent transparent transparent;
+  }
+  
+  .tooltip:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+  }
+  
+  /* Estilos específicos para gráficos */
+  .chart-container {
+    position: relative;
+  }
+  
+  .chart-legend {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  
+  .legend-item {
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+    color: rgba(156, 163, 175, 1);
+  }
+  
+  .legend-color {
+    width: 12px;
+    height: 12px;
+    border-radius: 3px;
+    margin-right: 5px;
+  }
+  
+  /* Estilos para modo claro/oscuro */
+  @media (prefers-color-scheme: dark) {
+    .chart-tooltip {
+      background-color: rgba(17, 24, 39, 0.9) !important;
+      border-color: rgba(75, 85, 99, 0.5) !important;
+      color: rgba(243, 244, 246, 1) !important;
+    }
+  }
+  
+  /* Mejoras para accesibilidad */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+  
+  /* Soporte para pantallas más pequeñas */
+  @media (max-width: 768px) {
+    .mobile-scroll {
+      overflow-x: auto;
+    }
+    
+    .mobile-full {
+      width: 100%;
+    }
+  }
+  
+  /* Estilos para el mapa */
+  .country-marker {
+    position: absolute;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 0.3s ease;
+  }
+  
+  .country-marker:hover {
+    z-index: 10;
+    transform: translate(-50%, -50%) scale(1.3);
+  }
+  
+  .pulse {
+    position: absolute;
+    border-radius: 50%;
+    transform: scale(0);
+    animation: pulse 2s infinite;
+  }
+  
+  @keyframes pulse {
+    0% {
+      transform: scale(0);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(1.5);
+      opacity: 0;
+    }
+  }
