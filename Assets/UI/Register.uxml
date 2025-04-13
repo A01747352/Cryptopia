@@ -1,0 +1,18 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/Register.uss?fileID=7433441132597879392&amp;guid=a21fcda099d4cef48bac4eac7be9503a&amp;type=3#Register" />
+    <engine:VisualElement name="screen" style="flex-grow: 1; background-color: rgb(16, 19, 64); align-items: center;">
+        <engine:VisualElement name="container2" class="container2" style="flex-grow: 0;">
+            <engine:VisualElement name="logo" class="logo" style="flex-grow: 1;" />
+        </engine:VisualElement>
+        <engine:VisualElement name="container" class="container" style="flex-grow: 1;">
+            <engine:TextField label="User" placeholder-text="In-game / Login " name="user" hide-placeholder-on-focus="true" class="textfield" />
+            <engine:TextField label="Password" name="password" hide-placeholder-on-focus="true" password="true" class="textfield" />
+            <engine:TextField label="Age" name="age" hide-placeholder-on-focus="true" password="true" class="textfield" />
+            <engine:DropdownField label="Gender" name="gender" class="dropdown" style="-unity-text-align: middle-center; font-size: 25px;" />
+            <engine:DropdownField label="Country" name="country" class="dropdown" style="-unity-text-align: middle-center; font-size: 25px;" />
+            <engine:DropdownField label="Occupation" name="occupation" class="dropdown" style="-unity-text-align: middle-center; font-size: 25px;" />
+            <engine:Button text="REGISTER" name="registerButton" class="button" style="background-color: rgba(255, 255, 255, 0);" />
+            <engine:Button text="&#10;" name="backButton" class="backButton" />
+        </engine:VisualElement>
+    </engine:VisualElement>
+</engine:UXML>
