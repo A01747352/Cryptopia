@@ -26,7 +26,7 @@
     background-image: url("project://database/Assets/Cryptography/IMG_0760.PNG?fileID=-6808759690348669619&guid=89c95d40a6cae46209b05cc1383da245&type=3#IMG_0760_2");
     font-size: 35px;
     color: rgb(0, 0, 0);
-    -unity-font-definition: url("project://database/Assets/Fonts/GrapeSoda.ttf?fileID=12800000&guid=588e280439f4369489b80237dabae9ff&type=3#GrapeSoda");
+    -unity-font-definition: url("project://database/Assets/Fonts/GrapeSoda%20SDF.asset?fileID=11400000&guid=d51c98973ae254cea92209cda6e50712&type=2#GrapeSoda SDF");
     -unity-text-align: upper-center;
     -unity-background-image-tint-color: rgb(173, 183, 174);
     background-color: rgba(226, 22, 22, 0);
@@ -56,7 +56,7 @@
     width: 306px;
     margin-top: 14px;
     margin-left: 25px;
-    -unity-font-definition: url("project://database/Assets/Fonts/GrapeSoda.ttf?fileID=12800000&guid=588e280439f4369489b80237dabae9ff&type=3#GrapeSoda");
+    -unity-font-definition: url("project://database/Assets/Fonts/GrapeSoda%20SDF.asset?fileID=11400000&guid=d51c98973ae254cea92209cda6e50712&type=2#GrapeSoda SDF");
     font-size: 70px;
     color: rgb(17, 243, 50);
     height: 111px;
@@ -85,14 +85,14 @@
     width: 200px;
     height: 40px;
     -unity-text-align: middle-center;
-    -unity-font-definition: url("project://database/Assets/Fonts/GrapeSoda.ttf?fileID=12800000&guid=588e280439f4369489b80237dabae9ff&type=3#GrapeSoda");
+    -unity-font-definition: url("project://database/Assets/Fonts/GrapeSoda%20SDF.asset?fileID=11400000&guid=d51c98973ae254cea92209cda6e50712&type=2#GrapeSoda SDF");
     font-size: 60px;
     color: rgb(2, 241, 21);
 }
 
 .problemText {
     font-size: 120px;
-    -unity-font-definition: url("project://database/Assets/Fonts/GrapeSoda.ttf?fileID=12800000&guid=588e280439f4369489b80237dabae9ff&type=3#GrapeSoda");
+    -unity-font-definition: url("project://database/Assets/Fonts/GrapeSoda%20SDF.asset?fileID=11400000&guid=d51c98973ae254cea92209cda6e50712&type=2#GrapeSoda SDF");
     color: rgb(2, 241, 21);
     -unity-text-align: upper-center;
 }

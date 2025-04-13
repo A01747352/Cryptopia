@@ -1,0 +1,16 @@
+{
+    "name": "learning-game-dashboard",
+    "version": "1.0.0",
+    "description": "Dashboard para analíticas de videojuego educativo",
+    "main": "app.mjs",
+    "scripts": {
+      "start": "node app.mjs",
+      "dev": "nodemon app.mjs"
+    },
+    "dependencies": {
+      "express": "^4.21.2",
+      "mysql2": "^3.14.0",
+      "ejs": "^3.1.10",
+      "dotenv": "^16.0.3"
+    }
+  }
