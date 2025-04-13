@@ -49,7 +49,7 @@ async function loginVerification(credentials) {
             return { result: "Correct Login" };
         }
 
-        else if (contrasenaValida !== null) {
+        else if (correctPassword !== null) {
             return { result: "Invalid Password" };
         }
         else {
@@ -175,14 +175,6 @@ app.post('/cryptography/saveGame', async (req, res) =>
             }
         }
 });
-app.use((req, res) => {
-    const url = req.originalUrl;
-    res.status(404).render('not_found', { url });
-  });
-  
-  app.listen(port, () => {
-    console.log(`Servidor esperando en: http://${ ipAddress }:${ port }`);
-  });
 
   // Login and Register Requests
 app.post("/login", async (req, res) => {
@@ -225,3 +217,14 @@ app.post('/register', async (req, res) =>
         }
     }
 });
+
+app.use((req, res) => {
+    const url = req.originalUrl;
+    res.status(404).json({ error: "Endpoint not found", url });
+    console.log(`Error 404: ${url}`);
+  });
+  
+  app.listen(port, () => {
+    console.log(`Servidor esperando en: http://${ ipAddress }:${ port }`);
+  });
+
