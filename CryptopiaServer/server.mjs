@@ -6,6 +6,8 @@ const app = express();
 const port = 8080;
 const ipAddress = 'localhost'; 
 
+app.use(express.json());
+
 /* Format for server url's.
 
 Use the format /scene/function
@@ -36,14 +38,14 @@ async function dbConnect()
 // Minigame Cryptography Requests
 
 
-app.get('/cryptography/newGame', async (req, res) => 
+app.get('/cryptography/newGame/:userId', async (req, res) => 
 {
-
+    let userId = req.params.userId;
     let connection;
     try
     {
         connection = await dbConnect();
-        const [rows] = await connection.query('CALL RegistrateCryptographyGame();');
+        const [rows] = await connection.query('CALL RegistrateCryptographyGame(?);', [userId]);
         const response = rows[0][0];
         res.send(response);
     }
@@ -84,7 +86,57 @@ app.get('/cryptography/loadEncryption', async (req, res) =>
         }
     }
 });
+app.post('/cryptography/submitAnswer', async (req, res) => 
+    {
+        let {respuestaUsuario, idPalabra, idPartida} = req.body;
+        console.log(req.body);
+        let connection;
+        try
+        {
+            connection = await dbConnect();
+            await connection.query('INSERT INTO RespuestaUsuarioCriptografia(respuestaUsuario, idPalabra, idPartida) VALUES(?, ?, ?);', [respuestaUsuario, idPalabra, idPartida]);
+            res.send({ success: true});
+        }
+        catch (err)
+        {
+            const {name, message} = err;
+            res.status(500).send({error: name, message});
+        }
+        finally 
+        {
+            if (connection)
+            {
+                connection.end();
+            }
+        }
 
+
+    });
+
+app.post('/cryptography/saveGame', async (req, res) =>
+{
+    let {idPartida, aciertos, errores, puntaje, TKNs, resultado, idMinijuego, idUsuario} = req.body;
+    let connection;
+    try
+    {
+        connection = await dbConnect();
+        await connection.execute('UPDATE PartidaCriptografia SET aciertos = ?, errores = ?, puntaje = ?, TKNs = ?, resultado = ?, idMinijuego = ? WHERE idPartida = ?', [aciertos, errores, puntaje, TKNs, resultado, idMinijuego, idPartida]);
+        await connection.execute('UPDATE Wallet SET cantidad = cantidad + ? WHERE idUsuario = ? AND idCriptomoneda = 1', [TKNs, idUsuario]);
+        res.send({success: true});
+    }
+    catch (err)
+        {
+            const {name, message} = err;
+            res.status(500).send({error: name, message});
+        }
+        finally 
+        {
+            if (connection)
+            {
+                connection.end();
+            }
+        }
+});
 app.use((req, res) => {
     const url = req.originalUrl;
     res.status(404).render('not_found', { url });

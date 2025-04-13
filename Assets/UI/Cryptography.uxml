@@ -32,7 +32,7 @@
                 </engine:VisualElement>
                 <engine:VisualElement name="TKNsContainer" class="summaryStatsContaiener">
                     <engine:Label text="TKN&apos;s:" name="TKNsKey" class="summaryStats summaryStatsKeys" style="width: 114px; margin-right: -3px;" />
-                    <engine:Label text="Label" name="TKNsValue" class="summaryStatsValues" />
+                    <engine:Label text="1.50" name="TKNsValue" class="summaryStatsValues" />
                 </engine:VisualElement>
                 <engine:VisualElement name="FinalResultContainer" class="summaryStatsContaiener" style="flex-grow: 0;">
                     <engine:Label text="Mistakes:" name="FinalResultKey" class="summaryStats summaryStatsKeys" style="width: 152px; margin-right: 13px;" />
