@@ -24,6 +24,7 @@ public class LoginUIHandler : MonoBehaviour
     void OnEnable()
     {
         var uiDoc = GetComponent<UIDocument>();
+        root = uiDoc.rootVisualElement; 
         var registerButton = root.Q<Button>("registerButton");
         var loginButton = root.Q<Button>("loginButton");
         userTextField = root.Q<TextField>("user");
