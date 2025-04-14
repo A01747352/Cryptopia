@@ -22,11 +22,8 @@ async function dbConnect()
 {
     return await mysql.createConnection({
         host: 'localhost',
-        //user: process.env.LOCALHOST_MYSQL_USER,
-        //password: process.env.LOCALHOST_MYSQL_PASSWORD,
-        
-        user: "root",
-        password: "",
+        user: process.env.LOCALHOST_MYSQL_USER,
+        password: process.env.LOCALHOST_MYSQL_PASSWORD,
         database: 'Cryptopia',
         multipleStatements: true
     });
@@ -345,7 +342,7 @@ app.post('/trivia/saveGame', async (req, res) =>
 
 app.use((req, res) => {
     const url = req.originalUrl;
-    res.status(404).render('not_found', { url });
+    res.status(404).json({ error: `No se encontró la URL: ${url}` });
   });
   
   app.listen(port, () => {
