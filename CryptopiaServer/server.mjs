@@ -29,6 +29,7 @@ async function dbConnect()
     });
 }
 
+// Login Verification
 async function loginVerification(user,password){
     let connection;
     try {
@@ -68,7 +69,6 @@ async function loginVerification(user,password){
 
 
 // Minigame Cryptography Requests
-
 
 app.get('/cryptography/newGame/:userId', async (req, res) => 
 {
@@ -121,7 +121,6 @@ app.get('/cryptography/loadEncryption', async (req, res) =>
 app.post('/cryptography/submitAnswer', async (req, res) => 
     {
         let {respuestaUsuario, idPalabra, idPartida} = req.body;
-        console.log(req.body);
         let connection;
         try
         {
@@ -339,6 +338,32 @@ app.post('/trivia/saveGame', async (req, res) =>
         }
     });
 
+
+// Minigame CryptoMine Requests 
+
+app.get('/cryptomine/retrievePowerUps', async (req, res) =>
+{
+    let connection;
+    try 
+    {
+        connection = await dbConnect();
+        const [rows] = await connection.execute('SELECT * FROM PowerUp;')
+        const response = JSON.stringify(rows);
+        res.send(response);
+    }
+    catch (err)
+    {
+        const {name, message} = err;
+        res.status(500).send({error: name, message});
+    }
+    finally 
+    {
+        if (connection)
+        {
+            connection.end();
+        }
+    }
+});
 
 app.use((req, res) => {
     const url = req.originalUrl;

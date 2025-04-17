@@ -1,4 +1,4 @@
-
+DROP DATABASE Cryptopia;
 CREATE DATABASE Cryptopia;
 USE Cryptopia;
 CREATE TABLE Usuario (
@@ -265,3 +265,12 @@ LEFT JOIN (
     GROUP BY idUsuario
 ) scm ON scm.idUsuario = u.Id;
 
+USE Cryptopia;
+
+INSERT INTO PowerUp(nombre, descripcion) 
+VALUES ("DoubleReward", "When active, this power up doubles the reward you recieve"),
+        ("Plus10", "When active it adds 10% extra to the reward"),
+        ("Every5th", "When active every fifth mined block multiplies its reward by 5"),
+        ("BitOfBitcoin", "Gain a bit of bitcoin every time you mine a block"),
+        ("TenfoldXP", "Get Ten times the XP after mining a block"),
+        ("TripleReward", "Multiply x3 the reward");
