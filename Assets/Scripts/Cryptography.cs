@@ -80,7 +80,7 @@ public class Cryptography : MonoBehaviour
     static int userId = 1;
     static int idGame;
     
-   string url = "http://localhost:8080";
+    private string url = "http://localhost:8080";
     
     void OnEnable()
     {
@@ -134,11 +134,11 @@ private IEnumerator RegisterNewGame()
         if (data.ContainsKey("idGame"))
         {
             idGame = System.Convert.ToInt32(data["idGame"]);
-            Debug.Log($"idGame: {idGame}");
+            print($"idGame: {idGame}");
         }
 
         
-        Debug.Log($"New game registered with ID: {idGame}");
+        print($"New game registered with ID: {idGame}");
 
         StartCoroutine(LoadProblem());
     }
@@ -166,7 +166,7 @@ private IEnumerator SaveGame(bool result)
 
     if (webRequest.result == UnityWebRequest.Result.Success)
     {
-        Debug.Log("Game saved successfully.");
+        print("Game saved successfully.");
     }
     else
     {
@@ -305,7 +305,7 @@ private IEnumerator LoadProblem()
 
         if (webRequest.result == UnityWebRequest.Result.Success)
         {
-            Debug.Log("Answer submitted successfully.");
+            print("Answer submitted successfully.");
         }
         else
         {

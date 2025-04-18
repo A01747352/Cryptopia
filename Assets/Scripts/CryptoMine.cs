@@ -5,6 +5,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using UnityEngine.Networking;
+using Newtonsoft.Json;
+using Unity.VisualScripting;
+
 
 public class CryptoMine : MonoBehaviour
 {
@@ -19,15 +23,15 @@ public class CryptoMine : MonoBehaviour
     // User Variables
     private double minedCrypto;
     private int totalBlocks;
-    private int score;
+    private int pointsPerBlock = 100;
+    private int score = 0;
     private int totalClicks;
     private HashSet<int> hashTarget;
     private HashSet<int> hashAttempts;
     private int hashUser;
-    
     private string[] userPowerUps;
-    
     private static bool rigTurnedOn = true;
+    private  DateTime sessionStart = DateTime.Now;
 
     
     // Units
@@ -49,11 +53,27 @@ public class CryptoMine : MonoBehaviour
         private DropdownField powerUp1Dropdown;
         private DropdownField powerUp2Dropdown;
         private DropdownField powerUp3Dropdown;
+        private DropdownField cryptoRigDropdown;
         private Button mineButton;
 
         // Drill
         private Label hashLabel;
 
+    // Web
+    private int userId = 1;
+    private string url = "http://localhost:8080";
+
+
+    public struct GameSession
+    {
+        public double TKNs;
+        public DateTime startSession;
+        public DateTime endSession;
+        public double minedBlocks;
+        public int clicks;
+        public int score;
+    }
+    static GameSession session;
 
     void Awake()
     {
@@ -72,6 +92,9 @@ public class CryptoMine : MonoBehaviour
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
 
+        session.startSession = DateTime.Now;
+        StartCoroutine(LoadUserData());
+
         game = GetComponent<UIDocument>();
         VisualElement root = game.rootVisualElement;
 
@@ -82,6 +105,10 @@ public class CryptoMine : MonoBehaviour
         blocksMinedLabel = root.Q<Label>("BlocksMinedValue");
         totalScoreLabel = root.Q<Label>("TotalScoreValue");
 
+        cryptoMinedLabel.text = minedCrypto.ToString("F5");
+        blocksMinedLabel.text = totalBlocks.ToString();
+        totalScoreLabel.text = score.ToString() + "pts";
+
         // Main Container Elements
         powerUp1 = root.Q<VisualElement>("PowerUp1");
         powerUp2 = root.Q<VisualElement>("PowerUp2");
@@ -89,6 +116,7 @@ public class CryptoMine : MonoBehaviour
         powerUp1Dropdown = root.Q<DropdownField>("PowerUp1Dropdown");
         powerUp2Dropdown = root.Q<DropdownField>("PowerUp2Dropdown");
         powerUp3Dropdown = root.Q<DropdownField>("PowerUp3Dropdown");
+        cryptoRigDropdown = root.Q<DropdownField>("CryptoRigDropdown");
         
 
         // Drill
@@ -97,9 +125,9 @@ public class CryptoMine : MonoBehaviour
         hashLabel = root.Q<Label>("HashLabel");
 
         // Game Variables
-        minedCrypto = 0;
-        totalBlocks = 0;
-        score = 0;
+        // minedCrypto = 0;
+        // totalBlocks = 0;
+        // score = 0;
         powerUps = new Dictionary<string, Func<double, double>>()
         {
             {"DoubleReward", DoubleReward},
@@ -112,11 +140,12 @@ public class CryptoMine : MonoBehaviour
         powerUp1Dropdown.choices = powerUps.Keys.ToList();
         powerUp2Dropdown.choices = powerUps.Keys.ToList();
         powerUp3Dropdown.choices = powerUps.Keys.ToList();
-        userPowerUps = new string[] {"", "", ""};
-        powerUp1Dropdown.value = userPowerUps[0];
-        powerUp2Dropdown.value = userPowerUps[1];
-        powerUp3Dropdown.value = userPowerUps[2];
 
+        userPowerUps = PlayerPrefs.GetString("UserPowerUps", "") == "" ? new string[3] { "", "", "" } : PlayerPrefs.GetString("UserPowerUps", "").Split('-');
+        StartCoroutine(RetrieveUserPowerUps());
+
+        cryptoRigDropdown.choices = new List<string> { "CPU", "GPU" };
+        cryptoRigDropdown.value = PlayerPrefs.GetString("CryptoRig", "CPU");
 
         hashAttempts = new HashSet<int>();
         hashTarget = new HashSet<int>(); 
@@ -127,7 +156,20 @@ public class CryptoMine : MonoBehaviour
         powerUp2Dropdown.RegisterCallback<ChangeEvent<string>>(evt => SelectPowerUp(evt, 1));
         powerUp3Dropdown.RegisterCallback<ChangeEvent<string>>(evt => SelectPowerUp(evt, 2));
 
-        PlayerPrefs.SetInt("AutoMine", 0);
+        cryptoRigDropdown.RegisterCallback<ChangeEvent<string>>(evt => {
+            if (evt.newValue == "GPU")
+            {
+                StartCoroutine(AutoMine(0.5f));
+                PlayerPrefs.SetInt("AutoMine", 1);
+            }
+            else
+            {
+                PlayerPrefs.SetInt("AutoMine", 0);
+                //StopAllCoroutines();
+            }
+        });
+
+        
 
         //StartCoroutine(AutoMine(0.5f));
 
@@ -184,11 +226,15 @@ public class CryptoMine : MonoBehaviour
         hashLabel.text =  GenerateRandomString();
         if (hashTarget.Contains(hashUser))
         {
-            minedCrypto += ApplyPowerUps(hashReward);
+            double crypto = ApplyPowerUps(hashReward);
+            minedCrypto += crypto;
+            PlayerPrefs.SetFloat("TKNs", PlayerPrefs.GetFloat("TKNs", 0) + (float)crypto);
             hashAttempts.Clear();
             GenerateHashTarget();
             ++totalBlocks;
-            score += 100;
+
+            score += pointsPerBlock;
+            PlayerPrefs.SetInt("TotalScore", PlayerPrefs.GetInt("TotalScore", 0) + pointsPerBlock);
             blocksMinedLabel.text = totalBlocks.ToString();
             totalScoreLabel.text = score.ToString() + "pts";
         }
@@ -242,22 +288,117 @@ public class CryptoMine : MonoBehaviour
     }
 
     void OnDisable()
-        {
+    {
         SceneManager.sceneLoaded -= OnSceneLoaded;
-        }
+    }
 
-        void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    void OnApplicationQuit()
+    {
+        PlayerPrefs.SetString("UserPowerUps", String.Join("-", userPowerUps));
+        //SaveUserPowerUps();
+        SaveGameSession();
+        print("Application quitting");
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name != "CryptoMine")
         {
-            if (scene.name != "CryptoMine")
+            game.enabled = false; // Or rootVisualElement.visible = false
+        }
+        else
+        {
+            game.enabled = true;
+        }
+    }
+
+    // Server Functions
+
+    private IEnumerator RetrieveUserPowerUps()
+    {
+        UnityWebRequest webRequest = UnityWebRequest.Get($"{url}/cryptomine/retrieveUserPowerUps/{userId}");
+        yield return webRequest.SendWebRequest();
+
+        if (webRequest.result == UnityWebRequest.Result.Success)
+        {
+            powerUp1Dropdown.choices = webRequest.downloadHandler.text.Split('-').ToList();
+            powerUp2Dropdown.choices = webRequest.downloadHandler.text.Split('-').ToList();
+            powerUp3Dropdown.choices = webRequest.downloadHandler.text.Split('-').ToList();
+            
+        }
+        else
+        {
+            Debug.LogError($"Error retrieving available PowerUps: {webRequest.error}");
+        }
+    }
+
+    private void SaveUserPowerUps()
+    {
+        // Used Copilot for entering the correct format to accept strings in a Post
+        UnityWebRequest webRequest = UnityWebRequest.Post($"{url}/cryptomine/saveUserPowerUps/{userId}", string.Join("-", userPowerUps), "application/x-www-form-urlencoded");
+        webRequest.SendWebRequest();
+
+        while (!webRequest.isDone) { }
+        
+        if (webRequest.result == UnityWebRequest.Result.Success)
+        {
+            print("User variables saved succesfully.");
+        }
+        else
+        {
+            Debug.LogError($"Error saving user variables: {webRequest.error}");
+        }
+    }
+
+    private void SaveGameSession()
+    {
+        session.TKNs = minedCrypto;
+        session.minedBlocks = totalBlocks;
+        session.endSession = DateTime.Now;
+        session.clicks = totalClicks;
+        session.score = score;
+
+        string jsonData = JsonConvert.SerializeObject(session);
+
+        UnityWebRequest webRequest = UnityWebRequest.Post($"{url}/cryptomine/saveSession/{userId}", jsonData, "application/json");
+        webRequest.SendWebRequest();
+
+        while (!webRequest.isDone) { }
+
+        if (webRequest.result == UnityWebRequest.Result.Success)
+        {
+            print("Session saved succesfully.");
+        }
+        else
+        {
+            Debug.LogError($"Error saving game session: {webRequest.error}");
+        }
+    }
+
+    private IEnumerator LoadUserData()
+    {
+        UnityWebRequest webReqeust = UnityWebRequest.Get($"{url}/cryptomine/loadUserData/{userId}");
+        yield return webReqeust.SendWebRequest();
+        if (webReqeust.result == UnityWebRequest.Result.Success)
+        {
+            string userData = webReqeust.downloadHandler.text;
+            Dictionary<string, object> data = JsonConvert.DeserializeObject<Dictionary<string, object>>(userData);
+
+            // Access the values by key
+            if (data.ContainsKey("TKNs"))
             {
-                game.enabled = false; // Or rootVisualElement.visible = false
+                minedCrypto = System.Convert.ToDouble(data["TKNs"]);
             }
-            else
+            if (data.ContainsKey("totalBloquesMinados"))
             {
-                game.enabled = true;
+                totalBlocks = System.Convert.ToInt32(data["totalBloquesMinados"]);
             }
         }
-
+        else
+        {
+            Debug.LogError($"Error loading user data: {webReqeust.error}");
+        }
+    }
 
     // PowerUps
     private double DoubleReward(double points)

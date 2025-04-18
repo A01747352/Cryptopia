@@ -341,14 +341,15 @@ app.post('/trivia/saveGame', async (req, res) =>
 
 // Minigame CryptoMine Requests 
 
-app.get('/cryptomine/retrievePowerUps', async (req, res) =>
+app.get('/cryptomine/retrieveUserPowerUps/:userId', async (req, res) =>
 {
     let connection;
+    let userId = req.params.userId;
     try 
     {
         connection = await dbConnect();
-        const [rows] = await connection.execute('SELECT * FROM PowerUp;')
-        const response = JSON.stringify(rows);
+        const [rows] = await connection.execute('SELECT pu.nombre FROM PowerUpDesbloqueado AS pud LEFT JOIN PowerUp AS pu ON pud.idPowerUp = pu.idPowerUp WHERE pud.idUsuario = ?;', [userId]);
+        const response = rows.map(row => row.nombre).join('-');
         res.send(response);
     }
     catch (err)
@@ -364,6 +365,67 @@ app.get('/cryptomine/retrievePowerUps', async (req, res) =>
         }
     }
 });
+
+app.post('/cryptomine/saveSession/:userId', async (req, res) =>
+{
+    let userId = req.params.userId;
+    let {TKNs, startSession, endSession, minedBlocks, clicks, score} = req.body;
+    let connection;
+    try
+    {
+        connection = await dbConnect();
+        console.log("Conexion exitosa");
+        await connection.execute('INSERT INTO SesionCryptoMine(idUsuario, TKNs, bloquesMinados, clicks, puntaje, inicioSesion, terminaSesion, idMinijuego) VALUES(?, ?, ?, ?, ?, ?, ?, 3);', [userId, TKNs, minedBlocks, clicks, score, startSession, endSession]);
+        console.log("Consulta exitosa");
+        //await connection.execute('UPDATE Wallet SET cantidad = cantidad + ? WHERE idUsuario = ? AND idCriptomoneda = 1', [TKNs, userId]);
+        res.send({success: true});
+    }
+    catch (err)
+    {
+        const {name, message} = err;
+        res.status(500).send({error: name, message});
+    }
+    finally 
+    {
+        if (connection)
+        {
+            connection.end();
+        }
+    }
+});
+
+app.get('/cryptomine/loadUserData/:userId', async (req, res) =>
+{
+    let userId = req.params.userId;
+    let connection;
+    try
+    {
+        connection = await dbConnect();
+        const [rows] = await connection.execute('SELECT cantidad FROM Wallet WHERE idUsuario = ? AND idCriptomoneda = 1;', [userId]);
+        const TKNs = rows[0].cantidad || 0;
+        const [rows2] = await connection.execute('SELECT SUM(bloquesMinados) AS totalBloquesMinados FROM SesionCryptoMine WHERE idUsuario = ?;', [userId]);
+        const totalBloquesMinados = rows2[0].totalBloquesMinados || 0;
+        const response = {
+            TKNs: TKNs,
+            totalBloquesMinados: totalBloquesMinados
+        };
+        res.send(response);
+    }
+    catch (err)
+    {
+        const {name, message} = err;
+        res.status(500).send({error: name, message});
+    }
+    finally 
+    {
+        if (connection)
+        {
+            connection.end();
+        }
+    }
+});
+
+
 
 app.use((req, res) => {
     const url = req.originalUrl;

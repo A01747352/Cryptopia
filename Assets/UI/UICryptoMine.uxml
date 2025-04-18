@@ -37,6 +37,7 @@
         <engine:VisualElement name="DrillContainer" class="drillContainer" style="flex-grow: 0;">
             <engine:Label text="Label" name="HashLabel" class="hashLabel" />
             <engine:Button text="Button" name="MineButton" class="mineButton" />
+            <engine:DropdownField name="CryptoRigDropdown" class="cryptoRigDropdown" />
         </engine:VisualElement>
     </engine:VisualElement>
 </engine:UXML>

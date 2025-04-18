@@ -69,10 +69,18 @@
     -unity-text-align: upper-center;
     align-self: center;
     width: 218px;
+    font-size: 50px;
+    color: rgb(255, 255, 255);
+    -unity-font-style: bold;
 }
 
 .dropdownPowerUp {
 }
 
 .powerUpContainer {
+}
+
+.cryptoRigDropdown {
+    width: 229px;
+    align-self: center;
 }
