@@ -1,24 +1,56 @@
 using UnityEngine;
 using UnityEngine.UIElements;
+using System.Collections;
 using System.Collections.Generic;
+using Newtonsoft.Json;
+using UnityEngine.Networking;
+
 
 public class RegisterUIHandler : MonoBehaviour
 {
     [SerializeField] private LoginManager loginManager;  // Referencia al LoginManager
-
     private VisualElement root;
     private Button backButton;
+    private Button registerButton;
+    private TextField userTextField;
+    private TextField passwordTextField;
+    private TextField ageTextField;
+    private DropdownField genderDropdown;
+    private DropdownField countryDropdown;
+    private DropdownField occupationDropdown;
+    string url = "http://localhost:8080";
+    public struct Register
+    {
+        public string user;
+        public string password;
+        public string age;
+        public string gender;
+        public string country;
+        public string occupation;
+    }
 
     void OnEnable()
     {
         var uiDoc = GetComponent<UIDocument>();
         root = uiDoc.rootVisualElement;
+        userTextField = root.Q<TextField>("user");
+        passwordTextField = root.Q<TextField>("password");
+        ageTextField = root.Q<TextField>("ageF");
+        genderDropdown = root.Q<DropdownField>("gender");
+        countryDropdown = root.Q<DropdownField>("country");
+        occupationDropdown = root.Q<DropdownField>("occupation");
 
         // Configurar los Dropdowns
         SetupDropdowns();
 
         // Configurar el botón de volver
         backButton = root.Q<Button>("backButton");
+        registerButton = root.Q<Button>("registerButton");
+        if (registerButton != null)
+        {
+            registerButton.clicked -= OnRegisterButtonClicked;
+            registerButton.clicked += OnRegisterButtonClicked;
+        }
         if (backButton != null)
         {
             backButton.clicked -= OnBackButtonClicked;
@@ -42,6 +74,55 @@ public class RegisterUIHandler : MonoBehaviour
     private void OnBackButtonClicked()
     {
         loginManager.ShowLoginUI();  // Usamos el LoginManager para cambiar a LoginUI
+    }
+
+    private void OnRegisterButtonClicked()
+    {
+        string user = userTextField.value;
+        string password = passwordTextField.value;
+        string age = ageTextField.value;
+        string gender = genderDropdown.value;
+        string country = countryDropdown.value;
+        string occupation = occupationDropdown.value;
+        StartCoroutine(RegisterNewUser(user, password, age, gender, country, occupation));
+    }
+
+    private IEnumerator RegisterNewUser(string user, string password, string age, string gender, string country, string occupation)
+    {
+        Register reg;
+        reg.user = user;
+        reg.password = password;
+        reg.age = ageTextField.value;
+        reg.gender = genderDropdown.value;
+        reg.country = countryDropdown.value;
+        reg.occupation = occupationDropdown.value; 
+
+        string JsonRegister= JsonConvert.SerializeObject(reg);
+        UnityWebRequest webRequest = UnityWebRequest.Post($"{url}/register", JsonRegister, "application/json");
+        yield return webRequest.SendWebRequest();
+
+        if (webRequest.result == UnityWebRequest.Result.Success)
+        {
+            Dictionary<string, string> response = JsonConvert.DeserializeObject<Dictionary<string, string>>(webRequest.downloadHandler.text);
+            if (response["result"] == "usuarioExiste")
+            {
+                Debug.LogError("User already exists.");
+            }
+            else if (response["result"] == "contrasenaInvalida")
+            {
+                Debug.LogError("Password is invalid. Must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, and one number.");
+            }
+            else if (response["result"] == "registroExitoso")
+            {
+                Debug.Log("User registered successfully.");
+                OnBackButtonClicked();
+            }
+            else
+            {
+                Debug.LogError("Registration failed: Unknown error.");
+                Debug.LogError($"Error: {webRequest.error}");
+            }    
+        }
     }
 
     // Métodos para llenar los Dropdowns

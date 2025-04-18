@@ -35,12 +35,7 @@ async function dbConnect()
 async function loginVerification(user,password){
     let connection;
     try {
-        connection = await mysql.createConnection({
-            host: 'localhost',
-            user: process.env.LOCALHOST_MYSQL_USER,
-            password: process.env.LOCALHOST_MYSQL_PASSWORD,
-            database: 'Cryptopia',
-        });
+        connection = await dbConnect();
         const [rows] = await connection.query('SELECT contrasena FROM Usuario WHERE username = ?;', [user]);
         const correctPassword = rows[0].contrasena;
 
@@ -58,12 +53,38 @@ async function loginVerification(user,password){
         return { result: "errorServidor" };
     } finally {
         if (connection){
-            await connection.end();
+            connection.end();
         }
     }
 }
 
+async function registration(user, password, age, gender, country, occupation){
+    let connection;
+    
+    try {
+        connection = await dbConnect();
+        const [existingUser] = await connection.query('SELECT username FROM Usuario WHERE username = ?;', [user]);
+        if (existingUser.length > 0) {
+            return { result: "usuarioExiste" };
+        }
 
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/; // At least 8 characters, one uppercase letter, one lowercase letter and one number
+        if (!passwordRegex.test(password)) {
+            return { result: "contrasenaInvalida" };
+        } 
+        await connection.query('INSERT INTO Usuario(username, contrasena, age, gender, country, occupation) VALUES(?, ?, ?, ?, ?, ?);',
+            [user, password, age, gender, country, occupation]);
+            return { result: "registroExitoso" };
+
+    } catch (err){
+        console.error("Error al acceder a la base datos:", err);
+        return { result: "errorServidor" };
+    } finally {
+        if (connection){
+            connection.end();
+        }
+    }
+}
 
 
 // Player Progress
@@ -187,6 +208,19 @@ app.post("/login", async (req, res) =>
         res.status(500).json({ result: "errorServidor" });
     }
 });
+
+app.post("/register", async (req, res) => 
+    {
+        let {user, password, age, gender, country, occupation} = req.body;
+        try {
+            const result = await registration(user, password, age, gender, country, occupation);
+            res.status(200).json(result);
+    
+        } catch (error) {
+            console.error("Error en el endpoint de autenticación:", error);
+            res.status(500).json({ result: "errorServidor" });
+        }
+    });
 
 // Endpoint para registrar un nuevo juego de trivia
 app.get('/trivia/newGame/:userId', async (req, res) => 
