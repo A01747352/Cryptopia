@@ -1,0 +1,8 @@
+.cont2 {
+    -unity-text-align: upper-left;
+    white-space: normal;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-around;
+}

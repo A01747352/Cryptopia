@@ -1,0 +1,20 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/buy.uss?fileID=7433441132597879392&amp;guid=24ed55a3bd0260243819c9bfebbc2f90&amp;type=3#buy" />
+    <engine:VisualElement name="Frames" class="frames" style="flex-grow: 1;">
+        <engine:VisualElement name="Frame2" class="frame" style="flex-grow: 1;" />
+        <engine:VisualElement name="Frame" class="frame" style="flex-grow: 1;" />
+    </engine:VisualElement>
+    <engine:Label text="3500 Tks" name="Cat1Tks" enable-rich-text="false" class="cat_tkss" />
+    <engine:Label text="3000 Tks" name="Cat2Tks" class="cat_tks" style="-unity-font-definition: url(&quot;project://database/Assets/Fonts/GrapeSoda.ttf?fileID=12800000&amp;guid=588e280439f4369489b80237dabae9ff&amp;type=3#GrapeSoda&quot;);" />
+    <engine:VisualElement name="TitleCont" style="flex-grow: 1;">
+        <engine:Label text="CAT STORE" name="Title" class="title" />
+    </engine:VisualElement>
+    <engine:VisualElement name="CatDisplay" class="cont2" style="flex-grow: 1;">
+        <engine:VisualElement name="Cat2" class="cat" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Pet%20Cats%20pack/Sprites/Cat-2/Cat-2-Sitting.png?fileID=2800000&amp;guid=4282a1e20e673d943a10aa8a0fdf40fc&amp;type=3#Cat-2-Sitting&quot;);" />
+        <engine:VisualElement name="Cat1" class="cat" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Pet%20Cats%20pack/Sprites/Cat-1/Cat-1-Sitting.png?fileID=2800000&amp;guid=65ce8b731e1efbd4d8e681ee98d2ab85&amp;type=3#Cat-1-Sitting&quot;); width: auto;" />
+    </engine:VisualElement>
+    <engine:VisualElement name="Click2Buy" class="cont3" style="flex-grow: 1;">
+        <engine:Button text="BUY" name="BuyCat1" class="buy" style="background-size: 100% 100%;" />
+        <engine:Button text="BUY" name="BuyCat2" class="buy" />
+    </engine:VisualElement>
+</engine:UXML>

@@ -1,0 +1,99 @@
+.buy {
+    -unity-font-definition: url("project://database/Assets/Fonts/GrapeSoda.ttf?fileID=12800000&guid=588e280439f4369489b80237dabae9ff&type=3#GrapeSoda");
+    font-size: 65px;
+    color: rgb(255, 255, 255);
+    background-size: 100% 100%;
+    background-image: url("project://database/Assets/Sprites%20UI.psd?fileID=1322269772748154755&guid=62e23b6e7c6ab3944a50a3fbe783e045&type=3#Button_01");
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    background-color: rgba(255, 255, 255, 0);
+    -unity-background-scale-mode: stretch-to-fill;
+    background-position-y: center 0;
+    width: 20%;
+}
+
+.cont3 {
+    -unity-text-align: upper-left;
+    white-space: normal;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.cont2 {
+    flex-wrap: wrap-reverse;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    align-self: flex-end;
+    align-content: center;
+    width: 1920px;
+    height: 500px;
+    margin-bottom: -345px;
+    background-image: none;
+}
+
+.cat {
+    background-image: url("project://database/Assets/Sprites%20UI.psd?fileID=6969808719853940402&guid=62e23b6e7c6ab3944a50a3fbe783e045&type=3#Container_01");
+    background-color: rgba(173, 173, 173, 0);
+    background-size: contain;
+    border-top-width: 0;
+}
+
+.title {
+    justify-content: flex-end;
+    align-self: center;
+    font-size: 200px;
+    color: rgb(255, 255, 255);
+    align-items: stretch;
+    flex-wrap: wrap;
+    flex-direction: column-reverse;
+    align-content: flex-start;
+    position: absolute;
+    top: auto;
+    margin-top: 88px;
+    -unity-font-definition: url("project://database/Assets/Fonts/GrapeSoda.ttf?fileID=12800000&guid=588e280439f4369489b80237dabae9ff&type=3#GrapeSoda");
+    -unity-text-align: middle-center;
+}
+
+.frame {
+    position: relative;
+    background-image: url("project://database/Assets/CRYPTOChiks/NSFW_V40f23ae_New_Races_9000_Diff_Poses.psd?fileID=7499665891358462625&guid=fffd872ad522c814cb3bdecf903bf27b&type=3#Container_01");
+    width: 489px;
+    height: 490px;
+    -unity-background-scale-mode: scale-and-crop;
+    margin-top: 347px;
+    padding-top: 0;
+    margin-left: 239px;
+    margin-right: 239px;
+}
+
+.frames {
+    position: absolute;
+    justify-content: space-evenly;
+    flex-direction: row;
+    align-self: center;
+}
+
+.cat_tkss {
+    position: absolute;
+    align-items: center;
+    flex-direction: row;
+    font-size: 50px;
+    color: rgb(255, 255, 255);
+    -unity-font-definition: url("project://database/Assets/Fonts/GrapeSoda.ttf?fileID=12800000&guid=588e280439f4369489b80237dabae9ff&type=3#GrapeSoda");
+    margin-top: 355px;
+    margin-right: 0;
+    margin-left: 391px;
+    overflow: visible;
+}
+
+.cat_tks {
+    position: absolute;
+    margin-top: 354px;
+    margin-left: 1358px;
+    color: rgb(255, 255, 255);
+    font-size: 50px;
+}
