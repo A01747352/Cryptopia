@@ -1,6 +1,6 @@
 .container {
     width: 33%;
-    padding-top: 50px;
+    padding-top: 25px;
     align-items: stretch;
 }
 
@@ -17,7 +17,7 @@
 
 .container2 {
     width: 100%;
-    margin-top: 6%;
+    margin-top: 4%;
     height: 25%;
 }
 
@@ -38,7 +38,6 @@
     width: 35%;
     height: 15%;
     background-color: rgb(200, 110, 110);
-    align-self: center;
     font-size: 35px;
     color: rgb(255, 255, 255);
     -unity-font-definition: url("project://database/Assets/Fonts/GrapeSoda.ttf?fileID=12800000&guid=588e280439f4369489b80237dabae9ff&type=3#GrapeSoda");
@@ -47,7 +46,6 @@
     border-top-color: rgba(0, 0, 0, 0);
     border-bottom-color: rgba(0, 0, 0, 0);
     background-image: url("project://database/Assets/Sprites%20UI.psd?fileID=1322269772748154755&guid=62e23b6e7c6ab3944a50a3fbe783e045&type=3#Button_01");
-    margin-top: 20px;
 }
 
 .dropdown {
