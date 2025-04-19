@@ -18,25 +18,21 @@ The urls can be more specific too but the format should be descriptive.
 
 // Connect to Data Base
 
-async function dbConnect()
-{
+async function dbConnect() {
     return await mysql.createConnection({
-        host: 'localhost',
-        //user: process.env.LOCALHOST_MYSQL_USER,
-        //password: process.env.LOCALHOST_MYSQL_PASSWORD,
-        
-        user: "root",
-        password: "",
+        host: 'cryptochicks-db.c7uwe4okm9f3.us-east-2.rds.amazonaws.com',
+        user: "admin",
+        password: "Ivanyaduermete",
         database: 'Cryptopia',
-        multipleStatements: true
-    });
+        multipleStatements: true
+    });
 }
 
 async function loginVerification(user,password){
     let connection;
     try {
         connection = await dbConnect();
-        const [rows] = await connection.query('SELECT contrasena FROM Usuario WHERE username = ?;', [user]);
+        const [rows] = await connection.query('SELECT contrasena FROM usuario WHERE username = ?;', [user]);
         const correctPassword = rows[0].contrasena;
 
         if (rows.length > 0) {
@@ -68,7 +64,7 @@ async function registration(user, password, firstName, lastName, dateOfBirth, ge
             return { result: "usuarioExiste" };
         }
 
-        const passwordRegex = /^(?=.[a-z])(?=.[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
         if (!passwordRegex.test(password)) {
             return { result: "contrasenaInvalida" };
         } 
@@ -224,9 +220,9 @@ app.post("/login", async (req, res) =>
 
 app.post("/register", async (req, res) => 
     {
-        let {user, password, age, gender, country, occupation} = req.body;
+        let {user, password, firstName, lastName, dateOfBirth, gender, country, occupation} = req.body;
         try {
-            const result = await registration(user, password, age, gender, country, occupation);
+            const result = await registration(user, password, firstName, lastName, dateOfBirth, gender, country, occupation);
             res.status(200).json(result);
     
         } catch (error) {
