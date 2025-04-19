@@ -14,7 +14,11 @@ public class RegisterUIHandler : MonoBehaviour
     private Button registerButton;
     private TextField userTextField;
     private TextField passwordTextField;
-    private TextField ageTextField;
+    private TextField firstNameTextField;
+    private TextField lastNameTextField;
+    private TextField dayTextField;
+    private TextField monthTextField;
+    private TextField yearTextField;
     private DropdownField genderDropdown;
     private DropdownField countryDropdown;
     private DropdownField occupationDropdown;
@@ -23,11 +27,17 @@ public class RegisterUIHandler : MonoBehaviour
     {
         public string user;
         public string password;
-        public string age;
+        public string firstName;
+        public string lastName;
+        public int day;
+        public int month;
+        public int year;
+        public string dateOfBirth;
         public string gender;
         public string country;
         public string occupation;
     }
+
 
     void OnEnable()
     {
@@ -35,7 +45,11 @@ public class RegisterUIHandler : MonoBehaviour
         root = uiDoc.rootVisualElement;
         userTextField = root.Q<TextField>("user");
         passwordTextField = root.Q<TextField>("password");
-        ageTextField = root.Q<TextField>("ageF");
+        firstNameTextField = root.Q<TextField>("firstName");
+        lastNameTextField = root.Q<TextField>("lastName");
+        dayTextField = root.Q<TextField>("day");
+        monthTextField = root.Q<TextField>("month");
+        yearTextField = root.Q<TextField>("year");
         genderDropdown = root.Q<DropdownField>("gender");
         countryDropdown = root.Q<DropdownField>("country");
         occupationDropdown = root.Q<DropdownField>("occupation");
@@ -73,31 +87,41 @@ public class RegisterUIHandler : MonoBehaviour
     // Lógica para regresar al LoginUI
     private void OnBackButtonClicked()
     {
-        loginManager.ShowLoginUI();  // Usamos el LoginManager para cambiar a LoginUI
+        loginManager.ShowLoginUI(); 
     }
 
     private void OnRegisterButtonClicked()
     {
         string user = userTextField.value;
         string password = passwordTextField.value;
-        string age = ageTextField.value;
+        string firstName = firstNameTextField.value;
+        string lastName = lastNameTextField.value;
+        int day = int.TryParse(dayTextField.value, out int parsedDay) ? parsedDay : 0;
+        int month = int.TryParse(monthTextField.value, out int parsedMonth) ? parsedMonth : 0;
+        int year = int.TryParse(yearTextField.value, out int parsedYear) ? parsedYear : 0;
+        string dateOfBirth = $"{year:D4}-{month:D2}-{day:D2}"; // Construir la fecha en formato yyyy-MM-dd
         string gender = genderDropdown.value;
         string country = countryDropdown.value;
         string occupation = occupationDropdown.value;
-        StartCoroutine(RegisterNewUser(user, password, age, gender, country, occupation));
+
+        StartCoroutine(RegisterNewUser(user, password, firstName, lastName, dateOfBirth, gender, country, occupation));
     }
 
-    private IEnumerator RegisterNewUser(string user, string password, string age, string gender, string country, string occupation)
+    private IEnumerator RegisterNewUser(string user, string password, string firstName, string lastName, string dateOfBirth, string gender, string country, string occupation)
     {
-        Register reg;
-        reg.user = user;
-        reg.password = password;
-        reg.age = ageTextField.value;
-        reg.gender = genderDropdown.value;
-        reg.country = countryDropdown.value;
-        reg.occupation = occupationDropdown.value; 
+        Register reg = new Register
+        {
+            user = user,
+            password = password,
+            firstName = firstName,
+            lastName = lastName,
+            dateOfBirth = dateOfBirth,
+            gender = gender,
+            country = country,
+            occupation = occupation
+        };
 
-        string JsonRegister= JsonConvert.SerializeObject(reg);
+        string JsonRegister = JsonConvert.SerializeObject(reg);
         UnityWebRequest webRequest = UnityWebRequest.Post($"{url}/register", JsonRegister, "application/json");
         yield return webRequest.SendWebRequest();
 

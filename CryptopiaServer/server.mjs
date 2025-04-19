@@ -58,22 +58,35 @@ async function loginVerification(user,password){
     }
 }
 
-async function registration(user, password, age, gender, country, occupation){
+async function registration(user, password, firstName, lastName, dateOfBirth, gender, country, occupation){
     let connection;
-    
+
     try {
         connection = await dbConnect();
-        const [existingUser] = await connection.query('SELECT username FROM Usuario WHERE username = ?;', [user]);
+        const [existingUser] = await connection.query('SELECT username FROM usuario WHERE username = ?;', [user]);
         if (existingUser.length > 0) {
             return { result: "usuarioExiste" };
         }
 
-        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/; // At least 8 characters, one uppercase letter, one lowercase letter and one number
+        const passwordRegex = /^(?=.[a-z])(?=.[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
         if (!passwordRegex.test(password)) {
             return { result: "contrasenaInvalida" };
         } 
-        await connection.query('INSERT INTO Usuario(username, contrasena, age, gender, country, occupation) VALUES(?, ?, ?, ?, ?, ?);',
-            [user, password, age, gender, country, occupation]);
+
+        // Convertir género a formato correcto (un carácter)
+        let genderChar = null;
+        if (gender) {
+            if (gender.toLowerCase().startsWith('m')) {
+                genderChar = 'M';
+            } else if (gender.toLowerCase().startsWith('f')) {
+                genderChar = 'F';
+            } else {
+                genderChar = 'O'; // Otro
+            }
+        }
+
+        await connection.query('INSERT INTO usuario(username, contrasena, nombre, apellido, nacimiento, genero, pais, ocupacion) VALUES(?, ?, ?, ?, ?, ?, ?, ?);',
+            [user, password, firstName, lastName, dateOfBirth, genderChar, country, occupation]);
             return { result: "registroExitoso" };
 
     } catch (err){
