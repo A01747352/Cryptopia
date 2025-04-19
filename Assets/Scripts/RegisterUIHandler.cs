@@ -23,7 +23,7 @@ public class RegisterUIHandler : MonoBehaviour
     {
         public string user;
         public string password;
-        public string age;
+        public int age;
         public string gender;
         public string country;
         public string occupation;
@@ -35,7 +35,7 @@ public class RegisterUIHandler : MonoBehaviour
         root = uiDoc.rootVisualElement;
         userTextField = root.Q<TextField>("user");
         passwordTextField = root.Q<TextField>("password");
-        ageTextField = root.Q<TextField>("ageF");
+        ageTextField = root.Q<TextField>("age");
         genderDropdown = root.Q<DropdownField>("gender");
         countryDropdown = root.Q<DropdownField>("country");
         occupationDropdown = root.Q<DropdownField>("occupation");
@@ -77,22 +77,33 @@ public class RegisterUIHandler : MonoBehaviour
     }
 
     private void OnRegisterButtonClicked()
-    {
-        string user = userTextField.value;
-        string password = passwordTextField.value;
-        string age = ageTextField.value;
-        string gender = genderDropdown.value;
-        string country = countryDropdown.value;
-        string occupation = occupationDropdown.value;
-        StartCoroutine(RegisterNewUser(user, password, age, gender, country, occupation));
-    }
+{
+    string user = userTextField.value;
+    string password = passwordTextField.value;
+    
+    // Convertir el texto a entero
+    int age = 0;
+    int.TryParse(ageTextField.value, out age);
+    
+    string gender = genderDropdown.value;
+    string country = countryDropdown.value;
+    string occupation = occupationDropdown.value;
+    StartCoroutine(RegisterNewUser(user, password, age, gender, country, occupation));
+}
 
-    private IEnumerator RegisterNewUser(string user, string password, string age, string gender, string country, string occupation)
+    private IEnumerator RegisterNewUser(string user, string password, int age, string gender, string country, string occupation)
     {
         Register reg;
         reg.user = user;
         reg.password = password;
-        reg.age = ageTextField.value;
+        
+        if (int.TryParse(ageTextField.value, out int parsedAge)) {
+        reg.age = parsedAge;  // Asignar el valor convertido
+    } else {
+        reg.age = 0;  // Valor predeterminado en caso de que la conversión falle
+        Debug.LogWarning("No se pudo convertir la edad a un número entero");
+    }
+
         reg.gender = genderDropdown.value;
         reg.country = countryDropdown.value;
         reg.occupation = occupationDropdown.value; 
