@@ -1,24 +1,70 @@
 using UnityEngine;
 using UnityEngine.UIElements;
+using System.Collections;
 using System.Collections.Generic;
+using Newtonsoft.Json;
+using UnityEngine.Networking;
+
 
 public class RegisterUIHandler : MonoBehaviour
 {
     [SerializeField] private LoginManager loginManager;  // Referencia al LoginManager
-
     private VisualElement root;
     private Button backButton;
+    private Button registerButton;
+    private TextField userTextField;
+    private TextField passwordTextField;
+    private TextField firstNameTextField;
+    private TextField lastNameTextField;
+    private TextField dayTextField;
+    private TextField monthTextField;
+    private TextField yearTextField;
+    private DropdownField genderDropdown;
+    private DropdownField countryDropdown;
+    private DropdownField occupationDropdown;
+    string url = "http://localhost:8080";
+    public struct Register
+    {
+        public string user;
+        public string password;
+        public string firstName;
+        public string lastName;
+        public int day;
+        public int month;
+        public int year;
+        public string dateOfBirth;
+        public string gender;
+        public string country;
+        public string occupation;
+    }
+
 
     void OnEnable()
     {
         var uiDoc = GetComponent<UIDocument>();
         root = uiDoc.rootVisualElement;
+        userTextField = root.Q<TextField>("user");
+        passwordTextField = root.Q<TextField>("password");
+        firstNameTextField = root.Q<TextField>("firstName");
+        lastNameTextField = root.Q<TextField>("lastName");
+        dayTextField = root.Q<TextField>("day");
+        monthTextField = root.Q<TextField>("month");
+        yearTextField = root.Q<TextField>("year");
+        genderDropdown = root.Q<DropdownField>("gender");
+        countryDropdown = root.Q<DropdownField>("country");
+        occupationDropdown = root.Q<DropdownField>("occupation");
 
         // Configurar los Dropdowns
         SetupDropdowns();
 
         // Configurar el botón de volver
         backButton = root.Q<Button>("backButton");
+        registerButton = root.Q<Button>("registerButton");
+        if (registerButton != null)
+        {
+            registerButton.clicked -= OnRegisterButtonClicked;
+            registerButton.clicked += OnRegisterButtonClicked;
+        }
         if (backButton != null)
         {
             backButton.clicked -= OnBackButtonClicked;
@@ -41,7 +87,66 @@ public class RegisterUIHandler : MonoBehaviour
     // Lógica para regresar al LoginUI
     private void OnBackButtonClicked()
     {
-        loginManager.ShowLoginUI();  // Usamos el LoginManager para cambiar a LoginUI
+        loginManager.ShowLoginUI(); 
+    }
+
+    private void OnRegisterButtonClicked()
+    {
+        string user = userTextField.value;
+        string password = passwordTextField.value;
+        string firstName = firstNameTextField.value;
+        string lastName = lastNameTextField.value;
+        int day = int.TryParse(dayTextField.value, out int parsedDay) ? parsedDay : 0;
+        int month = int.TryParse(monthTextField.value, out int parsedMonth) ? parsedMonth : 0;
+        int year = int.TryParse(yearTextField.value, out int parsedYear) ? parsedYear : 0;
+        string dateOfBirth = $"{year:D4}-{month:D2}-{day:D2}"; // Construir la fecha en formato yyyy-MM-dd
+        string gender = genderDropdown.value;
+        string country = countryDropdown.value;
+        string occupation = occupationDropdown.value;
+
+        StartCoroutine(RegisterNewUser(user, password, firstName, lastName, dateOfBirth, gender, country, occupation));
+    }
+
+    private IEnumerator RegisterNewUser(string user, string password, string firstName, string lastName, string dateOfBirth, string gender, string country, string occupation)
+    {
+        Register reg = new Register
+        {
+            user = user,
+            password = password,
+            firstName = firstName,
+            lastName = lastName,
+            dateOfBirth = dateOfBirth,
+            gender = gender,
+            country = country,
+            occupation = occupation
+        };
+
+        string JsonRegister = JsonConvert.SerializeObject(reg);
+        UnityWebRequest webRequest = UnityWebRequest.Post($"{url}/register", JsonRegister, "application/json");
+        yield return webRequest.SendWebRequest();
+
+        if (webRequest.result == UnityWebRequest.Result.Success)
+        {
+            Dictionary<string, string> response = JsonConvert.DeserializeObject<Dictionary<string, string>>(webRequest.downloadHandler.text);
+            if (response["result"] == "usuarioExiste")
+            {
+                Debug.LogError("User already exists.");
+            }
+            else if (response["result"] == "contrasenaInvalida")
+            {
+                Debug.LogError("Password is invalid. Must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, and one number.");
+            }
+            else if (response["result"] == "registroExitoso")
+            {
+                Debug.Log("User registered successfully.");
+                OnBackButtonClicked();
+            }
+            else
+            {
+                Debug.LogError("Registration failed: Unknown error.");
+                Debug.LogError($"Error: {webRequest.error}");
+            }    
+        }
     }
 
     // Métodos para llenar los Dropdowns

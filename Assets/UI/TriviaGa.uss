@@ -1,0 +1,36 @@
+.BG {
+    align-items: flex-start;
+    align-self: center;
+    background-image: url("project://database/Assets/Sprites%20UI.psd?fileID=7251897061182455530&guid=62e23b6e7c6ab3944a50a3fbe783e045&type=3#Background");
+    background-color: rgba(88, 115, 197, 0);
+    -unity-background-image-tint-color: rgb(48, 91, 168);
+}
+
+.Upper {
+}
+
+.button {
+    justify-content: flex-end;
+    align-self: center;
+    align-content: center;
+    width: 650px;
+    height: 200px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    color: rgb(255, 255, 255);
+    font-size: 24px;
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+    background-size: 101% 100%;
+    padding-left: 31px;
+    padding-right: -31px;
+}
+
+.Question {
+}
+
+.questionText {
+    font-size: 15px;
+}
