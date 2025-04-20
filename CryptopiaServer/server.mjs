@@ -20,7 +20,7 @@ The urls can be more specific too but the format should be descriptive.
 
 async function dbConnect() {
     return await mysql.createConnection({
-        host: 'cryptochicks-db.c7uwe4okm9f3.us-east-2.rds.amazonaws.com',
+        host: 'database-3.c7uwe4okm9f3.us-east-2.rds.amazonaws.com',
         user: "admin",
         password: "Ivanyaduermete",
         database: 'Cryptopia',
@@ -103,106 +103,92 @@ async function registration(user, password, firstName, lastName, dateOfBirth, ge
 // Minigame Cryptography Requests
 
 
-app.get('/cryptography/newGame/:userId', async (req, res) => 
-{
+app.get('/trivia/newGame/:userId', async (req, res) => {
     let userId = req.params.userId;
     let connection;
-    try
-    {
+    try {
         connection = await dbConnect();
-        const [rows] = await connection.query('CALL RegistrateCryptographyGame(?);', [userId]);
+        const [rows] = await connection.query('CALL RegistrateTriviagame(?);', [userId]);
         const response = rows[0][0];
         res.send(response);
-    }
-    catch (err)
-    {
+    } catch (err) {
         const {name, message} = err;
         res.status(500).send({error: name, message});
-    }
-    finally 
-    {
-        if (connection)
-        {
+    } finally {
+        if (connection) {
             connection.end();
         }
     }
 });
-
-app.get('/cryptography/loadEncryption', async (req, res) =>
-{
+// Endpoint para cargar palabras de encriptación
+app.get('/cryptography/loadEncryption', async (req, res) => {
     let connection;
-    try
-    {
+    try {
         connection = await dbConnect();
-        const [rows] = await connection.execute('SELECT * FROM PalabraCriptografia ORDER BY RAND() LIMIT 1');
-        const response = JSON.stringify(rows);
-        res.send(response);
-    }
-    catch (err)
-    {
+        const [rows] = await connection.execute('SELECT * FROM palabracriptografia ORDER BY RAND() LIMIT 1');
+        res.send(rows);
+    } catch (err) {
+        console.error("Error cargando palabras de encriptación:", err);
         const {name, message} = err;
         res.status(500).send({error: name, message});
-    }
-    finally 
-    {
-        if (connection)
-        {
+    } finally {
+        if (connection) {
             connection.end();
         }
     }
 });
-app.post('/cryptography/submitAnswer', async (req, res) => 
-    {
-        let {respuestaUsuario, idPalabra, idPartida} = req.body;
-        console.log(req.body);
-        let connection;
-        try
-        {
-            connection = await dbConnect();
-            await connection.query('INSERT INTO RespuestaUsuarioCriptografia(respuestaUsuario, idPalabra, idPartida) VALUES(?, ?, ?);', [respuestaUsuario, idPalabra, idPartida]);
-            res.send({ success: true});
-        }
-        catch (err)
-        {
-            const {name, message} = err;
-            res.status(500).send({error: name, message});
-        }
-        finally 
-        {
-            if (connection)
-            {
-                connection.end();
-            }
-        }
 
+// Endpoint para enviar respuesta de criptografía
+app.post('/cryptography/submitAnswer', async (req, res) => {
+    let {respuestaUsuario, idPalabra, idPartida} = req.body;
+    console.log("Respuesta recibida:", req.body);
+    
+    let connection;
+    try {
+        connection = await dbConnect();
+        await connection.query(
+            'INSERT INTO respuestausuariocriptografia(respuestaUsuario, idPalabra, idPartida) VALUES(?, ?, ?);', 
+            [respuestaUsuario, idPalabra, idPartida]
+        );
+        res.send({ success: true });
+    } catch (err) {
+        console.error("Error guardando respuesta de criptografía:", err);
+        const {name, message} = err;
+        res.status(500).send({error: name, message});
+    } finally {
+        if (connection) {
+            connection.end();
+        }
+    }
+});
 
-    });
-
-app.post('/cryptography/saveGame', async (req, res) =>
-{
+// Endpoint para guardar resultados del juego de criptografía
+app.post('/cryptography/saveGame', async (req, res) => {
     let {idPartida, aciertos, errores, puntaje, TKNs, resultado, idMinijuego, idUsuario} = req.body;
+    console.log("Guardando juego de criptografía:", req.body);
+    
     let connection;
-    try
-    {
+    try {
         connection = await dbConnect();
-        await connection.execute('UPDATE PartidaCriptografia SET aciertos = ?, errores = ?, puntaje = ?, TKNs = ?, resultado = ?, idMinijuego = ? WHERE idPartida = ?', [aciertos, errores, puntaje, TKNs, resultado, idMinijuego, idPartida]);
-        await connection.execute('UPDATE Wallet SET cantidad = cantidad + ? WHERE idUsuario = ? AND idCriptomoneda = 1', [TKNs, idUsuario]);
+        await connection.execute(
+            'UPDATE partidacriptografia SET aciertos = ?, errores = ?, puntaje = ?, TKNs = ?, resultado = ?, idMinijuego = ? WHERE idPartida = ?', 
+            [aciertos, errores, puntaje, TKNs, resultado, idMinijuego, idPartida]
+        );
+        await connection.execute(
+            'UPDATE wallet SET cantidad = cantidad + ? WHERE idUsuario = ? AND idCriptomoneda = 1', 
+            [TKNs, idUsuario]
+        );
         res.send({success: true});
+    } catch (err) {
+        console.error("Error guardando resultados de criptografía:", err);
+        const {name, message} = err;
+        res.status(500).send({error: name, message});
+    } finally {
+        if (connection) {
+            connection.end();
+        }
     }
-    catch (err)
-        {
-            const {name, message} = err;
-            res.status(500).send({error: name, message});
-        }
-        finally 
-        {
-            if (connection)
-            {
-                connection.end();
-            }
-        }
 });
-
 
   // Login and Register Requests
 app.post("/login", async (req, res) => 
@@ -232,82 +218,70 @@ app.post("/register", async (req, res) =>
     });
 
 // Endpoint para registrar un nuevo juego de trivia
-app.get('/trivia/newGame/:userId', async (req, res) => 
-    {
-        let userId = req.params.userId;
-        let connection;
-        try
-        {
-            connection = await dbConnect();
-            const [rows] = await connection.query('CALL RegistrateTriviagame(?);', [userId]);
-            const response = rows[0][0];
-            res.send(response);
+app.get('/cryptography/newGame/:userId', async (req, res) => {
+    let userId = req.params.userId;
+    let connection;
+    try {
+        connection = await dbConnect();
+        const [rows] = await connection.query('CALL RegistrateCryptographyGame(?);', [userId]);
+        const response = rows[0][0];
+        res.send(response);
+    } catch (err) {
+        const {name, message} = err;
+        res.status(500).send({error: name, message});
+    } finally {
+        if (connection) {
+            connection.end();
         }
-        catch (err)
-        {
-            const {name, message} = err;
-            res.status(500).send({error: name, message});
-        }
-        finally 
-        {
-            if (connection)
-            {
-                connection.end();
-            }
-        }
-    });
+    }
+});
 
     // Endpoint para obtener todas las preguntas con sus respuestas
-app.get('/trivia/getAllQuestions', async (req, res) => 
-    {
-        let connection;
-        try
-        {
-            connection = await dbConnect();
-            
-            // Obtenemos todas las preguntas de trivia
-            const [questions] = await connection.execute('SELECT * FROM PreguntaTrivia');
-            
-            if (questions.length === 0) {
-                res.status(404).send({error: "No se encontraron preguntas"});
-                return;
-            }
-            
-            // Preparamos un array para almacenar cada pregunta con sus respuestas
-            const questionsWithAnswers = [];
-            
-            // Para cada pregunta, obtenemos sus respuestas
-            for (const question of questions) {
-                const [answers] = await connection.execute(
-                    'SELECT * FROM RespuestasTrivia WHERE idPregunta = ?', 
-                    [question.idPregunta]
-                );
-                
-                // Mezclamos las respuestas para que no siempre estén en el mismo orden
-                const shuffledAnswers = shuffleArray(answers);
-                
-                // Agregamos la pregunta con sus respuestas al array
-                questionsWithAnswers.push({
-                    question: question,
-                    answers: shuffledAnswers
-                });
-            }
-            
-            res.send(questionsWithAnswers);
+// Endpoint para obtener todas las preguntas con sus respuestas
+app.get('/trivia/getAllQuestions', async (req, res) => {
+    let connection;
+    try {
+        connection = await dbConnect();
+        
+        // Obtenemos todas las preguntas de trivia
+        const [questions] = await connection.execute('SELECT * FROM preguntatrivia');
+        
+        if (questions.length === 0) {
+            res.status(404).send({error: "No se encontraron preguntas"});
+            return;
         }
-        catch (err)
-        {
-            const {name, message} = err;
-            res.status(500).send({error: name, message});
+        
+        // Preparamos un array para almacenar cada pregunta con sus respuestas
+        const questionsWithAnswers = [];
+        
+        // Para cada pregunta, obtenemos sus respuestas
+        for (const question of questions) {
+            const [answers] = await connection.execute(
+                'SELECT * FROM respuestastrivia WHERE idPregunta = ?', 
+                [question.idPregunta]
+            );
+            
+            // Mezclamos las respuestas para que no siempre estén en el mismo orden
+            const shuffledAnswers = shuffleArray(answers);
+            
+            // Agregamos la pregunta con sus respuestas al array
+            questionsWithAnswers.push({
+                question: question,
+                answers: shuffledAnswers
+            });
         }
-        finally 
-        {
-            if (connection)
-            {
-                connection.end();
-            }
+        
+        res.send(questionsWithAnswers);
+    } catch (err) {
+        console.error("Error obteniendo preguntas de trivia:", err);
+        const {name, message} = err;
+        res.status(500).send({error: name, message});
+    } finally {
+        if (connection) {
+            connection.end();
         }
-    });
+    }
+});
     
     // Función auxiliar para mezclar un array (algoritmo Fisher-Yates)
     function shuffleArray(array) {
@@ -320,70 +294,63 @@ app.get('/trivia/getAllQuestions', async (req, res) =>
     }
 
     // Endpoint para enviar respuesta de usuario (versión personalizada)
-app.post('/trivia/submitAnswer', async (req, res) => 
-    {
-        let {respuestaUsuario, idPregunta, esCorrecta, idPartida} = req.body;
-        let connection;
-        try
-        {
-            connection = await dbConnect();
-            await connection.query(
-                'INSERT INTO RespuestaUsuarioTrivia(respuestaUsuario, idPregunta, esCorrecta, idPartida) VALUES(?, ?, ?, ?);', 
-                [respuestaUsuario, idPregunta, esCorrecta, idPartida]
-            );
-            res.send({ success: true});
+// Endpoint para enviar respuesta de usuario (versión personalizada)
+app.post('/trivia/submitAnswer', async (req, res) => {
+    let {respuestaUsuario, idPregunta, esCorrecta, idPartida} = req.body;
+    console.log("Respuesta de trivia recibida:", req.body);
+    
+    let connection;
+    try {
+        connection = await dbConnect();
+        await connection.query(
+            'INSERT INTO respuestausuariotrivia(respuestaUsuario, idPregunta, esCorrecta, idPartida) VALUES(?, ?, ?, ?);', 
+            [respuestaUsuario, idPregunta, esCorrecta, idPartida]
+        );
+        res.send({ success: true });
+    } catch (err) {
+        console.error("Error guardando respuesta de trivia:", err);
+        const {name, message} = err;
+        res.status(500).send({error: name, message});
+    } finally {
+        if (connection) {
+            connection.end();
         }
-        catch (err)
-        {
-            const {name, message} = err;
-            res.status(500).send({error: name, message});
-        }
-        finally 
-        {
-            if (connection)
-            {
-                connection.end();
-            }
-        }
-    });
+    }
+});
 
 
-    // Endpoint para guardar resultados del juego
-app.post('/trivia/saveGame', async (req, res) =>
-    {
-        let {idPartida, resultado, porcentajeAciertos, puntaje, TKNs, idMinijuego, idUsuario} = req.body;
-        let connection;
-        try
-        {
-            connection = await dbConnect();
-            
-            // Actualizar la partida de trivia
-            await connection.execute(
-                'UPDATE PartidaTrivia SET resultado = ?, porcentajeAciertos = ?, puntaje = ?, TKNs = ? WHERE idPartida = ?', 
-                [resultado, porcentajeAciertos, puntaje, TKNs, idPartida]
-            );
-            
-            // Añadir TKNs al wallet del usuario
-            await connection.execute(
-                'UPDATE Wallet SET cantidad = cantidad + ? WHERE idUsuario = ? AND idCriptomoneda = 1', 
-                [TKNs, idUsuario]
-            );
-            
-            res.send({success: true});
+   // Endpoint para guardar resultados del juego
+app.post('/trivia/saveGame', async (req, res) => {
+    let {idPartida, resultado, porcentajeAciertos, puntaje, TKNs, idMinijuego, idUsuario} = req.body;
+    console.log("Guardando juego de trivia:", req.body);
+    
+    let connection;
+    try {
+        connection = await dbConnect();
+        
+        // Actualizar la partida de trivia
+        await connection.execute(
+            'UPDATE partidatrivia SET resultado = ?, porcentajeAciertos = ?, puntaje = ?, TKNs = ? WHERE idPartida = ?', 
+            [resultado, porcentajeAciertos, puntaje, TKNs, idPartida]
+        );
+        
+        // Añadir TKNs al wallet del usuario
+        await connection.execute(
+            'UPDATE wallet SET cantidad = cantidad + ? WHERE idUsuario = ? AND idCriptomoneda = 1', 
+            [TKNs, idUsuario]
+        );
+        
+        res.send({success: true});
+    } catch (err) {
+        console.error("Error guardando resultados de trivia:", err);
+        const {name, message} = err;
+        res.status(500).send({error: name, message});
+    } finally {
+        if (connection) {
+            connection.end();
         }
-        catch (err)
-        {
-            const {name, message} = err;
-            res.status(500).send({error: name, message});
-        }
-        finally 
-        {
-            if (connection)
-            {
-                connection.end();
-            }
-        }
-    });
+    }
+});
 
 
 app.use((req, res) => {
