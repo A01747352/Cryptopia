@@ -7,7 +7,6 @@ using System.Collections;
 using UnityEngine.SceneManagement;
 using UnityEngine.Networking;
 using Newtonsoft.Json;
-using Unity.VisualScripting;
 
 
 public class CryptoMine : MonoBehaviour
@@ -21,16 +20,18 @@ public class CryptoMine : MonoBehaviour
     private string[] powerUpNames;
 
     // User Variables
-    private double minedCrypto;
-    private int totalBlocks;
+    private double sessionMinedCrypto = 0;
+    private double totalMinedCrypto;
+    private int sessionMinedBlocks = 0;
+    private int totalMinedBlocks;
     private int pointsPerBlock = 100;
     private int score = 0;
     private int totalClicks;
+    private int sessionClicks = 0;
     private HashSet<int> hashTarget;
     private HashSet<int> hashAttempts;
     private int hashUser;
     private string[] userPowerUps;
-    private static bool rigTurnedOn = true;
     private  DateTime sessionStart = DateTime.Now;
 
     
@@ -93,7 +94,7 @@ public class CryptoMine : MonoBehaviour
         SceneManager.sceneLoaded += OnSceneLoaded;
 
         session.startSession = DateTime.Now;
-        StartCoroutine(LoadUserData());
+        LoadUserData();
 
         game = GetComponent<UIDocument>();
         VisualElement root = game.rootVisualElement;
@@ -105,8 +106,8 @@ public class CryptoMine : MonoBehaviour
         blocksMinedLabel = root.Q<Label>("BlocksMinedValue");
         totalScoreLabel = root.Q<Label>("TotalScoreValue");
 
-        cryptoMinedLabel.text = minedCrypto.ToString("F5");
-        blocksMinedLabel.text = totalBlocks.ToString();
+        cryptoMinedLabel.text = totalMinedCrypto.ToString("F5");
+        blocksMinedLabel.text = totalMinedBlocks.ToString();
         totalScoreLabel.text = score.ToString() + "pts";
 
         // Main Container Elements
@@ -227,15 +228,17 @@ public class CryptoMine : MonoBehaviour
         if (hashTarget.Contains(hashUser))
         {
             double crypto = ApplyPowerUps(hashReward);
-            minedCrypto += crypto;
+            sessionMinedCrypto += crypto;
+            totalMinedCrypto += crypto;
             PlayerPrefs.SetFloat("TKNs", PlayerPrefs.GetFloat("TKNs", 0) + (float)crypto);
             hashAttempts.Clear();
             GenerateHashTarget();
-            ++totalBlocks;
+            ++sessionMinedBlocks;
+            ++totalMinedBlocks;
 
             score += pointsPerBlock;
             PlayerPrefs.SetInt("TotalScore", PlayerPrefs.GetInt("TotalScore", 0) + pointsPerBlock);
-            blocksMinedLabel.text = totalBlocks.ToString();
+            blocksMinedLabel.text = totalMinedBlocks.ToString();
             totalScoreLabel.text = score.ToString() + "pts";
         }
         else
@@ -243,7 +246,7 @@ public class CryptoMine : MonoBehaviour
             hashAttempts.Add(hashUser);
         }
         print(hashUser);
-        cryptoMinedLabel.text = minedCrypto.ToString("F5");
+        cryptoMinedLabel.text = totalMinedCrypto.ToString("F5");
     }
 
 
@@ -352,10 +355,10 @@ public class CryptoMine : MonoBehaviour
 
     private void SaveGameSession()
     {
-        session.TKNs = minedCrypto;
-        session.minedBlocks = totalBlocks;
+        session.TKNs = sessionMinedCrypto;
+        session.minedBlocks = sessionMinedBlocks;
         session.endSession = DateTime.Now;
-        session.clicks = totalClicks;
+        session.clicks = sessionClicks;
         session.score = score;
 
         string jsonData = JsonConvert.SerializeObject(session);
@@ -375,23 +378,31 @@ public class CryptoMine : MonoBehaviour
         }
     }
 
-    private IEnumerator LoadUserData()
+    private void LoadUserData()
     {
+        print("Loading user data");
         UnityWebRequest webReqeust = UnityWebRequest.Get($"{url}/cryptomine/loadUserData/{userId}");
-        yield return webReqeust.SendWebRequest();
+        webReqeust.SendWebRequest();
+        
+        while (!webReqeust.isDone) { }
+        
         if (webReqeust.result == UnityWebRequest.Result.Success)
         {
             string userData = webReqeust.downloadHandler.text;
             Dictionary<string, object> data = JsonConvert.DeserializeObject<Dictionary<string, object>>(userData);
 
+            foreach (var key in data.Keys)
+            {
+                print($"{key}: {data[key]}");
+            }
             // Access the values by key
             if (data.ContainsKey("TKNs"))
             {
-                minedCrypto = System.Convert.ToDouble(data["TKNs"]);
+                totalMinedCrypto = System.Convert.ToDouble(data["TKNs"]);
             }
             if (data.ContainsKey("totalBloquesMinados"))
             {
-                totalBlocks = System.Convert.ToInt32(data["totalBloquesMinados"]);
+                totalMinedBlocks = System.Convert.ToInt32(data["totalBloquesMinados"]);
             }
         }
         else
@@ -410,9 +421,10 @@ public class CryptoMine : MonoBehaviour
     private double EveryFifth(double points)
     {
         print("Every Fifth activated");
-        if (totalBlocks % 5 == 0)
+        if (sessionMinedBlocks % 5 == 0)
         {
-            minedCrypto += hashReward * 5;
+            sessionMinedCrypto += hashReward * 5;
+            totalMinedCrypto += hashReward * 5;
             return points;
         }
         else
@@ -423,7 +435,8 @@ public class CryptoMine : MonoBehaviour
     private double Plus10(double points)
     {
         print("Plusten activated");
-        minedCrypto += hashReward * .10;
+        sessionMinedCrypto += hashReward * .10;
+        totalMinedCrypto += hashReward * .10;
         return points;
     }
 

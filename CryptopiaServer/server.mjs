@@ -377,7 +377,7 @@ app.post('/cryptomine/saveSession/:userId', async (req, res) =>
         console.log("Conexion exitosa");
         await connection.execute('INSERT INTO SesionCryptoMine(idUsuario, TKNs, bloquesMinados, clicks, puntaje, inicioSesion, terminaSesion, idMinijuego) VALUES(?, ?, ?, ?, ?, ?, ?, 3);', [userId, TKNs, minedBlocks, clicks, score, startSession, endSession]);
         console.log("Consulta exitosa");
-        //await connection.execute('UPDATE Wallet SET cantidad = cantidad + ? WHERE idUsuario = ? AND idCriptomoneda = 1', [TKNs, userId]);
+        await connection.execute('UPDATE Wallet SET cantidad = cantidad + ? WHERE idUsuario = ? AND idCriptomoneda = 1', [TKNs, userId]);
         res.send({success: true});
     }
     catch (err)
