@@ -1,0 +1,137 @@
+.dashboard {
+    padding: 20px 0;
+  }
+  
+  .loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+    font-size: 20px;
+  }
+  
+  .chart-container {
+    height: 220px;
+    position: relative;
+    margin-top: 15px;
+  }
+  
+  .card h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #ffffff;
+  }
+  
+  .gender-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .gender-chart {
+    width: 70%;
+  }
+  
+  .gender-percentage {
+    text-align: center;
+  }
+  
+  .gender-percentage h2 {
+    font-size: 36px;
+    margin-bottom: 0;
+    color: #6c63ff;
+  }
+  
+  .gender-percentage p {
+    font-size: 18px;
+    color: #a0a0a0;
+  }
+  
+  .retention-percentage {
+    text-align: center;
+  }
+  
+  .retention-percentage h2 {
+    font-size: 36px;
+    margin-bottom: 0;
+    color: #6c63ff;
+  }
+  
+  .sessions-count h2, .revenue-amount h2 {
+    font-size: 44px;
+    margin-bottom: 15px;
+    color: #ffffff;
+  }
+  
+  .rating {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+  }
+  
+  .rating .star {
+    color: #5a5a5a;
+    font-size: 20px;
+    margin-right: 5px;
+  }
+  
+  .rating .star.filled {
+    color: #ffb400;
+  }
+  
+  .rating .star.half {
+    position: relative;
+    color: #5a5a5a;
+  }
+  
+  .rating .star.half:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%;
+    overflow: hidden;
+    color: #ffb400;
+  }
+  
+  .rating span {
+    margin-left: 10px;
+    font-size: 18px;
+    color: #a0a0a0;
+  }
+  
+  .questions-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .top-questions h3, .bottom-questions h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #a0a0a0;
+  }
+  
+  .top-questions ul, .bottom-questions ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .top-questions li, .bottom-questions li {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #333;
+  }
+  
+  .percentage {
+    font-weight: bold;
+  }
+  
+  .top-questions .percentage {
+    color: #4caf50;
+  }
+  
+  .bottom-questions .percentage {
+    color: #f44336;
+  }
