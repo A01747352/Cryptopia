@@ -21,13 +21,23 @@
     </engine:VisualElement>
     <engine:VisualElement name="MainContainer" class="mainContainer" style="flex-grow: 1;">
         <engine:VisualElement name="PowerUpWindow" class="powerUpWindow" style="flex-grow: 0;">
-            <engine:VisualElement name="PowerUp1" class="powerUp" style="flex-grow: 0;" />
-            <engine:VisualElement name="PowerUp2" class="powerUp" style="flex-grow: 0;" />
-            <engine:VisualElement name="PowerUp3" class="powerUp" style="flex-grow: 0;" />
+            <engine:VisualElement name="PowerUp1Container" class="powerUpContainer" style="flex-grow: 0;">
+                <engine:VisualElement name="PowerUp1" class="powerUp" style="flex-grow: 0;" />
+                <engine:DropdownField name="PowerUp1Dropdown" class="dropdownPowerUp" />
+            </engine:VisualElement>
+            <engine:VisualElement name="PowerUp2Container" class="powerUpContainer" style="flex-grow: 0;">
+                <engine:VisualElement name="PowerUp2" class="powerUp" style="flex-grow: 0;" />
+                <engine:DropdownField name="PowerUp2Dropdown" class="dropdownPowerUp" />
+            </engine:VisualElement>
+            <engine:VisualElement name="PowerUp3Container" class="powerUpContainer" style="flex-grow: 0;">
+                <engine:VisualElement name="PowerUp3" class="powerUp" style="flex-grow: 0;" />
+                <engine:DropdownField name="PowerUp3Dropdown" class="dropdownPowerUp" />
+            </engine:VisualElement>
         </engine:VisualElement>
         <engine:VisualElement name="DrillContainer" class="drillContainer" style="flex-grow: 0;">
             <engine:Label text="Label" name="HashLabel" class="hashLabel" />
             <engine:Button text="Button" name="MineButton" class="mineButton" />
+            <engine:DropdownField name="CryptoRigDropdown" class="cryptoRigDropdown" />
         </engine:VisualElement>
     </engine:VisualElement>
 </engine:UXML>
