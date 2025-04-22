@@ -874,7 +874,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveAmount: 0.5
-  duration: 0.5
+  duration: 1.5
   imageText: Contrato 1
   reward: x2
   textComponent: {fileID: 483789326}
@@ -1703,7 +1703,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveAmount: 0.5
-  duration: 0.5
+  duration: 1.5
   imageText: Contrato3
   reward: x4
   textComponent: {fileID: 2099120198}
@@ -2016,7 +2016,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveAmount: 0.5
-  duration: 0.5
+  duration: 1.5
   imageText: Contrato2
   reward: x3
   textComponent: {fileID: 534758797}

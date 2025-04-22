@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+
 [System.Serializable]
 public class TextEntry {
     public string id;
