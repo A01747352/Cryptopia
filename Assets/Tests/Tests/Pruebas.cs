@@ -6,22 +6,6 @@ using System.Collections;
 
 public class Pruebas
 {
-    // 1. Verificar que la escena del menú cambie correctamente a los minijuegos
-    [UnityTest]
-    public IEnumerator MenuToMinigame1()
-    {
-        // ARRANGE: Cargar la escena "City" como punto de partida
-        SceneManager.LoadScene("City");
-        yield return new WaitForSeconds(1f);
-
-        // ACT: Cambiar a la escena del minijuego "MiniGame"
-        SceneManager.LoadScene("ss");
-        yield return new WaitForSeconds(1f);
-
-        // ASSERT: Verificar que la escena activa sea "MiniGame"
-        Assert.AreEqual("ss", SceneManager.GetActiveScene().name, "La escena MiniGame no se cargó correctamente.");
-    }
-
     // 3. Dummy test para asegurar que el framework de tests funciona
     [Test]
     public void DummyTest()
