@@ -72,4 +72,15 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
+# ================================
+# === Node.js: Ignorar npm install ===
+# ================================
 
+/cryptopage/frontend/node_modules/
+/cryptopage/frontend/package-lock.json
+
+/cryptopage/backend/node_modules/
+/cryptopage/backend/package-lock.json
+
+/CryptopiaServer/node_modules/
+/CryptopiaServer/package-lock.json
