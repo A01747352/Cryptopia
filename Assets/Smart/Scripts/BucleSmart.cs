@@ -4,7 +4,7 @@ using UnityEngine;
 public class BucleSmart : MonoBehaviour
 {
     public float moveAmount = 0.5f;     // Cuánto sube y baja en el eje Y
-    public float duration = 1f;       // Tiempo que tarda en subir o bajar
+    public float duration = 1.5f;       // Tiempo que tarda en subir o bajar
 
     private Coroutine moveCoroutine;
     private Vector3 initialPosition;    // Posición inicial del objeto

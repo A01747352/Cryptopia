@@ -74,4 +74,15 @@ public class Pruebas
         // ASSERT: Verificación directa
         Assert.Pass("Dummy test passed.");
     }
+
+    [UnityTest]
+    public IEnumerator SamrtTest()
+    {
+        // ACT: Cambiar a la escena del minijuego "Cryptography"
+        SceneManager.LoadScene("Smart");
+        yield return new WaitForSeconds(1f);
+
+        // ASSERT: Verificar que la escena activa sea "Cryptography"
+        Assert.AreEqual("Smart", SceneManager.GetActiveScene().name, "La escena Cryptography no se cargó correctamente.");
+    }
 }
