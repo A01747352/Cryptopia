@@ -41,6 +41,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/CryptoMine.unity
     guid: b57b372c27fad420ba53f9bd6615b853
+    path: Assets/Scenes/Smart.unity
+    guid: 09b800401d66ab0478aacb65506e1894
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

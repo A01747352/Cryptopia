@@ -1,0 +1,7 @@
+{
+    "texts": [
+        { "id": "1", "message": "Texto A", "reward": "Recompensa A" },
+        { "id": "2", "message": "Texto B", "reward": "Recompensa B" },
+        { "id": "3", "message": "Texto C", "reward": "Recompensa C" }
+    ]
+}
