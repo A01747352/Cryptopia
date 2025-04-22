@@ -18,30 +18,21 @@ The urls can be more specific too but the format should be descriptive.
 
 // Connect to Data Base
 
-async function dbConnect()
-{
+async function dbConnect() {
     return await mysql.createConnection({
-        host: 'localhost',
-        //user: process.env.LOCALHOST_MYSQL_USER,
-        //password: process.env.LOCALHOST_MYSQL_PASSWORD,
-        
-        user: "root",
-        password: "",
+        host: 'cryptochicks-db.c7uwe4okm9f3.us-east-2.rds.amazonaws.com',
+        user: "admin",
+        password: "Ivanyaduermete",
         database: 'Cryptopia',
-        multipleStatements: true
-    });
+        multipleStatements: true
+    });
 }
 
 async function loginVerification(user,password){
     let connection;
     try {
-        connection = await mysql.createConnection({
-            host: 'localhost',
-            user: process.env.LOCALHOST_MYSQL_USER,
-            password: process.env.LOCALHOST_MYSQL_PASSWORD,
-            database: 'Cryptopia',
-        });
-        const [rows] = await connection.query('SELECT contrasena FROM Usuario WHERE username = ?;', [user]);
+        connection = await dbConnect();
+        const [rows] = await connection.query('SELECT contrasena FROM usuario WHERE username = ?;', [user]);
         const correctPassword = rows[0].contrasena;
 
         if (rows.length > 0) {
@@ -58,12 +49,51 @@ async function loginVerification(user,password){
         return { result: "errorServidor" };
     } finally {
         if (connection){
-            await connection.end();
+            connection.end();
         }
     }
 }
 
+async function registration(user, password, firstName, lastName, dateOfBirth, gender, country, occupation){
+    let connection;
 
+    try {
+        connection = await dbConnect();
+        const [existingUser] = await connection.query('SELECT username FROM usuario WHERE username = ?;', [user]);
+        if (existingUser.length > 0) {
+            return { result: "usuarioExiste" };
+        }
+
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+        if (!passwordRegex.test(password)) {
+            return { result: "contrasenaInvalida" };
+        } 
+
+        // Convertir género a formato correcto (un carácter)
+        let genderChar = null;
+        if (gender) {
+            if (gender.toLowerCase().startsWith('m')) {
+                genderChar = 'M';
+            } else if (gender.toLowerCase().startsWith('f')) {
+                genderChar = 'F';
+            } else {
+                genderChar = 'O'; // Otro
+            }
+        }
+
+        await connection.query('INSERT INTO usuario(username, contrasena, nombre, apellido, nacimiento, genero, pais, ocupacion) VALUES(?, ?, ?, ?, ?, ?, ?, ?);',
+            [user, password, firstName, lastName, dateOfBirth, genderChar, country, occupation]);
+            return { result: "registroExitoso" };
+
+    } catch (err){
+        console.error("Error al acceder a la base datos:", err);
+        return { result: "errorServidor" };
+    } finally {
+        if (connection){
+            connection.end();
+        }
+    }
+}
 
 
 // Player Progress
@@ -187,6 +217,19 @@ app.post("/login", async (req, res) =>
         res.status(500).json({ result: "errorServidor" });
     }
 });
+
+app.post("/register", async (req, res) => 
+    {
+        let {user, password, firstName, lastName, dateOfBirth, gender, country, occupation} = req.body;
+        try {
+            const result = await registration(user, password, firstName, lastName, dateOfBirth, gender, country, occupation);
+            res.status(200).json(result);
+    
+        } catch (error) {
+            console.error("Error en el endpoint de autenticación:", error);
+            res.status(500).json({ result: "errorServidor" });
+        }
+    });
 
 // Endpoint para registrar un nuevo juego de trivia
 app.get('/trivia/newGame/:userId', async (req, res) => 
