@@ -77,7 +77,7 @@ public class LoginUIHandler : MonoBehaviour
             else
             {
                 Debug.LogError("Login failed: Invalid credentials.");
-                Debug.LogError($"CHUPAME LA VERGA: {webRequest.error}");
+                Debug.LogError($"Error: {webRequest.error}");
             }
             
         }
