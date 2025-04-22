@@ -25,7 +25,7 @@ async function dbConnect() {
         password: "Ivanyaduermete",
         database: 'Cryptopia',
         multipleStatements: true
-    });
+    });
 }
 
 async function loginVerification(user,password){
@@ -95,31 +95,38 @@ async function registration(user, password, firstName, lastName, dateOfBirth, ge
     }
 }
 
+  // Login and Register Requests
+  app.post("/login", async (req, res) => 
+    {
+        let {user, password} = req.body;
+        try {
+            const result = await loginVerification(user, password);
+            res.status(200).json(result);
+    
+        } catch (error) {
+            console.error("Error en el endpoint de autenticación:", error);
+            res.status(500).json({ result: "errorServidor" });
+        }
+    });
+    
+    app.post("/register", async (req, res) => 
+        {
+            let {user, password, firstName, lastName, dateOfBirth, gender, country, occupation} = req.body;
+            try {
+                const result = await registration(user, password, firstName, lastName, dateOfBirth, gender, country, occupation);
+                res.status(200).json(result);
+        
+            } catch (error) {
+                console.error("Error en el endpoint de autenticación:", error);
+                res.status(500).json({ result: "errorServidor" });
+            }
+        });
 
 // Player Progress
 
 
 
 // Minigame Cryptography Requests
-
-
-app.get('/trivia/newGame/:userId', async (req, res) => {
-    let userId = req.params.userId;
-    let connection;
-    try {
-        connection = await dbConnect();
-        const [rows] = await connection.query('CALL RegistrateTriviagame(?);', [userId]);
-        const response = rows[0][0];
-        res.send(response);
-    } catch (err) {
-        const {name, message} = err;
-        res.status(500).send({error: name, message});
-    } finally {
-        if (connection) {
-            connection.end();
-        }
-    }
-});
 // Endpoint para cargar palabras de encriptación
 app.get('/cryptography/loadEncryption', async (req, res) => {
     let connection;
@@ -190,32 +197,6 @@ app.post('/cryptography/saveGame', async (req, res) => {
     }
 });
 
-  // Login and Register Requests
-app.post("/login", async (req, res) => 
-{
-    let {user, password} = req.body;
-    try {
-        const result = await loginVerification(user, password);
-        res.status(200).json(result);
-
-    } catch (error) {
-        console.error("Error en el endpoint de autenticación:", error);
-        res.status(500).json({ result: "errorServidor" });
-    }
-});
-
-app.post("/register", async (req, res) => 
-    {
-        let {user, password, firstName, lastName, dateOfBirth, gender, country, occupation} = req.body;
-        try {
-            const result = await registration(user, password, firstName, lastName, dateOfBirth, gender, country, occupation);
-            res.status(200).json(result);
-    
-        } catch (error) {
-            console.error("Error en el endpoint de autenticación:", error);
-            res.status(500).json({ result: "errorServidor" });
-        }
-    });
 
 // Endpoint para registrar un nuevo juego de trivia
 app.get('/cryptography/newGame/:userId', async (req, res) => {
@@ -236,7 +217,111 @@ app.get('/cryptography/newGame/:userId', async (req, res) => {
     }
 });
 
-    // Endpoint para obtener todas las preguntas con sus respuestas
+// Minigame CryptoMine Requests 
+
+app.get('/cryptomine/retrieveUserPowerUps/:userId', async (req, res) =>
+    {
+        let connection;
+        let userId = req.params.userId;
+        try 
+        {
+            connection = await dbConnect();
+            const [rows] = await connection.execute('SELECT pu.nombre FROM PowerUpDesbloqueado AS pud LEFT JOIN PowerUp AS pu ON pud.idPowerUp = pu.idPowerUp WHERE pud.idUsuario = ?;', [userId]);
+            const response = rows.map(row => row.nombre).join('-');
+            res.send(response);
+        }
+        catch (err)
+        {
+            const {name, message} = err;
+            res.status(500).send({error: name, message});
+        }
+        finally 
+        {
+            if (connection)
+            {
+                connection.end();
+            }
+        }
+    });
+    
+    app.post('/cryptomine/saveSession/:userId', async (req, res) =>
+    {
+        let userId = req.params.userId;
+        let {TKNs, startSession, endSession, minedBlocks, clicks, score} = req.body;
+        let connection;
+        try
+        {
+            connection = await dbConnect();
+            console.log("Conexion exitosa");
+            await connection.execute('INSERT INTO SesionCryptoMine(idUsuario, TKNs, bloquesMinados, clicks, puntaje, inicioSesion, terminaSesion, idMinijuego) VALUES(?, ?, ?, ?, ?, ?, ?, 3);', [userId, TKNs, minedBlocks, clicks, score, startSession, endSession]);
+            console.log("Consulta exitosa");
+            await connection.execute('UPDATE Wallet SET cantidad = cantidad + ? WHERE idUsuario = ? AND idCriptomoneda = 1', [TKNs, userId]);
+            res.send({success: true});
+        }
+        catch (err)
+        {
+            const {name, message} = err;
+            res.status(500).send({error: name, message});
+        }
+        finally 
+        {
+            if (connection)
+            {
+                connection.end();
+            }
+        }
+    });
+    
+    app.get('/cryptomine/loadUserData/:userId', async (req, res) =>
+    {
+        let userId = req.params.userId;
+        let connection;
+        try
+        {
+            connection = await dbConnect();
+            const [rows] = await connection.execute('SELECT cantidad FROM Wallet WHERE idUsuario = ? AND idCriptomoneda = 1;', [userId]);
+            const TKNs = rows[0].cantidad || 0;
+            const [rows2] = await connection.execute('SELECT SUM(bloquesMinados) AS totalBloquesMinados FROM SesionCryptoMine WHERE idUsuario = ?;', [userId]);
+            const totalBloquesMinados = rows2[0].totalBloquesMinados || 0;
+            const response = {
+                TKNs: TKNs,
+                totalBloquesMinados: totalBloquesMinados
+            };
+            res.send(response);
+        }
+        catch (err)
+        {
+            const {name, message} = err;
+            res.status(500).send({error: name, message});
+        }
+        finally 
+        {
+            if (connection)
+            {
+                connection.end();
+            }
+        }
+    });
+
+// Endpoint para registrar nuevo juego de trivia
+    app.get('/trivia/newGame/:userId', async (req, res) => {
+        let userId = req.params.userId;
+        let connection;
+        try {
+            connection = await dbConnect();
+            const [rows] = await connection.query('CALL RegistrateTriviagame(?);', [userId]);
+            const response = rows[0][0];
+            res.send(response);
+        } catch (err) {
+            const {name, message} = err;
+            res.status(500).send({error: name, message});
+        } finally {
+            if (connection) {
+                connection.end();
+            }
+        }
+    });
+
 // Endpoint para obtener todas las preguntas con sus respuestas
 app.get('/trivia/getAllQuestions', async (req, res) => {
     let connection;
