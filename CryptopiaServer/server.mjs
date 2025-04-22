@@ -1,5 +1,6 @@
 import express from 'express';
 import mysql from 'mysql2/promise';
+import axios from 'axios';
 
 
 const app = express();
@@ -425,6 +426,17 @@ app.get('/cryptomine/loadUserData/:userId', async (req, res) =>
     }
 });
 
+app.get('/trading/retrieveCryptoPrices', async (req, res) =>
+{
+    try {
+        const response = await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,litecoin&vs_currencies=usd');
+        res.json(response.data);
+        console.log("Precios de criptomonedas obtenidos:", response.data);
+    } catch (error) {
+        console.error("Error al obtener precios de criptomonedas:", error);
+        res.status(500).json({ error: "Error al obtener precios de criptomonedas" });
+    }
+});
 
 
 app.use((req, res) => {
