@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UIElements;
+using System;
 using System.Collections;
 using UnityEngine.Networking;
 using Newtonsoft.Json;
@@ -9,6 +10,11 @@ public class Trading : MonoBehaviour
     string url = "http://localhost:8080";
     private int userId;
 
+    // UI Elements
+    private VisualElement container;
+    private UIDocument game;
+
+
     public struct CryptoCurrency
     {
         public string nombre;
@@ -17,12 +23,30 @@ public class Trading : MonoBehaviour
     }
 
     private CryptoCurrency[] wallet;
+    
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
         userId = PlayerPrefs.GetInt("userId", 1);
         RetrieveWallet();
+    }
+
+    void OnEnable()
+    {
+        game = GetComponent<UIDocument>();
+        container = game.rootVisualElement;
+        
+        VisualElement MakeItem() => new Label();
+
+        void BindItem(VisualElement e, int i) => (e as Label).text = wallet[i].nombre;
+
+        var listView = container.Q<ListView>("ListView1");
+        listView.makeItem = MakeItem;
+        listView.bindItem = BindItem;
+        listView.itemsSource = wallet;
+        listView.selectionType = SelectionType.Multiple;
+
     }
 
     // Retrieving user Wallet
