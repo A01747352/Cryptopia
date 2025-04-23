@@ -9,6 +9,7 @@ public class PauseButton : MonoBehaviour
     [SerializeField] private UIDocument gameUIDocument;     // Main in-game UI
     [SerializeField] private GameObject pauseUI;            // Pause menu UI (with buttons)
     [SerializeField] private GameObject pauseCat;           // PauseCat canvas (con animaciones)
+    [SerializeField] private string backButtonScene;      // Scene name to load for the main menu
 
     private bool isPaused = false;
     private bool isMuted = false;
@@ -67,7 +68,8 @@ public class PauseButton : MonoBehaviour
             ResumeGame();
         }
     }
-        private IEnumerator SetupPauseMenuButtonsNextFrame()
+
+    private IEnumerator SetupPauseMenuButtonsNextFrame()
     {
         yield return null;
         SetupPauseMenuButtons();
@@ -106,8 +108,15 @@ public class PauseButton : MonoBehaviour
 
     private void GoToMainMenu()
     {
-        Time.timeScale = 1f;
-        SceneManager.LoadScene("MainMenu");
+        if (!string.IsNullOrEmpty(backButtonScene))
+        {
+            Time.timeScale = 1f;
+            SceneManager.LoadScene(backButtonScene);
+        }
+        else
+        {
+            Debug.LogWarning("Main menu scene name is not set!");
+        }
     }
 
     private void ToggleMute()
