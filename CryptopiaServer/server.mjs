@@ -1,5 +1,6 @@
 import express from 'express';
 import mysql from 'mysql2/promise';
+import axios from 'axios';
 
 
 const app = express();
@@ -81,7 +82,7 @@ async function registration(user, password, firstName, lastName, dateOfBirth, ge
             }
         }
 
-        await connection.query('INSERT INTO usuario(username, contrasena, nombre, apellido, nacimiento, genero, pais, ocupacion) VALUES(?, ?, ?, ?, ?, ?, ?, ?);',
+        await connection.query('CALL InsertUsuario(?, ?, ?, ?, ?, ?, ?, ?);',
             [user, password, firstName, lastName, dateOfBirth, genderChar, country, occupation]);
         return { result: "registroExitoso" };
 
@@ -155,7 +156,7 @@ app.post('/cryptography/submitAnswer', async (req, res) => {
     try {
         connection = await dbConnect();
         await connection.query(
-            'INSERT INTO respuestausuariocriptografia(respuestaUsuario, idPalabra, idPartida) VALUES(?, ?, ?);',
+            'CALL InsertRespuestaUsuarioCriptografia(?, ?, ?);',
             [respuestaUsuario, idPalabra, idPartida]
         );
         res.send({ success: true });
@@ -179,12 +180,8 @@ app.post('/cryptography/saveGame', async (req, res) => {
     try {
         connection = await dbConnect();
         await connection.execute(
-            'UPDATE partidacriptografia SET aciertos = ?, errores = ?, puntaje = ?, TKNs = ?, resultado = ?, idMinijuego = ? WHERE idPartida = ?',
-            [aciertos, errores, puntaje, TKNs, resultado, idMinijuego, idPartida]
-        );
-        await connection.execute(
-            'UPDATE wallet SET cantidad = cantidad + ? WHERE idUsuario = ? AND idCriptomoneda = 1',
-            [TKNs, idUsuario]
+            'CALL saveGameCryptography(?, ?, ?, ?, ?, ?, ?);',
+            [idPartida, idUsuario, aciertos, errores, puntaje, TKNs, resultado]
         );
         res.send({ success: true });
     } catch (err) {
@@ -219,6 +216,7 @@ app.get('/cryptography/newGame/:userId', async (req, res) => {
     }
 });
 
+<<<<<<< Updated upstream
 // Minigame CryptoMine Requests 
 
 app.get('/cryptomine/retrieveUserPowerUps/:userId', async (req, res) => {
@@ -290,6 +288,19 @@ app.get('/cryptomine/loadUserData/:userId', async (req, res) => {
     }
 });
 
+app.get('/trading/retrieveCryptoPrices', async (req, res) =>
+{
+    try {
+        const response = await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,litecoin&vs_currencies=usd');
+        res.json(response.data);
+        console.log("Precios de criptomonedas obtenidos:", response.data);
+    } catch (error) {
+        console.error("Error al obtener precios de criptomonedas:", error);
+        res.status(500).json({ error: "Error al obtener precios de criptomonedas" });
+    }
+});
+=======
+>>>>>>> Stashed changes
 
 app.get('/trivia/newGame/:userId', async (req, res) => {
     let userId = req.params.userId;
@@ -375,7 +386,7 @@ app.post('/trivia/submitAnswer', async (req, res) => {
     try {
         connection = await dbConnect();
         await connection.query(
-            'INSERT INTO respuestausuariotrivia(respuestaUsuario, idPregunta, esCorrecta, idPartida) VALUES(?, ?, ?, ?);',
+            'CALL InsertRespuestaUsuarioTrivia(?, ?, ?, ?);',
             [respuestaUsuario, idPregunta, esCorrecta, idPartida]
         );
         res.send({ success: true });
@@ -402,16 +413,9 @@ app.post('/trivia/saveGame', async (req, res) => {
 
         // Actualizar la partida de trivia
         await connection.execute(
-            'UPDATE partidatrivia SET resultado = ?, porcentajeAciertos = ?, puntaje = ?, TKNs = ? WHERE idPartida = ?',
-            [resultado, porcentajeAciertos, puntaje, TKNs, idPartida]
+            'CALL saveGameTrivia(?, ?, ?, ?, ?, ?);',
+            [idPartida, idUsuario, resultado, porcentajeAciertos, puntaje, TKNs]
         );
-
-        // Añadir TKNs al wallet del usuario
-        await connection.execute(
-            'UPDATE wallet SET cantidad = cantidad + ? WHERE idUsuario = ? AND idCriptomoneda = 1',
-            [TKNs, idUsuario]
-        );
-
         res.send({ success: true });
     } catch (err) {
         console.error("Error guardando resultados de trivia:", err);
@@ -424,6 +428,78 @@ app.post('/trivia/saveGame', async (req, res) => {
     }
 });
 
+// Minigame CryptoMine Requests 
+
+app.get('/cryptomine/retrieveUserPowerUps/:userId', async (req, res) => {
+    let connection;
+    let userId = req.params.userId;
+    try {
+        connection = await dbConnect();
+        const [rows] = await connection.execute('SELECT pu.nombre FROM powerupdesbloqueado AS pud LEFT JOIN powerup AS pu ON pud.idPowerUp = pu.idPowerUp WHERE pud.idUsuario = ?;', [userId]);
+        const response = rows.map(row => row.nombre).join('-');
+        res.send(response);
+    }
+    catch (err) {
+        const { name, message } = err;
+        res.status(500).send({ error: name, message });
+    }
+    finally {
+        if (connection) {
+            connection.end();
+        }
+    }
+});
+
+app.post('/cryptomine/saveSession/:userId', async (req, res) => {
+    let userId = req.params.userId;
+    let { TKNs, startSession, endSession, minedBlocks, clicks, score } = req.body;
+    let connection;
+    try {
+        connection = await dbConnect();
+        console.log("Conexion exitosa");
+        await connection.execute('CALL InsertSesionCryptoMine(?, ?, ?, ?, ?, ?, ?);', [userId, TKNs, minedBlocks, clicks, score, startSession, endSession]);
+        console.log("Consulta exitosa");
+        res.send({ success: true });
+    }
+    catch (err) {
+        const { name, message } = err;
+        res.status(500).send({ error: name, message });
+    }
+    finally {
+        if (connection) {
+            connection.end();
+        }
+    }
+});
+
+app.get('/cryptomine/loadUserData/:userId', async (req, res) => {
+    let userId = req.params.userId;
+    let connection;
+    try {
+        connection = await dbConnect();
+        const [rows] = await connection.execute('SELECT cantidad FROM wallet WHERE idUsuario = ? AND idCriptomoneda = 1;', [userId]);
+        const TKNs = rows[0].cantidad || 0;
+        const [rows2] = await connection.execute('SELECT SUM(bloquesMinados) AS totalBloquesMinados FROM sesioncryptomine WHERE idUsuario = ?;', [userId]);
+        const totalBloquesMinados = rows2[0].totalBloquesMinados || 0;
+        const response = {
+            TKNs: TKNs,
+            totalBloquesMinados: totalBloquesMinados
+        };
+        res.send(response);
+    }
+    catch (err) {
+        const { name, message } = err;
+        res.status(500).send({ error: name, message });
+    }
+    finally {
+        if (connection) {
+            connection.end();
+        }
+    }
+});
+
+
+
 
 app.use((req, res) => {
     const url = req.originalUrl;
@@ -433,3 +509,73 @@ app.use((req, res) => {
 app.listen(port, () => {
     console.log(`Servidor esperando en: http://${ipAddress}:${port}`);
 });
+
+
+/*
+CREATE TABLE `partidatrivia` (
+  `idPartida` int NOT NULL AUTO_INCREMENT,
+  `resultado` enum('victoria','derrota') COLLATE utf8mb4_general_ci NOT NULL,
+  `porcentajeAciertos` decimal(5,2) NOT NULL,
+  `puntaje` int NOT NULL DEFAULT '0',
+  `fechaPartida` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `TKNs` double NOT NULL DEFAULT '0',
+  `idSmartContract` int DEFAULT NULL,
+  `idMinijuego` int NOT NULL,
+  `idUsuario` int NOT NULL,
+  PRIMARY KEY (`idPartida`),
+  KEY `idSmartContract` (`idSmartContract`),
+  KEY `idMinijuego` (`idMinijuego`),
+  KEY `idUsuario` (`idUsuario`),
+  CONSTRAINT `partidatrivia_ibfk_1` FOREIGN KEY (`idSmartContract`) REFERENCES `smartcontract` (`idSmartContract`),
+  CONSTRAINT `partidatrivia_ibfk_2` FOREIGN KEY (`idMinijuego`) REFERENCES `minijuego` (`idMinijuego`),
+  CONSTRAINT `partidatrivia_ibfk_3` FOREIGN KEY (`idUsuario`) REFERENCES `usuario` (`Id`),
+  CONSTRAINT `partidatrivia_chk_1` CHECK ((`porcentajeAciertos` between 0 and 100))
+) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+
+DELIMITER $$
+CREATE DEFINER=`admin`@`%` PROCEDURE `RegistrateTriviagame`(IN `userId` INT)
+BEGIN
+    DECLARE idMinigame INT;
+    DECLARE idGame INT;
+    
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        ROLLBACK;
+        RESIGNAL SQLSTATE '50000' SET MESSAGE_TEXT = 'Se produjo un error con la transaccion';
+    END;
+    
+    SET TRANSACTION ISOLATION LEVEL REPEATABLE READ;
+    START TRANSACTION;
+        SELECT idMinijuego INTO idMinigame FROM minijuego WHERE nombre = 'Trivia';
+        
+        INSERT INTO partidatrivia(resultado, porcentajeAciertos, puntaje, TKNs, idMinijuego, idUsuario) 
+        VALUES ('derrota', 0, 0, 0, idMinigame, userId);
+        
+        SET idGame = LAST_INSERT_ID();
+    COMMIT;
+    
+    SELECT idGame as 'idPartida', idGame as 'idGame', userId as 'idUsuario', 'Partida de trivia registrada correctamente' as 'mensaje';
+END$$
+DELIMITER ;
+
+
+CREATE TABLE `partidacriptografia` (
+  `idPartida` int NOT NULL AUTO_INCREMENT,
+  `aciertos` int NOT NULL DEFAULT '0',
+  `errores` int NOT NULL DEFAULT '0',
+  `puntaje` int NOT NULL DEFAULT '0',
+  `TKNs` double NOT NULL DEFAULT '0',
+  `resultado` tinyint(1) NOT NULL,
+  `idMinijuego` int NOT NULL,
+  `idUsuario` int NOT NULL,
+  PRIMARY KEY (`idPartida`),
+  KEY `idMinijuego` (`idMinijuego`),
+  KEY `idUsuario` (`idUsuario`),
+  CONSTRAINT `partidacriptografia_ibfk_1` FOREIGN KEY (`idMinijuego`) REFERENCES `minijuego` (`idMinijuego`),
+  CONSTRAINT `partidacriptografia_ibfk_2` FOREIGN KEY (`idUsuario`) REFERENCES `usuario` (`Id`)
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+*/

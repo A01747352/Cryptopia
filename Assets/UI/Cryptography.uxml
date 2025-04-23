@@ -6,7 +6,7 @@
             <engine:Label text="1/10" name="QuestionCount" class="questionCount" />
             <engine:Label text="Score" name="Score" emoji-fallback-support="false" class="score" style="height: 39px;" />
             <engine:VisualElement name="ProblemScreen" class="problemScreen" style="flex-grow: 1;">
-                <engine:Label text="Cryptography" name="Problem" class="problemText" />
+                <engine:Label text="Loading..." name="Problem" class="problemText" />
                 <engine:Label text="+ 100" name="GainedPoints" enabled="true" class="gainedPoints" />
             </engine:VisualElement>
             <engine:VisualElement name="InputContainer" class="inputContainer" style="flex-grow: 0; justify-content: center;">

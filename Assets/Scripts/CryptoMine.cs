@@ -381,14 +381,14 @@ public class CryptoMine : MonoBehaviour
     private void LoadUserData()
     {
         print("Loading user data");
-        UnityWebRequest webReqeust = UnityWebRequest.Get($"{url}/cryptomine/loadUserData/{userId}");
-        webReqeust.SendWebRequest();
+        UnityWebRequest webRequest = UnityWebRequest.Get($"{url}/cryptomine/loadUserData/{userId}");
+        webRequest.SendWebRequest();
         
-        while (!webReqeust.isDone) { }
+        while (!webRequest.isDone) { }
         
-        if (webReqeust.result == UnityWebRequest.Result.Success)
+        if (webRequest.result == UnityWebRequest.Result.Success)
         {
-            string userData = webReqeust.downloadHandler.text;
+            string userData = webRequest.downloadHandler.text;
             Dictionary<string, object> data = JsonConvert.DeserializeObject<Dictionary<string, object>>(userData);
 
             foreach (var key in data.Keys)
@@ -407,7 +407,7 @@ public class CryptoMine : MonoBehaviour
         }
         else
         {
-            Debug.LogError($"Error loading user data: {webReqeust.error}");
+            Debug.LogError($"Error loading user data: {webRequest.error}");
         }
     }
 

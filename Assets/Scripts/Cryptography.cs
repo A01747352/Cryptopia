@@ -186,9 +186,6 @@ private IEnumerator LoadProblem()
         problemaWrapper = JsonConvert.DeserializeObject<Problema[]>(response); 
         problema = problemaWrapper[0];
 
-        
-        
-
         // Update the UI with the loaded problem
         displayLabel.text = problema.palabra;
         scoreLabel.text = score.ToString() + "pts";
