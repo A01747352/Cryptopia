@@ -61,7 +61,7 @@ public class CryptoMine : MonoBehaviour
         private Label hashLabel;
 
     // Web
-    private int userId = 1;
+    private int userId;
     private string url = "http://localhost:8080";
 
 
@@ -78,6 +78,7 @@ public class CryptoMine : MonoBehaviour
 
     void Awake()
     {
+        userId = PlayerPrefs.GetInt("UserId", 0);
         if (instance == null)
         {
             instance = this;

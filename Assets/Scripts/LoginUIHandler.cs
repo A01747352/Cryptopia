@@ -56,13 +56,14 @@ public class LoginUIHandler : MonoBehaviour
 
         StartCoroutine(VerifyCredentials(user, password));
     }
+
     private IEnumerator VerifyCredentials(string user, string password)
-        {
+    {
         Login log;
         log.user = user;
         log.password = password;
 
-        string JsonLogin= JsonConvert.SerializeObject(log);
+        string JsonLogin = JsonConvert.SerializeObject(log);
         UnityWebRequest webRequest = UnityWebRequest.Post($"{url}/login", JsonLogin, "application/json");
         yield return webRequest.SendWebRequest();
 
@@ -71,15 +72,26 @@ public class LoginUIHandler : MonoBehaviour
             Dictionary<string, string> response = JsonConvert.DeserializeObject<Dictionary<string, string>>(webRequest.downloadHandler.text);
             if (response["result"] == "True")
             {
-                Debug.Log("VAMO");
+                Debug.Log("Login successful!");
+
+                // Save user ID in PlayerPrefs
+                if (response.ContainsKey("userId"))
+                {
+                    PlayerPrefs.SetInt("UserId", int.Parse(response["userId"]));
+                    PlayerPrefs.Save();
+                    Debug.Log($"User ID {response["userId"]} saved in PlayerPrefs.");
+                }
+
                 SceneManager.LoadScene("MainMenu");
             }
             else
             {
                 Debug.LogError("Login failed: Invalid credentials.");
-                Debug.LogError($"Error: {webRequest.error}");
             }
-            
+        }
+        else
+        {
+            Debug.LogError($"Error: {webRequest.error}");
         }
     }
 }

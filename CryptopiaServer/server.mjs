@@ -33,18 +33,20 @@ async function loginVerification(user, password) {
     let connection;
     try {
         connection = await dbConnect();
-        const [rows] = await connection.query('SELECT contrasena FROM usuario WHERE username = ?;', [user]);
-        const correctPassword = rows[0].contrasena;
+        const [rows] = await connection.query('SELECT Id, contrasena FROM usuario WHERE username = ?;', [user]);
 
         if (rows.length > 0) {
+            const correctPassword = rows[0].contrasena;
+            const userId = rows[0].Id;
+
             if (correctPassword === password) {
-                return { result: "True" };
-            }
-            else {
+                return { result: "True", userId: userId };
+            } else {
                 return { result: "False" };
             }
+        } else {
+            return { result: "False" };
         }
-
     } catch (err) {
         console.error("Error al acceder a la base datos:", err);
         return { result: "errorServidor" };
@@ -103,7 +105,6 @@ app.post("/login", async (req, res) => {
     try {
         const result = await loginVerification(user, password);
         res.status(200).json(result);
-
     } catch (error) {
         console.error("Error en el endpoint de autenticación:", error);
         res.status(500).json({ result: "errorServidor" });
