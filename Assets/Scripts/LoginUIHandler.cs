@@ -14,6 +14,8 @@ public class LoginUIHandler : MonoBehaviour
     private TextField userTextField;
     private TextField passwordTextField;
     string url = "http://localhost:8080";
+    private Label errorMessageLabel;
+
 
     public struct Login
     {
@@ -21,14 +23,17 @@ public class LoginUIHandler : MonoBehaviour
         public string password;
     }
 
+
     void OnEnable()
     {
         var uiDoc = GetComponent<UIDocument>();
-        root = uiDoc.rootVisualElement; 
+        root = uiDoc.rootVisualElement;
         var registerButton = root.Q<Button>("registerButton");
         var loginButton = root.Q<Button>("loginButton");
         userTextField = root.Q<TextField>("user");
         passwordTextField = root.Q<TextField>("password");
+        errorMessageLabel = root.Q<Label>("errorMessage");
+
 
         if (registerButton != null)
         {
@@ -41,6 +46,7 @@ public class LoginUIHandler : MonoBehaviour
             loginButton.clicked -= OnLoginClicked;
             loginButton.clicked += OnLoginClicked;
         }
+
     }
 
     private void OnRegisterClicked()
@@ -51,11 +57,15 @@ public class LoginUIHandler : MonoBehaviour
 
     private void OnLoginClicked()
     {
+        errorMessageLabel.text = "";
+        errorMessageLabel.style.color = Color.red;
+
         string user = userTextField.value;
         string password = passwordTextField.value;
 
         StartCoroutine(VerifyCredentials(user, password));
     }
+
 
     private IEnumerator VerifyCredentials(string user, string password)
     {
@@ -73,6 +83,8 @@ public class LoginUIHandler : MonoBehaviour
             if (response["result"] == "True")
             {
                 Debug.Log("Login successful!");
+                errorMessageLabel.style.color = Color.green;
+                errorMessageLabel.text = "Login successful!";
 
                 // Save user ID in PlayerPrefs
                 if (response.ContainsKey("userId"))
@@ -82,16 +94,23 @@ public class LoginUIHandler : MonoBehaviour
                     Debug.Log($"User ID {response["userId"]} saved in PlayerPrefs.");
                 }
 
+                // Esperar 1 segundo antes de cambiar de escena
+                yield return new WaitForSeconds(1f);
                 SceneManager.LoadScene("MainMenu");
             }
+
+
             else
             {
-                Debug.LogError("Login failed: Invalid credentials.");
+                errorMessageLabel.text = "Invalid username or password.";
             }
+
         }
         else
         {
+            errorMessageLabel.text = "Network error. Please try again.";
             Debug.LogError($"Error: {webRequest.error}");
+
         }
     }
 }
