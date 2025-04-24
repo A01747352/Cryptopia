@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Working Day Chart</title>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <style>
+    body {
+      background-color: #343435;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      font-family: sans-serif;
+    }
+    /* damos tamaño y relativo al contenedor */
+    #container {
+      position: relative;
+      width: 500px;
+      height: 400px;
+    }
+    .legend {
+      position: absolute;
+      left: 20px;
+      bottom: 20px;
+      color: #ccc;
+      font-size: 14px;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+    .legend-color {
+      width: 16px;
+      height: 16px;
+      margin-right: 6px;
+      border-radius: 3px;
+    }
+    .title {
+      fill: white;
+      font-size: 20px;
+      text-anchor: middle;
+    }
+    .center-number {
+      fill: #fff;
+      font-size: 56px;
+      text-anchor: middle;
+    }
+    .center-text {
+      fill: #ccc;
+      font-size: 14px;
+      text-anchor: middle;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="container"></div>
+
+  <script>
+    const data = [
+      { label: "Calls",     value: 4,  color: "#58b3cd", thickness: 125 },
+      { label: "Work Time", value: 3,  color: "#8cc3d2", thickness: 115 },
+      { label: "Meeting",   value: 2,  color: "#c2cad4", thickness: 105 }
+    ];
+
+    const totalHours = d3.sum(data, d => d.value);
+    const width  = 500;
+    const height = 500;
+    const innerR = 80;
+
+    // seleccionamos el contenedor y le añadimos el SVG con tamaño
+    const container = d3.select("#container");
+    const svg = container
+      .append("svg")
+        .attr("width",  width)
+        .attr("height", height)
+        .attr("viewBox", "0 0 " + width + " " + height)
+      .append("g")
+        .attr("transform", `translate(${width/2}, ${height/2})`);
+
+    const pie = d3.pie()
+      .sort(null)
+      .value(d => d.value);
+
+    const arcs = pie(data);
+
+    // halo exterior
+    svg.selectAll(".halo")
+      .data(arcs)
+      .join("path")
+        .attr("class", "halo")
+        .attr("d", d3.arc()
+          .innerRadius(d => d.data.thickness )
+          .outerRadius(d => d.data.thickness + 10)
+          .startAngle(d => d.startAngle)
+          .endAngle(d => d.endAngle)
+        )
+        .attr("fill", d => d.data.color)
+        .attr("fill-opacity", 0.20);
+
+    // sectores principales
+    svg.selectAll(".arc")
+      .data(arcs)
+      .join("path")
+        .attr("class", "arc")
+        .attr("d", d3.arc()
+          .innerRadius(innerR)
+          .outerRadius(d => d.data.thickness)
+        )
+        .attr("fill", d => d.data.color);
+
+    // título
+    svg.append("text")
+      .attr("class", "title")
+      .attr("y", "-5em")
+      .attr("x", "-8em")
+      .text("Working Day");
+
+    // número central
+    svg.append("text")
+      .attr("class", "center-number")
+      .text(totalHours)
+      .attr("dy", "+0.1em");
+
+    svg.append("text")
+      .attr("class", "center-text")
+      .text("working hours")
+      .attr("dy", "2.4em");
+
+    // leyenda
+    const legend = container
+      .append("div")
+      .attr("class", "legend");
+
+    data.forEach(d => {
+      const item = legend.append("div")
+        .attr("class", "legend-item");
+      item.append("div")
+        .attr("class", "legend-color")
+        .style("background-color", d.color);
+      item.append("div")
+        .text(d.label);
+    });
+  </script>
+</body>
+</html>

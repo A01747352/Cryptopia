@@ -81,4 +81,189 @@ router.get('/retencion', async (req, res) => {
   }
 });
 
+// NUEVOS ENDPOINTS
+
+// Promedio de aciertos por usuario
+router.get('/average-accuracy', async (req, res) => {
+  let connection;
+  try {
+    connection = await connectDb();
+    const [rows] = await connection.execute(`
+      SELECT AVG(porcentajeAciertos) AS promedioAciertos FROM partidatrivia
+    `);
+    res.json({
+      promedioAciertos: parseFloat(rows[0].promedioAciertos || 0).toFixed(1)
+    });
+  } catch (err) {
+    console.error('Error en promedio de aciertos:', err);
+    res.status(500).json({ error: 'Error al obtener promedio de aciertos', details: err.message });
+  } finally {
+    if (connection) await connection.end();
+  }
+});
+
+// Usuarios activos por día
+router.get('/active-users', async (req, res) => {
+  let connection;
+  try {
+    connection = await connectDb();
+    const [rows] = await connection.execute(`
+      SELECT 
+        DATE(fechaPartida) AS dia, 
+        COUNT(DISTINCT idUsuario) AS usuarios 
+      FROM partidatrivia 
+      GROUP BY dia 
+      ORDER BY dia DESC 
+      LIMIT 7
+    `);
+    res.json(rows);
+  } catch (err) {
+    console.error('Error en usuarios activos:', err);
+    res.status(500).json({ error: 'Error al obtener usuarios activos', details: err.message });
+  } finally {
+    if (connection) await connection.end();
+  }
+});
+
+// PowerUps más usados
+router.get('/top-powerups', async (req, res) => {
+  let connection;
+  try {
+    connection = await connectDb();
+    const [rows] = await connection.execute(`
+      SELECT 
+        p.nombre, 
+        COUNT(*) AS veces_usado 
+      FROM powerupdesbloqueado pd 
+      JOIN powerup p ON pd.idPowerUp = p.idPowerUp 
+      WHERE pd.activado = 1 
+      GROUP BY p.nombre 
+      ORDER BY veces_usado DESC 
+      LIMIT 5
+    `);
+    res.json(rows);
+  } catch (err) {
+    console.error('Error en top powerups:', err);
+    res.status(500).json({ error: 'Error al obtener powerups más usados', details: err.message });
+  } finally {
+    if (connection) await connection.end();
+  }
+});
+
+// Ranking de usuarios por puntaje
+router.get('/user-ranking', async (req, res) => {
+  let connection;
+  try {
+    connection = await connectDb();
+    const [rows] = await connection.execute(`
+      SELECT 
+        u.username, 
+        SUM(pt.puntaje) AS totalPuntaje 
+      FROM usuario u 
+      JOIN partidatrivia pt ON u.Id = pt.idUsuario 
+      GROUP BY u.username 
+      ORDER BY totalPuntaje DESC 
+      LIMIT 5
+    `);
+    res.json(rows);
+  } catch (err) {
+    console.error('Error en ranking de usuarios:', err);
+    res.status(500).json({ error: 'Error al obtener ranking de usuarios', details: err.message });
+  } finally {
+    if (connection) await connection.end();
+  }
+});
+
+// Estadísticas de trading
+router.get('/trading-stats', async (req, res) => {
+  let connection;
+  try {
+    connection = await connectDb();
+    const [rows] = await connection.execute(`
+      SELECT 
+        COUNT(*) AS totalTrades, 
+        SUM(cantidadIntercambiada) AS totalVolumen 
+      FROM trading
+    `);
+    res.json(rows[0]);
+  } catch (err) {
+    console.error('Error en estadísticas de trading:', err);
+    res.status(500).json({ error: 'Error al obtener estadísticas de trading', details: err.message });
+  } finally {
+    if (connection) await connection.end();
+  }
+});
+
+// TKNs ganados por día
+router.get('/tkns-by-day', async (req, res) => {
+  let connection;
+  try {
+    connection = await connectDb();
+    const [rows] = await connection.execute(`
+      SELECT 
+        DATE(fechaPartida) AS dia, 
+        SUM(TKNs) AS totalTKNs 
+      FROM partidatrivia 
+      GROUP BY dia 
+      ORDER BY dia DESC 
+      LIMIT 7
+    `);
+    res.json(rows);
+  } catch (err) {
+    console.error('Error en TKNs por día:', err);
+    res.status(500).json({ error: 'Error al obtener TKNs por día', details: err.message });
+  } finally {
+    if (connection) await connection.end();
+  }
+});
+
+// Criptomonedas más almacenadas
+router.get('/top-cryptocurrencies', async (req, res) => {
+  let connection;
+  try {
+    connection = await connectDb();
+    const [rows] = await connection.execute(`
+      SELECT 
+        c.nombre, 
+        SUM(w.cantidad) AS total 
+      FROM wallet w 
+      JOIN criptomoneda c ON w.idCriptomoneda = c.idCriptomoneda 
+      GROUP BY c.nombre 
+      ORDER BY total DESC
+      LIMIT 5
+    `);
+    res.json(rows);
+  } catch (err) {
+    console.error('Error en top criptomonedas:', err);
+    res.status(500).json({ error: 'Error al obtener criptomonedas más almacenadas', details: err.message });
+  } finally {
+    if (connection) await connection.end();
+  }
+});
+
+// Preguntas con más errores
+router.get('/most-failed-questions', async (req, res) => {
+  let connection;
+  try {
+    connection = await connectDb();
+    const [rows] = await connection.execute(`
+      SELECT 
+        pt.pregunta, 
+        COUNT(*) AS errores 
+      FROM respuestausuariotrivia rut 
+      JOIN preguntatrivia pt ON rut.idPregunta = pt.idPregunta 
+      WHERE esCorrecta = 0 
+      GROUP BY pt.pregunta 
+      ORDER BY errores DESC 
+      LIMIT 5
+    `);
+    res.json(rows);
+  } catch (err) {
+    console.error('Error en preguntas con más errores:', err);
+    res.status(500).json({ error: 'Error al obtener preguntas con más errores', details: err.message });
+  } finally {
+    if (connection) await connection.end();
+  }
+});
+
 export default router;

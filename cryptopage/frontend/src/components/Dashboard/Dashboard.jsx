@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { Line, Bar } from 'react-chartjs-2';
 import { 
   Chart as ChartJS, 
   CategoryScale, 
@@ -8,16 +6,31 @@ import {
   PointElement, 
   LineElement,
   BarElement,
+  ArcElement,
   Title, 
   Tooltip, 
   Legend 
 } from 'chart.js';
+import AnalyticsService from '../../services/analytics-service';
+
+// Componentes existentes
 import AgeDistribution from './AgeDistribution';
 import GenderDistribution from './GenderDistribution';
 import RetentionChart from './RetentionChart';
 import SessionsCard from './SessionsCard';
 import RevenueCard from './RevenueCard';
 import QuestionsCard from './QuestionsCard';
+
+// Nuevos componentes
+import AverageAccuracyCard from './AverageAccuracyCard';
+import ActiveUsersCard from './ActiveUsersCard';
+import TopPowerUpsCard from './TopPowerUpsCard';
+import UserRankingCard from './UserRankingCard';
+import TradingStatsCard from './TradingStatsCard';
+import TknsByDayCard from './TknsByDayCard';
+import TopCryptocurrenciesCard from './TopCryptocurrenciesCard';
+import MostFailedQuestionsCard from './MostFailedQuestionsCard';
+
 import './Dashboard.css';
 
 // Registrar componentes de Chart.js
@@ -27,29 +40,83 @@ ChartJS.register(
   PointElement,
   LineElement,
   BarElement,
+  ArcElement,
   Title,
   Tooltip,
   Legend
 );
+
+// Configuración global para Chart.js
+ChartJS.defaults.color = '#6c7a89';
+ChartJS.defaults.font.family = "'Inter', 'Helvetica', 'Arial', sans-serif";
 
 const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const [dashboardData, setDashboardData] = useState(null);
   const [triviaStats, setTriviaStats] = useState(null);
   const [retentionData, setRetentionData] = useState(null);
+  
+  // Estados para los nuevos datos
+  const [averageAccuracy, setAverageAccuracy] = useState(null);
+  const [activeUsers, setActiveUsers] = useState(null);
+  const [topPowerUps, setTopPowerUps] = useState(null);
+  const [userRanking, setUserRanking] = useState(null);
+  const [tradingStats, setTradingStats] = useState(null);
+  const [tknsByDay, setTknsByDay] = useState(null);
+  const [topCryptos, setTopCryptos] = useState(null);
+  const [failedQuestions, setFailedQuestions] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [dashboardRes, triviaRes, retentionRes] = await Promise.all([
-          axios.get('http://localhost:8081/api/analytics/dashboard'),
-          axios.get('http://localhost:8081/api/trivia/estadisticas'),
-          axios.get('http://localhost:8081/api/analytics/retencion')
+        // Simular tiempo de carga para prueba
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        
+        // Cargar datos existentes
+        const [
+          dashboardRes, 
+          triviaRes, 
+          retentionRes,
+          // Nuevos endpoints
+          accuracyRes,
+          activeUsersRes,
+          powerUpsRes,
+          rankingRes,
+          tradingRes,
+          tknsRes,
+          cryptosRes,
+          failedQuestionsRes
+        ] = await Promise.all([
+          // Endpoints existentes
+          AnalyticsService.getDashboardData(),
+          AnalyticsService.getTriviaStats(),
+          AnalyticsService.getRetentionData(),
+          // Nuevos endpoints
+          AnalyticsService.getAverageAccuracy(),
+          AnalyticsService.getActiveUsersByDay(),
+          AnalyticsService.getTopPowerUps(),
+          AnalyticsService.getUserRanking(),
+          AnalyticsService.getTradingStats(),
+          AnalyticsService.getTknsByDay(),
+          AnalyticsService.getTopCryptocurrencies(),
+          AnalyticsService.getMostFailedQuestions()
         ]);
 
-        setDashboardData(dashboardRes.data);
-        setTriviaStats(triviaRes.data);
-        setRetentionData(retentionRes.data);
+        // Establecer datos existentes
+        setDashboardData(dashboardRes);
+        setTriviaStats(triviaRes);
+        setRetentionData(retentionRes);
+        
+        // Establecer nuevos datos
+        setAverageAccuracy(accuracyRes.promedioAciertos);
+        setActiveUsers(activeUsersRes);
+        setTopPowerUps(powerUpsRes);
+        setUserRanking(rankingRes);
+        setTradingStats(tradingRes);
+        setTknsByDay(tknsRes);
+        setTopCryptos(cryptosRes);
+        setFailedQuestions(failedQuestionsRes);
+        
         setLoading(false);
       } catch (error) {
         console.error('Error fetching dashboard data:', error);
@@ -60,22 +127,175 @@ const Dashboard = () => {
     fetchData();
   }, []);
 
-  if (loading) {
-    return <div className="loading">Cargando...</div>;
-  }
-
   return (
-    <div className="dashboard">
-      <div className="dashboard-grid">
-        <AgeDistribution data={dashboardData?.edad} />
-        <GenderDistribution data={dashboardData?.genero} />
-        <RetentionChart data={retentionData} />
+    <div className="dashboard light-theme">
+      {/* FILA DE KPIs PRINCIPALES */}
+      <div className="dashboard-row kpi-row">
+        <div className="card">
+          {loading ? (
+            <div className="loading-card">
+              <div className="loading-title"></div>
+              <div className="loading-content"></div>
+            </div>
+          ) : (
+            <SessionsCard sessionsCount={dashboardData?.sesiones} />
+          )}
+        </div>
+        
+        <div className="card">
+          {loading ? (
+            <div className="loading-card">
+              <div className="loading-title"></div>
+              <div className="loading-content"></div>
+            </div>
+          ) : (
+            <RevenueCard revenue={dashboardData?.ingresos} />
+          )}
+        </div>
+        
+        <div className="card">
+          {loading ? (
+            <div className="loading-card">
+              <div className="loading-title"></div>
+              <div className="loading-content"></div>
+            </div>
+          ) : (
+            <AverageAccuracyCard accuracy={averageAccuracy} />
+          )}
+        </div>
+        
+        <div className="card">
+          {loading ? (
+            <div className="loading-card">
+              <div className="loading-title"></div>
+              <div className="loading-content"></div>
+            </div>
+          ) : (
+            <RetentionChart data={retentionData} />
+          )}
+        </div>
       </div>
-      
-      <div className="dashboard-grid">
-        <SessionsCard sessionsCount={dashboardData?.sesiones} />
-        <RevenueCard revenue={dashboardData?.ingresos} />
-        <QuestionsCard triviaStats={triviaStats} />
+
+      {/* FILA DEMOGRÁFICA */}
+      <div className="dashboard-row">
+        <div className="card">
+          {loading ? (
+            <div className="loading-card">
+              <div className="loading-title"></div>
+              <div className="loading-content"></div>
+            </div>
+          ) : (
+            <AgeDistribution data={dashboardData?.edad} />
+          )}
+        </div>
+        
+        <div className="card">
+          {loading ? (
+            <div className="loading-card">
+              <div className="loading-title"></div>
+              <div className="loading-content"></div>
+            </div>
+          ) : (
+            <GenderDistribution data={dashboardData?.genero} />
+          )}
+        </div>
+        
+        <div className="card">
+          {loading ? (
+            <div className="loading-card">
+              <div className="loading-title"></div>
+              <div className="loading-content"></div>
+            </div>
+          ) : (
+            <ActiveUsersCard data={activeUsers} />
+          )}
+        </div>
+      </div>
+
+      {/* FILA DE PREGUNTAS Y POWERUPS */}
+      <div className="dashboard-row">
+        <div className="card">
+          {loading ? (
+            <div className="loading-card">
+              <div className="loading-title"></div>
+              <div className="loading-content"></div>
+            </div>
+          ) : (
+            <QuestionsCard triviaStats={triviaStats} />
+          )}
+        </div>
+        
+        <div className="card">
+          {loading ? (
+            <div className="loading-card">
+              <div className="loading-title"></div>
+              <div className="loading-content"></div>
+            </div>
+          ) : (
+            <TopPowerUpsCard data={topPowerUps} />
+          )}
+        </div>
+        
+        <div className="card">
+          {loading ? (
+            <div className="loading-card">
+              <div className="loading-title"></div>
+              <div className="loading-content"></div>
+            </div>
+          ) : (
+            <MostFailedQuestionsCard data={failedQuestions} />
+          )}
+        </div>
+      </div>
+
+      {/* FILA DE ECONOMÍA Y RANKINGS */}
+      <div className="dashboard-row">
+        <div className="card">
+          {loading ? (
+            <div className="loading-card">
+              <div className="loading-title"></div>
+              <div className="loading-content"></div>
+            </div>
+          ) : (
+            <UserRankingCard data={userRanking} />
+          )}
+        </div>
+        
+        <div className="card">
+          {loading ? (
+            <div className="loading-card">
+              <div className="loading-title"></div>
+              <div className="loading-content"></div>
+            </div>
+          ) : (
+            <TradingStatsCard data={tradingStats} />
+          )}
+        </div>
+      </div>
+
+      {/* FILA DE TKNs Y CRIPTOMONEDAS */}
+      <div className="dashboard-row">
+        <div className="card">
+          {loading ? (
+            <div className="loading-card">
+              <div className="loading-title"></div>
+              <div className="loading-content"></div>
+            </div>
+          ) : (
+            <TknsByDayCard data={tknsByDay} />
+          )}
+        </div>
+        
+        <div className="card">
+          {loading ? (
+            <div className="loading-card">
+              <div className="loading-title"></div>
+              <div className="loading-content"></div>
+            </div>
+          ) : (
+            <TopCryptocurrenciesCard data={topCryptos} />
+          )}
+        </div>
       </div>
     </div>
   );

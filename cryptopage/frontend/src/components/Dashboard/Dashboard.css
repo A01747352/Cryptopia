@@ -1,137 +1,304 @@
+/* Estilos base para el dashboard */
 .dashboard {
-    padding: 20px 0;
+  padding: 40px;
+  max-width: 1600px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  font-family: 'Inter', sans-serif;
+  min-height: 100vh;
+}
+
+.light-theme {
+  background-color: #1f2d3d;
+  color: #7c95ae;
+}
+
+.dashboard-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+  width: 100%;
+}
+
+.kpi-row {
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.card {
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  padding: 24px;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  min-height: 300px;
+  position: relative;
+  overflow: hidden;
+}
+
+.card:hover {
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+  transform: translateY(-4px);
+}
+
+/* Estilos para el estado de carga */
+.loading-card {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  height: 100%;
+  width: 100%;
+}
+
+.loading-title {
+  height: 24px;
+  width: 60%;
+  background: linear-gradient(90deg, #f0f3f8 0%, #e4e9f2 50%, #f0f3f8 100%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+  border-radius: 6px;
+}
+
+.loading-content {
+  height: 200px;
+  background: linear-gradient(90deg, #f0f3f8 0%, #e4e9f2 50%, #f0f3f8 100%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+  border-radius: 10px;
+  margin-top: auto;
+}
+
+@keyframes loading {
+  0% { background-position: 0% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Estilos específicos para cabeceras de tarjetas */
+.card h2, .card h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #93a2b1;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+/* Estilos para tablas */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table th {
+  color: #344759;
+  font-weight: 600;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  text-align: left;
+  padding: 12px 10px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+table td {
+  padding: 12px 10px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  color: #2c3e50;
+}
+
+.card table tr:last-child td {
+  border-bottom: none;
+}
+
+.card table tr:hover {
+  background-color: rgba(0, 0, 0, 0.01);
+}
+
+/* Estilos para números y estadísticas */
+.kpi-value {
+  font-size: 28px;
+  font-weight: 700;
+  color: #a1b0c0;
+  margin-bottom: 4px;
+}
+
+.kpi-label {
+  color: #26384b;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* Colores personalizados para diferentes tipos de datos */
+.highlight-primary {
+  color: #3498db;
+}
+
+.highlight-success {
+  color: #2ecc71;
+}
+
+.highlight-warning {
+  color: #f39c12;
+}
+
+.highlight-danger {
+  color: #e74c3c;
+}
+
+/* Estilos específicos para ciertos componentes */
+.users-average, .tkns-total, .crypto-total {
+  text-align: center;
+  padding: 10px;
+  background: rgba(52, 152, 219, 0.1);
+  border-radius: 10px;
+  width: fit-content;
+  margin: 0 auto 16px;
+}
+
+.users-average h3, .tkns-total h3, .crypto-total h3 {
+  font-size: 24px;
+  margin-bottom: 5px;
+  font-weight: 700;
+  padding: 0;
+  border: none;
+}
+
+.users-average p, .tkns-total p, .crypto-total p {
+  color: #6c7a89;
+  font-size: 14px;
+  margin: 0;
+}
+
+/* Diseño para tarjetas con gráficos */
+.chart-container {
+  height: 200px;
+  position: relative;
+  margin-top: auto;
+}
+
+/* Diseño para tablas con scroll */
+.ranking-card, .failed-questions-card, .questions-card {
+  overflow-y: auto;
+  max-height: 350px;
+}
+
+.ranking-card table th,
+.failed-questions-card table th,
+.questions-card table th {
+  position: sticky;
+  top: 0;
+  background-color: #ffffff;
+  z-index: 10;
+}
+
+/* Scroll personalizado */
+.ranking-card, .failed-questions-card, .questions-card {
+  scrollbar-width: thin;
+  scrollbar-color: #d1d8e0 #f7f9fc;
+}
+
+.ranking-card::-webkit-scrollbar, 
+.failed-questions-card::-webkit-scrollbar,
+.questions-card::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.ranking-card::-webkit-scrollbar-track, 
+.failed-questions-card::-webkit-scrollbar-track,
+.questions-card::-webkit-scrollbar-track {
+  background: #f7f9fc;
+  border-radius: 3px;
+}
+
+.ranking-card::-webkit-scrollbar-thumb, 
+.failed-questions-card::-webkit-scrollbar-thumb,
+.questions-card::-webkit-scrollbar-thumb {
+  background: #d1d8e0;
+  border-radius: 3px;
+}
+
+/* Estilos para íconos en estadísticas de trading */
+.trading-stat {
+  background: rgba(0, 0, 0, 0.02);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: all 0.2s ease;
+}
+
+.trading-stat:hover {
+  background: rgba(0, 0, 0, 0.04);
+  transform: translateY(-2px);
+}
+
+.stat-icon {
+  font-size: 24px;
+  color: #3498db;
+  margin-bottom: 10px;
+}
+
+.stat-data {
+  text-align: center;
+}
+
+.stat-data h3 {
+  border: none;
+  padding: 0;
+  margin-bottom: 5px;
+}
+
+/* Configuración para PieCharts y Doughnuts */
+.gender-container, .crypto-container {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.gender-chart, .crypto-chart {
+  width: 70%;
+  height: 180px;
+}
+
+/* Adaptabilidad */
+@media (max-width: 768px) {
+  .dashboard {
+    padding: 20px;
+    gap: 20px;
   }
-  
-  .loading {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 80vh;
-    font-size: 20px;
+
+  .card {
+    padding: 20px;
+    min-height: 250px;
+  }
+
+  .dashboard-row {
+    grid-template-columns: 1fr;
+  }
+
+  .kpi-row {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  }
+
+  .kpi-value {
+    font-size: 24px;
   }
   
   .chart-container {
-    height: 220px;
-    position: relative;
-    margin-top: 15px;
+    height: 180px;
   }
   
-  .card h2 {
-    font-size: 24px;
-    margin-bottom: 20px;
-    color: #ffffff;
-  }
-  
-  .gender-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  
-  .gender-chart {
-    width: 70%;
-  }
-  
-  .gender-percentage {
-    text-align: center;
-  }
-  
-  .gender-percentage h2 {
-    font-size: 36px;
-    margin-bottom: 0;
-    color: #6c63ff;
-  }
-  
-  .gender-percentage p {
-    font-size: 18px;
-    color: #a0a0a0;
-  }
-  
-  .retention-percentage {
-    text-align: center;
-  }
-  
-  .retention-percentage h2 {
-    font-size: 36px;
-    margin-bottom: 0;
-    color: #6c63ff;
-  }
-  
-  .sessions-count h2, .revenue-amount h2 {
-    font-size: 44px;
-    margin-bottom: 15px;
-    color: #ffffff;
-  }
-  
-  .rating {
-    display: flex;
-    align-items: center;
-    margin-top: 10px;
-  }
-  
-  .rating .star {
-    color: #5a5a5a;
-    font-size: 20px;
-    margin-right: 5px;
-  }
-  
-  .rating .star.filled {
-    color: #ffb400;
-  }
-  
-  .rating .star.half {
-    position: relative;
-    color: #5a5a5a;
-  }
-  
-  .rating .star.half:after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 50%;
-    overflow: hidden;
-    color: #ffb400;
-  }
-  
-  .rating span {
-    margin-left: 10px;
-    font-size: 18px;
-    color: #a0a0a0;
-  }
-  
-  .questions-container {
-    display: flex;
+  .gender-container, .crypto-container {
     flex-direction: column;
-    gap: 20px;
   }
   
-  .top-questions h3, .bottom-questions h3 {
-    font-size: 18px;
-    margin-bottom: 10px;
-    color: #a0a0a0;
+  .gender-chart, .crypto-chart {
+    width: 100%;
   }
-  
-  .top-questions ul, .bottom-questions ul {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .top-questions li, .bottom-questions li {
-    display: flex;
-    justify-content: space-between;
-    padding: 8px 0;
-    border-bottom: 1px solid #333;
-  }
-  
-  .percentage {
-    font-weight: bold;
-  }
-  
-  .top-questions .percentage {
-    color: #4caf50;
-  }
-  
-  .bottom-questions .percentage {
-    color: #f44336;
-  }
+}
