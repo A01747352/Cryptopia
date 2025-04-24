@@ -1,0 +1,14 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/Trading.uss?fileID=7433441132597879392&amp;guid=7cd15d45091a34bc183e4c3fb79e03ea&amp;type=3#Trading" />
+    <engine:VisualElement name="CryptoCoinContainer" class="cryptoCoin cryptoCoinContainer" style="flex-grow: 0;">
+        <engine:VisualElement name="CryptoCoinData" class="cryptoCoinData" style="flex-grow: 0;">
+            <engine:Label text="Label" name="Abbreviation" class="abbreviation" />
+            <engine:VisualElement name="CryptoIcon" class="CryptoIcon" style="flex-grow: 0;" />
+            <engine:Label text="Label" name="Price" class="Price" />
+        </engine:VisualElement>
+        <engine:VisualElement name="CryptoCoinButtonsContainer" class="cryptoCoinButtons cryptoCoinButtonsContainer" style="flex-grow: 1;">
+            <engine:Button text="Buy" name="Buy" class="buyButton" />
+            <engine:Button text="Sell" name="Sell" class="sellButton" />
+        </engine:VisualElement>
+    </engine:VisualElement>
+</engine:UXML>

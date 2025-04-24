@@ -1,0 +1,116 @@
+.tradingWindow {
+    justify-content: flex-end;
+    background-image: url("project://database/Assets/CRYPTOChiks/CoreAssets.psd?fileID=636265927770870144&guid=6a175b91a67904e5c8e418dfac6490a9&type=3#Container_03");
+}
+
+.cryptoContainer {
+    width: 1540px;
+    align-self: center;
+    height: 828px;
+    margin-bottom: 55px;
+    flex-direction: row;
+    background-image: url("project://database/Assets/CRYPTOChiks/CoreAssets.psd?fileID=-2808779950346174159&guid=6a175b91a67904e5c8e418dfac6490a9&type=3#Container_03");
+}
+
+.cryptoCoinData {
+    background-color: rgba(23, 89, 214, 0.69);
+    height: 309px;
+    justify-content: center;
+    background-image: url("project://database/Assets/CRYPTOChiks/CoreAssets.psd?fileID=636265927770870144&guid=6a175b91a67904e5c8e418dfac6490a9&type=3#Container_03");
+}
+
+.cryptoCoinContainer {
+    width: 300px;
+    height: 369px;
+    margin-top: 50px;
+    margin-left: 50px;
+    margin-right: 50px;
+    margin-bottom: 50px;
+}
+
+.cryptoCoinButtonsContainer {
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: rgba(43, 59, 192, 0);
+    height: 60px;
+}
+
+.titleContainer {
+    justify-content: center;
+}
+
+.CryptoIcon {
+    width: 200px;
+    align-self: center;
+    height: 200px;
+}
+
+.Price {
+    font-size: 30px;
+    -unity-text-align: upper-center;
+    -unity-font-definition: url("project://database/Assets/Fonts/GrapeSoda%20SDF.asset?fileID=11400000&guid=d51c98973ae254cea92209cda6e50712&type=2#GrapeSoda SDF");
+}
+
+.abbreviation {
+    font-size: 50px;
+    -unity-text-align: upper-center;
+    -unity-font-definition: url("project://database/Assets/Fonts/GrapeSoda%20SDF.asset?fileID=11400000&guid=d51c98973ae254cea92209cda6e50712&type=2#GrapeSoda SDF");
+}
+
+.Title {
+    -unity-font-definition: url("project://database/Assets/Fonts/GrapeSoda%20SDF.asset?fileID=11400000&guid=d51c98973ae254cea92209cda6e50712&type=2#GrapeSoda SDF");
+    font-size: 140px;
+    background-image: url("project://database/Assets/CRYPTOChiks/CoreAssets.psd?fileID=-5991224337513594954&guid=6a175b91a67904e5c8e418dfac6490a9&type=3#button_01");
+    width: 1527px;
+    align-self: center;
+    height: 152px;
+    -unity-text-align: upper-center;
+    color: rgb(255, 255, 255);
+}
+
+.scrollCrypto {
+    margin-bottom: 50px;
+    margin-top: 0;
+    margin-right: 50px;
+    margin-left: 50px;
+    width: 1540px;
+    height: 828px;
+    align-self: center;
+    background-color: rgba(0, 0, 0, 0.47);
+}
+
+.tradeCoinContainer {
+    margin-bottom: 50px;
+    margin-top: 0;
+    margin-right: 50px;
+    margin-left: 50px;
+    width: 1540px;
+    height: 828px;
+    align-self: center;
+    background-color: rgba(0, 0, 0, 0.47);
+    justify-content: space-around;
+    background-image: url("project://database/Assets/CRYPTOChiks/CoreAssets.psd?fileID=-2808779950346174159&guid=6a175b91a67904e5c8e418dfac6490a9&type=3#Container_03");
+}
+
+.traderInfoContainer {
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.buyButton {
+    height: 51px;
+    align-self: center;
+    width: 139px;
+    font-size: 40px;
+    -unity-font-definition: url("project://database/Assets/Fonts/GrapeSoda%20SDF.asset?fileID=11400000&guid=d51c98973ae254cea92209cda6e50712&type=2#GrapeSoda SDF");
+    background-color: rgb(206, 15, 77);
+}
+
+.sellButton {
+    height: 51px;
+    align-self: center;
+    width: 139px;
+    font-size: 40px;
+    -unity-font-definition: url("project://database/Assets/Fonts/GrapeSoda%20SDF.asset?fileID=11400000&guid=d51c98973ae254cea92209cda6e50712&type=2#GrapeSoda SDF");
+    background-color: rgb(32, 204, 193);
+}

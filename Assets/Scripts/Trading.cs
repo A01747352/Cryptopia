@@ -9,10 +9,12 @@ public class Trading : MonoBehaviour
 {
     string url = "http://localhost:8080";
     private int userId;
+    [SerializeField]   
+    public VisualTreeAsset cryptoItemTemplate;
 
     // UI Elements
     private VisualElement container;
-    private UIDocument game;
+    private UIDocument gameUI;
 
 
     public struct CryptoCurrency
@@ -34,18 +36,19 @@ public class Trading : MonoBehaviour
 
     void OnEnable()
     {
-        game = GetComponent<UIDocument>();
-        container = game.rootVisualElement;
-        
-        VisualElement MakeItem() => new Label();
+        gameUI = GetComponent<UIDocument>();
+        var root = gameUI.rootVisualElement;
+        container = root.Q<VisualElement>("CryptoContainer");
 
-        void BindItem(VisualElement e, int i) => (e as Label).text = wallet[i].nombre;
+        foreach (var crypto in wallet)
+        {
+            var item = cryptoItemTemplate.CloneTree();
+            item.Q<Label>("Abbreviation").text = crypto.abreviatura;
+            item.Q<VisualElement>("CryptoIcon").style.backgroundImage = new StyleBackground(Resources.Load<Sprite>($"CryptoIcons/{crypto.nombre}"));
+            item.Q<Label>("Price").text = "10000";
 
-        var listView = container.Q<ListView>("ListView1");
-        listView.makeItem = MakeItem;
-        listView.bindItem = BindItem;
-        listView.itemsSource = wallet;
-        listView.selectionType = SelectionType.Multiple;
+            container.Add(item);
+        }
 
     }
 

@@ -1,9 +1,75 @@
-<?xml version="1.0" encoding="utf-8"?>
-<engine:UXML
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:engine="UnityEngine.UIElements"
-    xmlns:editor="UnityEditor.UIElements"
-    xsi:noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd"
->
-    
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/Trading.uss?fileID=7433441132597879392&amp;guid=7cd15d45091a34bc183e4c3fb79e03ea&amp;type=3#Trading" />
+    <Style src="project://database/Assets/UI/TraderWindow.uss?fileID=7433441132597879392&amp;guid=0a665efeb91d94b98a85b629b78cca68&amp;type=3#TraderWindow" />
+    <engine:VisualElement name="Trading" class="tradingWindow" style="flex-grow: 1;">
+        <engine:VisualElement name="TitleContainer" class="titleContainer" style="flex-grow: 1;">
+            <engine:Label text="Trader" name="Title" class="Title" />
+        </engine:VisualElement>
+        <engine:ScrollView name="ScrollCrypto" class="scrollCrypto" style="display: none;">
+            <engine:VisualElement name="CryptoContainer" class="cryptoContainer" style="flex-grow: 0;">
+                <engine:VisualElement name="CryptoCoinContainer" enabled="false" class="cryptoCoin cryptoCoinContainer" style="flex-grow: 0; display: none;">
+                    <engine:VisualElement name="CryptoCoinData" class="cryptoCoinData" style="flex-grow: 0;">
+                        <engine:Label text="Label" name="Abbreviation" class="abbreviation" />
+                        <engine:VisualElement name="CryptoIcon" class="CryptoIcon" style="flex-grow: 0;" />
+                        <engine:Label text="Label" name="Price" class="Price" />
+                    </engine:VisualElement>
+                    <engine:VisualElement name="CryptoCoinButtonsContainer" class="cryptoCoinButtons cryptoCoinButtonsContainer" style="flex-grow: 0;">
+                        <engine:Button text="Buy" name="Buy" class="cryptoCoinButton buyButton" />
+                        <engine:Button text="Sell" name="Sell" class="cryptoCoinButton sellButton" />
+                    </engine:VisualElement>
+                </engine:VisualElement>
+            </engine:VisualElement>
+        </engine:ScrollView>
+        <engine:VisualElement name="BuyWindow" class="tradeCoinContainer" style="flex-grow: 0; display: flex;">
+            <engine:VisualElement name="TraderInfoContainer" class="traderInfoContainer" style="flex-grow: 1;">
+                <engine:VisualElement name="TradeContainer" class="traderContainer" style="flex-grow: 0;">
+                    <engine:Label text="Label" name="TraderCryptoName" class="tradeCryptoName" />
+                    <engine:VisualElement name="TraderCryptoIcon" class="tradeCryptoIcon" style="flex-grow: 0;" />
+                    <engine:Label text="1 Crypto =" name="TraderCryptoPrice" class="traderCryptoPrice" style="-unity-text-align: upper-center;" />
+                    <engine:TextField label="TKNs:" placeholder-text="Insert Amount" name="TfTokens" class="tfTrader" />
+                    <engine:TextField label="Crypto:" placeholder-text="Insert Amount" name="TfCryptoCoin" class="tfTrader" style="margin-bottom: 9px;" />
+                </engine:VisualElement>
+                <engine:VisualElement name="WalletContainer" class="walletContainer" style="flex-grow: 0;">
+                    <engine:Label text="Wallet" name="WalletTitle" class="tradeCryptoName" />
+                    <engine:VisualElement name="WalletInfoContainer" class="walletInfoContainer" style="flex-grow: 0;">
+                        <engine:Label text="Owned TKN:" name="TKNsLabel" class="WalletCrypto WalletCryptoLabel" />
+                        <engine:Label text="Label" name="TKNsValue" class="WalletCryptoValues" />
+                    </engine:VisualElement>
+                    <engine:VisualElement name="WalletInfoContainer" class="walletInfoContainer" style="flex-grow: 0;">
+                        <engine:Label text="Owned Crp:" name="CryptoCoinLabel" class="WalletCrypto WalletCryptoLabel" />
+                        <engine:Label text="Label" name="CryptoCoinValue" class="WalletCryptoValues" />
+                    </engine:VisualElement>
+                </engine:VisualElement>
+            </engine:VisualElement>
+            <engine:Button text="Buy!" name="TraderBuyButton" class="traderBuyButton" />
+        </engine:VisualElement>
+        <engine:VisualElement name="SellWindow" class="tradeCoinContainer" style="flex-grow: 0; display: none;">
+            <engine:VisualElement name="TraderInfoContainer" class="traderInfoContainer" style="flex-grow: 1;">
+                <engine:VisualElement name="TradeContainer" class="traderContainer" style="flex-grow: 0;">
+                    <engine:Label text="Crypto" name="TraderCryptoName" class="tradeCryptoName" />
+                    <engine:VisualElement name="TraderCryptoIcon" class="tradeCryptoIcon" style="flex-grow: 0;" />
+                    <engine:Label text="1 Crypto =" name="TraderCryptoPrice" class="traderCryptoPrice" style="-unity-text-align: upper-center;" />
+                    <engine:VisualElement style="flex-grow: 0; justify-content: space-around; height: 119px;">
+                        <engine:TextField label="Crypto:" placeholder-text="Insert Amount" name="TfCryptoCoin" class="tfTrader" style="margin-bottom: 0;" />
+                        <engine:VisualElement style="flex-grow: 1; flex-direction: row; width: 407px; align-self: center;">
+                            <engine:Label text="TKN:" name="RecieveTKN" class="recieveTKN" style="-unity-text-align: upper-right; -unity-font-definition: url(&quot;project://database/Assets/Fonts/GrapeSoda%20SDF.asset?fileID=11400000&amp;guid=d51c98973ae254cea92209cda6e50712&amp;type=2#GrapeSoda SDF&quot;); font-size: 35px; margin-top: 0; padding-top: 0;" />
+                            <engine:Label text="Label" name="RecieveTKNValue" class="recieveTKNValue" />
+                        </engine:VisualElement>
+                    </engine:VisualElement>
+                </engine:VisualElement>
+                <engine:VisualElement name="WalletContainer" class="walletContainer" style="flex-grow: 0;">
+                    <engine:Label text="Wallet" name="WalletTitle" class="tradeCryptoName" />
+                    <engine:VisualElement name="WalletInfoContainer" class="walletInfoContainer" style="flex-grow: 0;">
+                        <engine:Label text="TKN:" name="TKNsLabel" class="WalletCrypto WalletCryptoLabel" />
+                        <engine:Label text="0.000000" name="TKNsValue" class="WalletCryptoValues" />
+                    </engine:VisualElement>
+                    <engine:VisualElement name="WalletInfoContainer" class="walletInfoContainer" style="flex-grow: 0;">
+                        <engine:Label text="Crp:" name="CryptoCoinLabel" class="WalletCrypto WalletCryptoLabel" />
+                        <engine:Label text="0.000000" name="CryptoCoinValue" class="WalletCryptoValues" />
+                    </engine:VisualElement>
+                </engine:VisualElement>
+            </engine:VisualElement>
+            <engine:Button text="Sell!" name="TraderSellButton" class="traderBuyButton" />
+        </engine:VisualElement>
+    </engine:VisualElement>
 </engine:UXML>
