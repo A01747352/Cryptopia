@@ -1,24 +1,23 @@
 .container {
-    width: 33%;
-    padding-top: 25px;
+    width: 40%;
     align-items: stretch;
 }
 
 .textfield {
     -unity-background-scale-mode: stretch-to-fill;
-    font-size: 25px;
+    font-size: 20px;
     color: rgb(0, 0, 0);
     background-color: rgb(255, 255, 255);
     margin-bottom: 20px;
     -unity-background-image-tint-color: rgb(255, 255, 255);
     -unity-text-align: middle-center;
-    -unity-font-definition: url("project://database/Assets/Fonts/GrapeSoda.ttf?fileID=12800000&guid=588e280439f4369489b80237dabae9ff&type=3#GrapeSoda");
+    -unity-font-definition: url("project://database/Assets/Fonts/PressStart2P-Regular.ttf?fileID=12800000&guid=2eeec31d665c5ed46b90940027895e85&type=3#PressStart2P-Regular");
 }
 
 .container2 {
     width: 100%;
-    margin-top: 2%;
-    height: 25%;
+    margin-top: 100px;
+    height: 22.5%;
 }
 
 .logo {
@@ -26,6 +25,13 @@
     -unity-background-scale-mode: scale-to-fit;
     background-size: contain;
     margin-top: 0;
+    -unity-text-align: middle-center;
+    font-size: 180px;
+    -unity-font-definition: url("project://database/Assets/Fonts/PressStart2P-Regular.ttf?fileID=12800000&guid=2eeec31d665c5ed46b90940027895e85&type=3#PressStart2P-Regular");
+    -unity-text-outline-color: rgb(255, 210, 216);
+    color: rgb(205, 16, 77);
+    -unity-text-outline-width: 10px;
+    -unity-font-style: bold;
 }
 
 .button:hover {
@@ -40,7 +46,7 @@
     background-color: rgb(200, 110, 110);
     font-size: 35px;
     color: rgb(255, 255, 255);
-    -unity-font-definition: url("project://database/Assets/Fonts/GrapeSoda.ttf?fileID=12800000&guid=588e280439f4369489b80237dabae9ff&type=3#GrapeSoda");
+    -unity-font-definition: url("project://database/Assets/Fonts/PressStart2P-Regular.ttf?fileID=12800000&guid=2eeec31d665c5ed46b90940027895e85&type=3#PressStart2P-Regular");
     border-left-color: rgba(0, 0, 0, 0);
     border-right-color: rgba(0, 0, 0, 0);
     border-top-color: rgba(0, 0, 0, 0);
@@ -50,15 +56,17 @@
 
 .dropdown {
     background-color: rgb(255, 255, 255);
-    -unity-font-definition: url("project://database/Assets/Fonts/GrapeSoda.ttf?fileID=12800000&guid=588e280439f4369489b80237dabae9ff&type=3#GrapeSoda");
+    -unity-font-definition: url("project://database/Assets/Fonts/PressStart2P-Regular.ttf?fileID=12800000&guid=2eeec31d665c5ed46b90940027895e85&type=3#PressStart2P-Regular");
     margin-bottom: 20px;
+    font-size: 20px;
+    -unity-text-align: middle-center;
 }
 
 .backButton {
     background-image: url("project://database/Assets/NewUI.psd?fileID=-1393384716567362197&guid=88580963f0bc34a4993c39e31de83996&type=3#button_return_ex");
     -unity-background-scale-mode: scale-to-fit;
-    width: 100px;
-    height: 51px;
+    width: 132px;
+    height: 66px;
     background-color: rgba(0, 0, 0, 0);
     border-left-color: rgba(0, 0, 0, 0);
     border-right-color: rgba(0, 0, 0, 0);

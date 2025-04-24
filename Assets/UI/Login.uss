@@ -6,13 +6,13 @@
 
 .textfield {
     -unity-background-scale-mode: stretch-to-fill;
-    font-size: 25px;
+    font-size: 22px;
     color: rgb(0, 0, 0);
     background-color: rgb(255, 255, 255);
     margin-bottom: 20px;
     -unity-background-image-tint-color: rgb(255, 255, 255);
     -unity-text-align: middle-center;
-    -unity-font-definition: url("project://database/Assets/Fonts/GrapeSoda.ttf?fileID=12800000&guid=588e280439f4369489b80237dabae9ff&type=3#GrapeSoda");
+    -unity-font-definition: url("project://database/Assets/Fonts/PressStart2P-Regular.ttf?fileID=12800000&guid=2eeec31d665c5ed46b90940027895e85&type=3#PressStart2P-Regular");
     height: 70px;
 }
 
@@ -32,9 +32,9 @@
     width: 329px;
     height: 100px;
     background-color: rgb(200, 110, 110);
-    font-size: 35px;
+    font-size: 30px;
     color: rgb(255, 255, 255);
-    -unity-font-definition: url("project://database/Assets/Fonts/GrapeSoda.ttf?fileID=12800000&guid=588e280439f4369489b80237dabae9ff&type=3#GrapeSoda");
+    -unity-font-definition: url("project://database/Assets/Fonts/PressStart2P-Regular.ttf?fileID=12800000&guid=2eeec31d665c5ed46b90940027895e85&type=3#PressStart2P-Regular");
     border-left-color: rgba(0, 0, 0, 0);
     border-right-color: rgba(0, 0, 0, 0);
     border-top-color: rgba(0, 0, 0, 0);
@@ -58,6 +58,6 @@
 }
 
 .buttons {
-    flex-direction: row;
+    flex-direction: row-reverse;
     justify-content: space-evenly;
 }
