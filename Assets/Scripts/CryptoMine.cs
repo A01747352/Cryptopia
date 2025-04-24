@@ -78,7 +78,8 @@ public class CryptoMine : MonoBehaviour
 
     void Awake()
     {
-        userId = PlayerPrefs.GetInt("UserId", 1);
+        //userId = PlayerPrefs.GetInt("UserId", 1);
+        userId = 4;
         if (instance == null)
         {
             instance = this;
