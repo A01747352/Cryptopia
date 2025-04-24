@@ -6,11 +6,5 @@
                 <engine:Button name="pauseButton" class="pauseButton" />
             </engine:VisualElement>
         </engine:VisualElement>
-        <engine:VisualElement name="statsBox" class="statsBox" style="flex-grow: 1; width: 85%;">
-            <engine:VisualElement name="photo" class="photo" style="flex-grow: 1;" />
-            <engine:VisualElement name="bar1" class="bar1" style="flex-grow: 1;">
-                <engine:VisualElement name="bar2" class="bar2" style="flex-grow: 1;" />
-            </engine:VisualElement>
-        </engine:VisualElement>
     </engine:VisualElement>
 </engine:UXML>

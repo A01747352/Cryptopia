@@ -1,6 +1,6 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/Register.uss?fileID=7433441132597879392&amp;guid=a21fcda099d4cef48bac4eac7be9503a&amp;type=3#Register" />
-    <engine:VisualElement name="screen" style="flex-grow: 1; background-color: rgb(16, 19, 64); align-items: center;">
+    <engine:VisualElement name="screen" style="flex-grow: 1; background-color: rgb(255, 142, 158); align-items: center;">
         <engine:VisualElement name="container2" class="container2" style="flex-grow: 0;">
             <engine:VisualElement name="logo" class="logo" style="flex-grow: 1; -unity-background-scale-mode: scale-to-fit; flex-direction: column;" />
         </engine:VisualElement>

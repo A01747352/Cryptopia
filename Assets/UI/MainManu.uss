@@ -1,20 +1,9 @@
-.container {
-    width: 44%;
-}
-
 .buttons {
-    width: 100%;
-    justify-content: space-evenly;
-}
-
-.button {
-    width: 37.87%;
-    height: 17%;
-    align-self: center;
-    -unity-background-scale-mode: scale-to-fit;
-    transition-timing-function: ease-out-bounce;
-    transition-duration: 0.1s;
-    transition-property: initial;
+    width: 50%;
+    justify-content: center;
+    height: 50%;
+    margin-top: 400px;
+    margin-left: 55px;
 }
 
 .button:hover {
@@ -24,4 +13,20 @@
 
 .button:active {
     -unity-background-image-tint-color: rgb(255, 255, 255);
+}
+
+.button {
+    width: 329px;
+    height: 100px;
+    align-self: center;
+    -unity-background-scale-mode: scale-to-fit;
+    transition-timing-function: ease-out-bounce;
+    transition-duration: 0.1s;
+    transition-property: initial;
+    background-image: url("project://database/Assets/NewUI.psd?fileID=-1385882056141864744&guid=88580963f0bc34a4993c39e31de83996&type=3#button_01");
+    margin-bottom: 50px;
+    -unity-font-definition: url("project://database/Assets/Fonts/PressStart2P-Regular.ttf?fileID=12800000&guid=2eeec31d665c5ed46b90940027895e85&type=3#PressStart2P-Regular");
+    color: rgb(255, 255, 255);
+    font-size: 40px;
+    -unity-text-align: middle-center;
 }

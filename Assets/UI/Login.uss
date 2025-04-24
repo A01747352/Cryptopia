@@ -1,6 +1,6 @@
 .container {
-    width: 33%;
-    padding-top: 50px;
+    width: 50%;
+    padding-top: 20px;
     align-items: stretch;
 }
 
@@ -13,19 +13,13 @@
     -unity-background-image-tint-color: rgb(255, 255, 255);
     -unity-text-align: middle-center;
     -unity-font-definition: url("project://database/Assets/Fonts/GrapeSoda.ttf?fileID=12800000&guid=588e280439f4369489b80237dabae9ff&type=3#GrapeSoda");
+    height: 70px;
 }
 
 .container2 {
     width: 100%;
-    margin-top: 6%;
+    margin-top: 10%;
     height: 25%;
-}
-
-.logo {
-    background-image: url("project://database/Assets/UI/Menu_Logov2.png?fileID=2800000&guid=cd43eb6929f5c3f49861678d45b6c80d&type=3#Menu_Logov2");
-    -unity-background-scale-mode: scale-to-fit;
-    background-size: contain;
-    margin-top: 0;
 }
 
 .button:hover {
@@ -35,10 +29,9 @@
 }
 
 .button {
-    width: 35%;
-    height: 15%;
+    width: 329px;
+    height: 100px;
     background-color: rgb(200, 110, 110);
-    align-self: center;
     font-size: 35px;
     color: rgb(255, 255, 255);
     -unity-font-definition: url("project://database/Assets/Fonts/GrapeSoda.ttf?fileID=12800000&guid=588e280439f4369489b80237dabae9ff&type=3#GrapeSoda");
@@ -46,6 +39,25 @@
     border-right-color: rgba(0, 0, 0, 0);
     border-top-color: rgba(0, 0, 0, 0);
     border-bottom-color: rgba(0, 0, 0, 0);
-    background-image: url("project://database/Assets/Sprites%20UI.psd?fileID=1322269772748154755&guid=62e23b6e7c6ab3944a50a3fbe783e045&type=3#Button_01");
+    background-image: url("project://database/Assets/NewUI.psd?fileID=-1385882056141864744&guid=88580963f0bc34a4993c39e31de83996&type=3#button_01");
     margin-top: 20px;
+}
+
+.logo {
+    background-image: url("project://database/Assets/UI/Menu_Logov2.png?fileID=2800000&guid=cd43eb6929f5c3f49861678d45b6c80d&type=3#Menu_Logov2");
+    -unity-background-scale-mode: scale-to-fit;
+    background-size: contain;
+    margin-top: 0;
+    -unity-text-align: middle-center;
+    font-size: 180px;
+    -unity-font-definition: url("project://database/Assets/Fonts/PressStart2P-Regular.ttf?fileID=12800000&guid=2eeec31d665c5ed46b90940027895e85&type=3#PressStart2P-Regular");
+    -unity-text-outline-color: rgb(255, 210, 216);
+    color: rgb(205, 16, 77);
+    -unity-text-outline-width: 10px;
+    -unity-font-style: bold;
+}
+
+.buttons {
+    flex-direction: row;
+    justify-content: space-evenly;
 }

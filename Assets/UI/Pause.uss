@@ -43,7 +43,7 @@
 }
 
 .back {
-    background-image: url("project://database/Assets/Sprites%20UI.psd?fileID=-3248817540606541918&guid=62e23b6e7c6ab3944a50a3fbe783e045&type=3#Pause_Menu_Button_02");
+    background-image: url("project://database/Assets/NewUI.psd?fileID=-2798877267648287088&guid=88580963f0bc34a4993c39e31de83996&type=3#button_return");
     align-self: center;
     -unity-background-scale-mode: scale-to-fit;
     width: 97px;
@@ -56,7 +56,7 @@
 }
 
 .play {
-    background-image: url("project://database/Assets/Sprites%20UI.psd?fileID=3720184069377556504&guid=62e23b6e7c6ab3944a50a3fbe783e045&type=3#Pause_Menu_Button_01");
+    background-image: url("project://database/Assets/NewUI.psd?fileID=-4903454496307731718&guid=88580963f0bc34a4993c39e31de83996&type=3#button_play");
     -unity-background-scale-mode: scale-to-fit;
     width: 97px;
     height: 90px;
@@ -69,7 +69,7 @@
 
 .mute {
     -unity-background-scale-mode: scale-to-fit;
-    background-image: url("project://database/Assets/Sprites%20UI.psd?fileID=-3904189391918081324&guid=62e23b6e7c6ab3944a50a3fbe783e045&type=3#Pause_Menu_Button_03");
+    background-image: url("project://database/Assets/NewUI.psd?fileID=6583810518250903244&guid=88580963f0bc34a4993c39e31de83996&type=3#button_mute");
     width: 97px;
     height: 90px;
     background-color: rgba(255, 255, 255, 0);

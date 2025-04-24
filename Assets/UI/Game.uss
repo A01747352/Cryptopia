@@ -15,39 +15,9 @@
 }
 
 .pauseButton {
-    background-image: url("project://database/Assets/Sprites%20UI.psd?fileID=-3904189391918081324&guid=62e23b6e7c6ab3944a50a3fbe783e045&type=3#Pause_Menu_Button_03");
+    background-image: url("project://database/Assets/NewUI.psd?fileID=-3347132401102743855&guid=88580963f0bc34a4993c39e31de83996&type=3#button_menu");
     background-size: 100% 100%;
     width: 84px;
     height: 77px;
     -unity-background-scale-mode: scale-to-fit;
-}
-
-.statsBox {
-    flex-direction: column;
-    left: 0;
-    flex-wrap: wrap-reverse;
-}
-
-.photo {
-    background-image: url("project://database/Assets/Sprites%20UI.psd?fileID=-7588396863020668561&guid=62e23b6e7c6ab3944a50a3fbe783e045&type=3#Character_Icon");
-    -unity-background-scale-mode: scale-to-fit;
-    width: 125px;
-}
-
-.bar1 {
-    background-image: url("project://database/Assets/Sprites%20UI.psd?fileID=1724060519768228849&guid=62e23b6e7c6ab3944a50a3fbe783e045&type=3#Health_Bar_Outline");
-    -unity-background-scale-mode: scale-to-fit;
-    width: 116px;
-    height: 23px;
-    margin-top: -35px;
-    margin-left: 3px;
-}
-
-.bar2 {
-    background-image: url("project://database/Assets/Sprites%20UI.psd?fileID=-9169309945536998235&guid=62e23b6e7c6ab3944a50a3fbe783e045&type=3#Health_Bar_Bar");
-    -unity-background-scale-mode: scale-to-fit;
-    width: 111px;
-    height: 23px;
-    margin-bottom: 2px;
-    margin-left: 2px;
 }
