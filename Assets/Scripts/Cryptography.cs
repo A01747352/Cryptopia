@@ -77,7 +77,7 @@ public class Cryptography : MonoBehaviour
     private int totalQuestions = 5;
     private float tkns;
 
-    static int userId = 1;
+    static int userId;
     static int idGame;
     
     private string url = "http://localhost:8080";
@@ -96,7 +96,7 @@ public class Cryptography : MonoBehaviour
         restartVSButton.RegisterCallback<ClickEvent>(RestartGame);
         backToMainVSButton = victoryScreen.Q<Button>("BackToMainButton");
         backToMainVSButton.RegisterCallback<ClickEvent>(BackToMain);
-
+        userId = PlayerPrefs.GetInt("UserId", 0);
         defeatScreen = root.Q<VisualElement>("DefeatScreen");
         totalScoreDSLabel = defeatScreen.Q<Label>("TotalPointsValue");
         summaryDSResult = defeatScreen.Q<Label>("FinalResultValue");

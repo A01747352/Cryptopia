@@ -186,14 +186,21 @@ public class RegisterUIHandler : MonoBehaviour
         };
     }
 
-    List<string> GetOccupationList()
-    {
-        return new List<string> {
-            "Student", "Developer", "Engineer", "Designer", "Entrepreneur",
-            "Researcher", "Artist", "Content Creator", "Educator", "Marketer",
-            "Community Manager", "Project Manager", "Investor", "Data Analyst",
-            "Blockchain Specialist", "Cybersecurity Specialist", "Product Manager",
-            "Unemployed", "Other"
-        };
-    }
+List<string> GetOccupationList()
+{
+    return new List<string> {
+        "Student",
+        "Working Professional",
+        "Entrepreneur / Business Owner",
+        "Academic / Researcher",
+        "Teacher / Educator",
+        "Creative / Artist / Content Creator",
+        "Homemaker / Caregiver",
+        "Unemployed / Between Jobs",
+        "Career Transition / Reskilling",
+        "Retired",
+        "Other / Prefer not to say"
+    };
+}
+
 }
