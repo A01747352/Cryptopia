@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 public class Trading : MonoBehaviour
 {
-    string url = "http://localhost:8080";
+    string url = "http://98.83.42.146:8080";
     private int userId;
     [SerializeField]   
     public VisualTreeAsset cryptoItemTemplate;

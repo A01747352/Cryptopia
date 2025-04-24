@@ -1,5 +1,7 @@
 import express from 'express';
 import mysql from 'mysql2/promise';
+import compression from 'compression';
+import path from 'path';
 import axios from 'axios';
 
 
@@ -8,6 +10,9 @@ const port = 8080;
 const ipAddress = 'localhost';
 
 app.use(express.json());
+app.use(compression());
+
+app.use(express.static(path.join(__dirname, "Web")));
 
 /* Format for server url's.
 

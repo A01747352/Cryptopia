@@ -62,7 +62,7 @@ public class CryptoMine : MonoBehaviour
 
     // Web
     private int userId;
-    private string url = "http://localhost:8080";
+    private string url = "http://98.83.42.146:8080";
 
 
     public struct GameSession
