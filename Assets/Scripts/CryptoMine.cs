@@ -78,7 +78,7 @@ public class CryptoMine : MonoBehaviour
 
     void Awake()
     {
-        userId = PlayerPrefs.GetInt("UserId", 0);
+        userId = PlayerPrefs.GetInt("UserId", 1);
         if (instance == null)
         {
             instance = this;
@@ -365,6 +365,7 @@ public class CryptoMine : MonoBehaviour
         string jsonData = JsonConvert.SerializeObject(session);
 
         UnityWebRequest webRequest = UnityWebRequest.Post($"{url}/cryptomine/saveSession/{userId}", jsonData, "application/json");
+        print($"Sending JSON: {jsonData}");
         webRequest.SendWebRequest();
 
         while (!webRequest.isDone) { }
