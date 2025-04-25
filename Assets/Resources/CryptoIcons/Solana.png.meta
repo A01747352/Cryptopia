@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 6778ace257ed84c05b5c23f2f91288df
+guid: 415093c0243c9414b93480a69ed38625
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 981436864817288723
-    second: Bitcoin_0
+      213: -5214645775038191690
+    second: Solana_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Bitcoin_0
+      name: Solana_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 99
-        height: 91
+        width: 93
+        height: 92
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 31658e0f0a3ce9d00800000000000000
-      internalID: 981436864817288723
+      spriteID: 6b76b55cb4bd1a7b0800000000000000
+      internalID: -5214645775038191690
       vertices: []
       indices: 
       edges: []

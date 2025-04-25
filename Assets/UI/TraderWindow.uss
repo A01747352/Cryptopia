@@ -106,3 +106,33 @@
     -unity-text-align: middle-left;
     height: 50px;
 }
+
+.goBackButton {
+    position: absolute;
+    left: 270px;
+    bottom: 72px;
+    width: 90px;
+    height: 92px;
+    -unity-background-image-tint-color: rgb(255, 255, 255);
+    background-color: rgba(0, 0, 0, 0.1);
+    background-image: url("project://database/Assets/CRYPTOChiks/CoreAssets.psd?fileID=4610457160513229400&guid=6a175b91a67904e5c8e418dfac6490a9&type=3#button_return");
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+}
+
+.Alert {
+    position: absolute;
+    background-image: url("project://database/Assets/CRYPTOChiks/CoreAssets.psd?fileID=7678733802817698854&guid=6a175b91a67904e5c8e418dfac6490a9&type=3#button_02");
+    width: 862px;
+    height: 440px;
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    left: 480px;
+    top: 369px;
+    justify-content: center;
+    display: none;
+}

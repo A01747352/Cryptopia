@@ -419,11 +419,57 @@ app.get('/trading/getUserWallet/:userId', async (req, res) => {
     let connection;
     try {
         connection = await dbConnect();
-        const [rows] = await connection.execute('SELECT c.nombre, c.abreviatura ,w.cantidad FROM wallet AS w INNER JOIN criptomoneda AS c ON c.idCriptomoneda = w.idCriptomoneda WHERE idUsuario = ?;', [userId]);
+        const [rows] = await connection.execute('SELECT c.nombre, c.tokenId, c.abreviatura, w.cantidad FROM criptomoneda AS c LEFT JOIN wallet AS w ON c.idCriptomoneda = w.idCriptomoneda AND w.idUsuario = 1;', [userId]);
+        const idTokens = rows.filter(row => row.tokenId !== 0).map(row => row.tokenId).join(',');
+        const options = 
+        {
+            method: 'GET',
+            headers: {accept: 'application/json', api_key: 'tm-d6883ffa-b6ba-4805-876c-923d32308570'}
+        };
+        const queryParams = `token_id=${idTokens}`;
+        const url = `https://api.tokenmetrics.com/v2/price?${queryParams}`;
 
-        res.send(rows);
-        console.log(rows);
+
+        try {
+            const response = await axios.get(url, options);
+            
+            
+            //Add CURRENT_PRICE to matching rows
+        for (const row of rows) 
+        {
+            
+            if (row.cantidad === undefined || row.cantidad === null) 
+            {
+                row.cantidad = 0; // Default value if cantidad is undefined or null
+            }
+            if (row.tokenId === 0)
+            {
+                row.precio = 1;
+
+            }
+            else
+            {
+                
+                const tokenData = response.data.data.find(token => token.TOKEN_ID === row.tokenId);
+                if (tokenData) 
+                {
+                    row.precio = tokenData.CURRENT_PRICE;
+                } 
+                else 
+                {
+                    console.log(`Token ID ${row.tokenId} not found in API response.`);
+                    row.precio = 0; 
+                }
+            }
+        }
+
+            res.send(rows); 
+        } catch (axiosError) {
+            console.error("Error fetching data from Token Metrics API:", axiosError);
+            res.status(500).send({ error: "Error fetching data from external API", message: axiosError.message });
+        }
     }
+
     catch (err) {
         const { name, message } = err;
         res.status(500).send({ error: name, message });
@@ -443,6 +489,9 @@ app.post('/trading/registerTransaction/:userId', async (req, res) =>
     try {
         connection = await dbConnect();
         console.log("Conexion exitosa");
+        console.log("Transaccion: ", req.body);
+        const query = `CALL registerTrade(${userId}, ${cryptoSold}, ${amountSold}, ${cryptoBought}, ${amountBought});`;
+        console.log("Query: ", query);
         await connection.execute('CALL registerTrade(?, ?, ?, ?, ?);', [userId, cryptoSold, amountSold, cryptoBought, amountBought]);
         res.send({ success: true });
     }
