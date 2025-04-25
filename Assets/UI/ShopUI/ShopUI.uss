@@ -1,0 +1,78 @@
+.mainContainer {
+    flex-direction: row;
+}
+
+.leftContainer {
+    width: 55%;
+}
+
+.rightContainer {
+    width: 45%;
+}
+
+.titleContainer {
+    height: 30%;
+    -unity-text-align: middle-center;
+    justify-content: center;
+    align-self: center;
+}
+
+.catsContainer {
+    height: 35%;
+}
+
+.powerupsContainer {
+    height: 35%;
+}
+
+.title {
+    font-size: 80px;
+    -unity-font-definition: url("project://database/Assets/Fonts/PressStart2P-Regular.ttf?fileID=12800000&guid=2eeec31d665c5ed46b90940027895e85&type=3#PressStart2P-Regular");
+    -unity-text-align: middle-center;
+    color: rgb(205, 16, 77);
+    -unity-text-outline-color: rgb(255, 210, 216);
+    -unity-text-outline-width: 5px;
+    -unity-font-style: bold;
+}
+
+.skinsContainer {
+    flex-direction: row;
+}
+
+.skinsBuyButton {
+    height: 5%;
+    width: 300px;
+    align-self: center;
+    justify-content: flex-start;
+    align-content: flex-start;
+    align-items: center;
+    -unity-text-align: middle-center;
+    position: absolute;
+    margin-top: 913px;
+    background-image: url("project://database/Assets/CRYPTOChiks/CoreAssets.psd?fileID=5533259361339235805&guid=6a175b91a67904e5c8e418dfac6490a9&type=3#button_01");
+    -unity-font-definition: url("project://database/Assets/Fonts/PressStart2P-Regular.ttf?fileID=12800000&guid=2eeec31d665c5ed46b90940027895e85&type=3#PressStart2P-Regular");
+    color: rgb(255, 255, 255);
+}
+
+.skin {
+    justify-content: center;
+    align-self: auto;
+    height: 70%;
+    background-size: 70% 70%;
+}
+
+.buyableSkinContainer {
+    background-image: url("project://database/Assets/NewUI.psd?fileID=-8177893096301847432&guid=88580963f0bc34a4993c39e31de83996&type=3#Container_03");
+    background-size: 85% 75%;
+}
+
+.skin_text {
+    position: absolute;
+    font-size: 40px;
+    color: rgb(237, 99, 53);
+    -unity-font-definition: url("project://database/Assets/Fonts/PressStart2P-Regular.ttf?fileID=12800000&guid=2eeec31d665c5ed46b90940027895e85&type=3#PressStart2P-Regular");
+    margin-top: 67px;
+    margin-left: 104px;
+    -unity-text-outline-width: 1px;
+    -unity-text-outline-color: rgb(255, 210, 216);
+}

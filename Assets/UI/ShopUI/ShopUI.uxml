@@ -1,0 +1,25 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/ShopUI/ShopUI.uss?fileID=7433441132597879392&amp;guid=c04e3150d5c854a4e87504cb546b69cb&amp;type=3#ShopUI" />
+    <engine:VisualElement name="container_main" class="mainContainer" style="flex-grow: 1; background-color: rgb(255, 142, 158);">
+        <engine:VisualElement name="container_left" class="leftContainer" style="flex-grow: 1;">
+            <engine:VisualElement name="container_title" class="titleContainer" style="flex-grow: 1;">
+                <engine:Label text="CRYPTOSHOP" name="title" class="title" />
+            </engine:VisualElement>
+            <engine:VisualElement name="container_cats" class="catsContainer" style="flex-grow: 1;" />
+            <engine:VisualElement name="container_powerups" class="powerupsContainer" style="flex-grow: 1;" />
+        </engine:VisualElement>
+        <engine:VisualElement name="container_right" class="rightContainer" style="flex-grow: 1;">
+            <engine:VisualElement name="container_skins" class="skinsContainer" style="flex-grow: 1;">
+                <engine:Label text="PREMIUM SKINS !!!" name="premium_skins" class="skin_text" />
+                <engine:VisualElement name="buyable_skin01" class="buyableSkinContainer" style="flex-grow: 1;">
+                    <engine:VisualElement name="skin01" class="skin" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Characters/Girl_2/Idle.png?fileID=4723107735738678597&amp;guid=68329c67fa45d9a4aa8932d57bcf5267&amp;type=3#Idle_0&quot;); width: auto; height: auto;" />
+                    <engine:Button text="10,000 Tks" name="buy_skin01_button" class="skinsBuyButton" />
+                </engine:VisualElement>
+                <engine:VisualElement name="buyable_skin02" class="buyableSkinContainer" style="flex-grow: 1;">
+                    <engine:VisualElement name="skin02" class="skin" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Characters/Girl_3/Idle.png?fileID=4723107735738678597&amp;guid=28233d59c2c786e4ba3642a182a5802c&amp;type=3#Idle_0&quot;);" />
+                    <engine:Button text="10,000 Tks" name="buy_skin02_button" class="skinsBuyButton" />
+                </engine:VisualElement>
+            </engine:VisualElement>
+        </engine:VisualElement>
+    </engine:VisualElement>
+</engine:UXML>
