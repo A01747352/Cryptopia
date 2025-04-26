@@ -368,9 +368,9 @@ app.post('/cryptomine/saveSession/:userId', async (req, res) => {
     let connection;
     try {
         connection = await dbConnect();
-        console.log("Conexion exitosa");
+        
         await connection.execute('CALL InsertSesionCryptoMine(?, ?, ?, ?, ?, ?, ?);', [userId, TKNs, minedBlocks, clicks, score, startSession, endSession]);
-        console.log("Consulta exitosa");
+
         res.send({ success: true });
     }
     catch (err) {
@@ -389,8 +389,9 @@ app.get('/cryptomine/loadUserData/:userId', async (req, res) => {
     let connection;
     try {
         connection = await dbConnect();
+        console.log("Conexion exitosa");
         const [rows] = await connection.execute('SELECT cantidad FROM wallet WHERE idUsuario = ? AND idCriptomoneda = 1;', [userId]);
-        const TKNs = rows[0].cantidad || 0;
+        const TKNs = rows.length > 0 ? rows[0].cantidad : 0; // Default to 0 if no rows are returned
         const [rows2] = await connection.execute('SELECT SUM(bloquesMinados) AS totalBloquesMinados FROM sesioncryptomine WHERE idUsuario = ?;', [userId]);
         const totalBloquesMinados = rows2[0].totalBloquesMinados || 0;
         const response = {
@@ -398,6 +399,7 @@ app.get('/cryptomine/loadUserData/:userId', async (req, res) => {
             totalBloquesMinados: totalBloquesMinados
         };
         res.send(response);
+        console.log(response);
     }
     catch (err) {
         const { name, message } = err;
@@ -417,9 +419,81 @@ app.get('/trading/getUserWallet/:userId', async (req, res) => {
     let connection;
     try {
         connection = await dbConnect();
-        const [rows] = await connection.execute('SELECT c.nombre, c.abreviatura ,w.cantidad FROM wallet AS w INNER JOIN criptomoneda AS c ON c.idCriptomoneda = w.idCriptomoneda WHERE idUsuario = ?;', [userId]);
-        res.send(rows);
-        console.log(rows);
+        const [rows] = await connection.execute('SELECT c.nombre, c.tokenId, c.abreviatura, w.cantidad FROM criptomoneda AS c LEFT JOIN wallet AS w ON c.idCriptomoneda = w.idCriptomoneda AND w.idUsuario = 1;', [userId]);
+        const idTokens = rows.filter(row => row.tokenId !== 0).map(row => row.tokenId).join(',');
+        const options = 
+        {
+            method: 'GET',
+            headers: {accept: 'application/json', api_key: 'tm-d6883ffa-b6ba-4805-876c-923d32308570'}
+        };
+        const queryParams = `token_id=${idTokens}`;
+        const url = `https://api.tokenmetrics.com/v2/price?${queryParams}`;
+
+
+        try {
+            const response = await axios.get(url, options);
+            
+            
+            //Add CURRENT_PRICE to matching rows
+        for (const row of rows) 
+        {
+            
+            if (row.cantidad === undefined || row.cantidad === null) 
+            {
+                row.cantidad = 0; // Default value if cantidad is undefined or null
+            }
+            if (row.tokenId === 0)
+            {
+                row.precio = 1;
+
+            }
+            else
+            {
+                
+                const tokenData = response.data.data.find(token => token.TOKEN_ID === row.tokenId);
+                if (tokenData) 
+                {
+                    row.precio = tokenData.CURRENT_PRICE;
+                } 
+                else 
+                {
+                    console.log(`Token ID ${row.tokenId} not found in API response.`);
+                    row.precio = 0; 
+                }
+            }
+        }
+
+            res.send(rows); 
+        } catch (axiosError) {
+            console.error("Error fetching data from Token Metrics API:", axiosError);
+            res.status(500).send({ error: "Error fetching data from external API", message: axiosError.message });
+        }
+    }
+
+    catch (err) {
+        const { name, message } = err;
+        res.status(500).send({ error: name, message });
+    }
+    finally {
+        if (connection) {
+            connection.end();
+        }
+    }
+});
+
+app.post('/trading/registerTransaction/:userId', async (req, res) => 
+    {
+    let userId = req.params.userId;
+    let {cryptoSold, cryptoBought, amountSold, amountBought} = req.body;
+    let connection;
+    try {
+        connection = await dbConnect();
+        console.log("Conexion exitosa");
+        console.log("Transaccion: ", req.body);
+        const query = `CALL registerTrade(${userId}, ${cryptoSold}, ${amountSold}, ${cryptoBought}, ${amountBought});`;
+        console.log("Query: ", query);
+        await connection.execute('CALL registerTrade(?, ?, ?, ?, ?);', [userId, cryptoSold, amountSold, cryptoBought, amountBought]);
+        res.send({ success: true });
     }
     catch (err) {
         const { name, message } = err;
@@ -433,9 +507,10 @@ app.get('/trading/getUserWallet/:userId', async (req, res) => {
 });
 
 
+
 app.use((req, res) => {
     const url = req.originalUrl;
-    res.status(404).render('not_found', { url });
+    res.status(404).send({ error: "Endpoint no encontrado", url });
 });
 
 app.listen(port, () => {

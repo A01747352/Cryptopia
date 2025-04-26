@@ -13,9 +13,10 @@
 .tfTrader {
     margin-left: 50px;
     align-self: flex-start;
-    width: 370px;
+    width: 510px;
     -unity-font-definition: url("project://database/Assets/Fonts/GrapeSoda%20SDF.asset?fileID=11400000&guid=d51c98973ae254cea92209cda6e50712&type=2#GrapeSoda SDF");
     font-size: 30px;
+    text-overflow: ellipsis;
 }
 
 .tradeCryptoName {
@@ -105,4 +106,38 @@
     font-size: 35px;
     -unity-text-align: middle-left;
     height: 50px;
+}
+
+.goBackButton {
+    position: absolute;
+    left: 270px;
+    bottom: 72px;
+    width: 90px;
+    height: 92px;
+    -unity-background-image-tint-color: rgb(255, 255, 255);
+    background-color: rgba(0, 0, 0, 0.1);
+    background-image: url("project://database/Assets/CRYPTOChiks/CoreAssets.psd?fileID=4610457160513229400&guid=6a175b91a67904e5c8e418dfac6490a9&type=3#button_return");
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+}
+
+.Alert {
+    position: absolute;
+    width: 862px;
+    height: 440px;
+    border-left-color: rgb(255, 210, 216);
+    border-right-color: rgb(255, 210, 216);
+    border-top-color: rgb(255, 210, 216);
+    border-bottom-color: rgb(255, 210, 216);
+    left: 480px;
+    top: 369px;
+    justify-content: center;
+    display: none;
+    background-color: rgb(205, 15, 77);
+    border-top-width: 15px;
+    border-right-width: 15px;
+    border-bottom-width: 15px;
+    border-left-width: 15px;
 }

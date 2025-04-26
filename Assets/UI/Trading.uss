@@ -9,7 +9,7 @@
     height: 828px;
     margin-bottom: 55px;
     flex-direction: row;
-    background-image: url("project://database/Assets/CRYPTOChiks/CoreAssets.psd?fileID=-2808779950346174159&guid=6a175b91a67904e5c8e418dfac6490a9&type=3#Container_03");
+    flex-wrap: wrap;
 }
 
 .cryptoCoinData {
@@ -76,7 +76,15 @@
     width: 1540px;
     height: 828px;
     align-self: center;
-    background-color: rgba(0, 0, 0, 0.47);
+    background-color: rgb(255, 130, 15);
+    border-top-width: 14px;
+    border-right-width: 14px;
+    border-bottom-width: 14px;
+    border-left-width: 14px;
+    border-left-color: rgb(255, 210, 216);
+    border-right-color: rgb(255, 210, 216);
+    border-top-color: rgb(255, 210, 216);
+    border-bottom-color: rgb(255, 210, 216);
 }
 
 .tradeCoinContainer {
