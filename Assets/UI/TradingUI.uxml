@@ -53,7 +53,7 @@
                         <engine:TextField label="Sell:" placeholder-text="Insert Amount" name="TfCryptoCoin" class="tfTrader" style="margin-bottom: 0;" />
                         <engine:VisualElement style="flex-grow: 1; flex-direction: row; width: 407px; align-self: center;">
                             <engine:Label text="TKN:" name="RecieveTKN" class="recieveTKN" style="-unity-text-align: upper-right; -unity-font-definition: url(&quot;project://database/Assets/Fonts/GrapeSoda%20SDF.asset?fileID=11400000&amp;guid=d51c98973ae254cea92209cda6e50712&amp;type=2#GrapeSoda SDF&quot;); font-size: 35px; margin-top: 0; padding-top: 0;" />
-                            <engine:Label text="Label" name="RecieveTKNValue" class="recieveTKNValue" />
+                            <engine:Label text="0.000000" name="RecieveTKNValue" class="recieveTKNValue" />
                         </engine:VisualElement>
                     </engine:VisualElement>
                 </engine:VisualElement>
