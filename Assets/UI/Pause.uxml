@@ -3,7 +3,7 @@
     <engine:VisualElement name="screen" class="screen" style="flex-grow: 1;">
         <engine:VisualElement name="container" class="container" style="flex-grow: 1;">
             <engine:VisualElement name="bkg" class="bkg" style="flex-grow: 1;">
-                <engine:Label text="PAUSED" class="text" />
+                <engine:Label text="PAUSED" class="text" style="-unity-font-definition: url(&quot;project://database/Assets/Fonts/PressStart2P-Regular%20SDF.asset?fileID=11400000&amp;guid=21ac1a085446d534a995ca40c6379324&amp;type=2#PressStart2P-Regular SDF&quot;); font-size: 64px; margin-top: 130px; margin-left: 6px; padding-left: 7px;" />
                 <engine:VisualElement name="buttons" class="buttons" style="flex-grow: 1;">
                     <engine:Button name="back" class="back" />
                     <engine:Button name="play" class="play" />

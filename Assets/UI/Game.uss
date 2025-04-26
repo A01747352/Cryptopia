@@ -21,3 +21,9 @@
     height: 77px;
     -unity-background-scale-mode: scale-to-fit;
 }
+
+.pauseButton:hover {
+    scale: 1.1 1.1;
+    transition-timing-function: ease-out-bounce;
+    transition-duration: 0.1s;
+}

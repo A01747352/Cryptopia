@@ -11,7 +11,7 @@
 }
 
 .bkg {
-    background-image: url("project://database/Assets/Sprites%20UI.psd?fileID=-4728711202863039818&guid=62e23b6e7c6ab3944a50a3fbe783e045&type=3#Container_02");
+    background-image: url("project://database/Assets/NewUI%20w%20coins.psd?fileID=6106400125728684779&guid=5e86398a4f17edd408778995f9982758&type=3#container_02");
     -unity-background-scale-mode: scale-to-fit;
     width: 75%;
     height: auto;
@@ -77,4 +77,22 @@
     border-right-color: rgba(0, 0, 0, 0);
     border-top-color: rgba(0, 0, 0, 0);
     border-bottom-color: rgba(0, 0, 0, 0);
+}
+
+.back:hover {
+    scale: 1.1 1.1;
+    transition-timing-function: ease-out-bounce;
+    transition-duration: 0.1s;
+}
+
+.play:hover {
+    transition-duration: 0.1s;
+    transition-timing-function: ease-out-bounce;
+    scale: 1.1 1.1;
+}
+
+.mute:hover {
+    scale: 1.1 1.1;
+    transition-duration: 0.1s;
+    transition-timing-function: ease-out-bounce;
 }

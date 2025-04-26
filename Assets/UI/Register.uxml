@@ -2,7 +2,7 @@
     <Style src="project://database/Assets/UI/Register.uss?fileID=7433441132597879392&amp;guid=a21fcda099d4cef48bac4eac7be9503a&amp;type=3#Register" />
     <engine:VisualElement name="screen" style="flex-grow: 1; background-color: rgb(255, 142, 158); align-items: center;">
         <engine:VisualElement name="container2" class="container2" style="flex-grow: 0;">
-            <engine:Label text="CRYPTOPIA" name="logo" class="logo" style="background-image: none;" />
+            <engine:Label text="CRYPTOPIA" name="logo" class="logo" style="background-image: none; -unity-font-definition: url(&quot;project://database/Assets/Fonts/PressStart2P-Regular%20SDF.asset?fileID=11400000&amp;guid=21ac1a085446d534a995ca40c6379324&amp;type=2#PressStart2P-Regular SDF&quot;); scale: 1 1.6; letter-spacing: -4px; font-size: 130px; -unity-font-style: bold;" />
         </engine:VisualElement>
         <engine:VisualElement name="container" class="container" style="flex-grow: 1;">
             <engine:TextField label="User" name="user" hide-placeholder-on-focus="true" class="textfield" />

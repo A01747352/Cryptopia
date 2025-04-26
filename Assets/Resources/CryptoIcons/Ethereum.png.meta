@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Ethereum_0: -8445961721124841096
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
