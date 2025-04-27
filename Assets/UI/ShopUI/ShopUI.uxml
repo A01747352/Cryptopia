@@ -1,12 +1,35 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/ShopUI/ShopUI.uss?fileID=7433441132597879392&amp;guid=c04e3150d5c854a4e87504cb546b69cb&amp;type=3#ShopUI" />
     <engine:VisualElement name="container_main" class="mainContainer" style="flex-grow: 1; background-color: rgb(255, 142, 158);">
-        <engine:VisualElement name="container_left" class="leftContainer" style="flex-grow: 1;">
+        <engine:VisualElement name="container_left" class="leftContainer catCard" style="flex-grow: 1;">
             <engine:VisualElement name="container_title" class="titleContainer" style="flex-grow: 1;">
                 <engine:Label text="CRYPTOSHOP" name="title" class="title" />
             </engine:VisualElement>
-            <engine:VisualElement name="container_cats" class="catsContainer" style="flex-grow: 1;" />
-            <engine:VisualElement name="container_powerups" class="powerupsContainer" style="flex-grow: 1;" />
+            <engine:VisualElement name="container_cats" class="catsContainer cat" style="flex-grow: 1;">
+                <engine:Label text="Want more life in Cryptopia? " name="cats_txt" class="catsTXT" />
+                <engine:Label text="&#10;Buy some CATS!!!" name="cats_txt02" class="catsTXT" style="margin-top: -13px; margin-left: 277px;" />
+                <engine:VisualElement name="cats" class="cats" style="flex-grow: 1;">
+                    <engine:VisualElement name="cat_card01" class="catCard catCards" style="flex-grow: 1;">
+                        <engine:VisualElement name="cat01" class="cat catsSprites" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Pet%20Cats%20pack/Sprites/Cat-1/Cat-1-Licking%201.png?fileID=-1230147584&amp;guid=0ba83ae3e39fa1e418bf74f5e82b1f5d&amp;type=3#Cat-1-Licking 1_3&quot;);" />
+                        <engine:Button text="750 Tks" name="buy_cat01" class="catsBuyButton" />
+                    </engine:VisualElement>
+                    <engine:VisualElement name="cat_card02" class="catCards" style="flex-grow: 1;">
+                        <engine:VisualElement name="cat02" class="catsSprites" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Pet%20Cats%20pack/Sprites/Cat-2/Cat-2-Licking%201.png?fileID=1570926453&amp;guid=d2362876c3ea354468cb7816614b03eb&amp;type=3#Cat-2-Licking 1_3&quot;);" />
+                        <engine:Button text="750 Tks" name="buy_cat02" class="catsBuyButton" />
+                    </engine:VisualElement>
+                    <engine:VisualElement name="cat_card03" class="catCards" style="flex-grow: 1;">
+                        <engine:VisualElement name="cat03" class="catsSprites" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Pet%20Cats%20pack/Sprites/Cat-4/Cat-4-Licking%201.png?fileID=520730209&amp;guid=1da54fb549f0d20479096a395c4e037f&amp;type=3#Cat-4-Licking 1_0&quot;);" />
+                        <engine:Button text="750 Tks" name="buy_cat03" class="catsBuyButton" />
+                    </engine:VisualElement>
+                    <engine:VisualElement name="cat_card04" class="catCards" style="flex-grow: 1;">
+                        <engine:VisualElement name="cat04" class="catsSprites" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Pet%20Cats%20pack/Sprites/Cat-3/Cat-3-Licking%201.png?fileID=970402711&amp;guid=4ca7baa634788174db3724bd72751d5c&amp;type=3#Cat-3-Licking 1_2&quot;);" />
+                        <engine:Button text="750 Tks" name="buy_cat04" class="catsBuyButton" />
+                    </engine:VisualElement>
+                </engine:VisualElement>
+            </engine:VisualElement>
+            <engine:VisualElement name="container_powerups" class="powerupsContainer" style="flex-grow: 1;">
+                <engine:VisualElement name="powerups" class="pu" style="flex-grow: 1;" />
+            </engine:VisualElement>
         </engine:VisualElement>
         <engine:VisualElement name="container_right" class="rightContainer" style="flex-grow: 1;">
             <engine:VisualElement name="container_skins" class="skinsContainer" style="flex-grow: 1;">
