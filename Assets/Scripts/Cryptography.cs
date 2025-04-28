@@ -96,7 +96,7 @@ public class Cryptography : MonoBehaviour
         restartVSButton.RegisterCallback<ClickEvent>(RestartGame);
         backToMainVSButton = victoryScreen.Q<Button>("BackToMainButton");
         backToMainVSButton.RegisterCallback<ClickEvent>(BackToMain);
-        userId = PlayerPrefs.GetInt("UserId", 0);
+        userId = PlayerPrefs.GetInt("UserId", 1);
         defeatScreen = root.Q<VisualElement>("DefeatScreen");
         totalScoreDSLabel = defeatScreen.Q<Label>("TotalPointsValue");
         summaryDSResult = defeatScreen.Q<Label>("FinalResultValue");
