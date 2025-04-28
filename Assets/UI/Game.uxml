@@ -1,6 +1,6 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/Game.uss?fileID=7433441132597879392&amp;guid=80ad754e65b4e434fbb2b44eb875682c&amp;type=3#Game" />
-    <engine:VisualElement name="screen" class="screen" style="flex-grow: 0;">
+    <engine:VisualElement name="screen" class="screen" style="flex-grow: 0; width: 139px; height: 108px;">
         <engine:VisualElement name="topBar" class="topBar" style="flex-grow: 1;">
             <engine:VisualElement name="pauseBox" class="pauseBox" style="flex-grow: 1;">
                 <engine:Button name="pauseButton" class="pauseButton" />

@@ -9,16 +9,21 @@ using UnityEngine.Networking;
 using Newtonsoft.Json;
 
 
+
 public class CryptoMine : MonoBehaviour
 {
     
     private CryptoMine instance;
 
+    
     // Utility variables
     private Dictionary<string, Func<double, double>> powerUps;
     private System.Random randomizer = new System.Random();
     private string[] powerUpNames;
-
+    [SerializeField]
+    GameObject flyingCoins;
+    [SerializeField]
+    VisualTreeAsset powerUpTemplate;
     // User Variables
     private double sessionMinedCrypto = 0;
     private double totalMinedCrypto;
@@ -31,7 +36,7 @@ public class CryptoMine : MonoBehaviour
     private HashSet<int> hashTarget;
     private HashSet<int> hashAttempts;
     private int hashUser;
-    private string[] userPowerUps;
+    private string[] activeUserPowerUps;
     private  DateTime sessionStart = DateTime.Now;
 
     
@@ -51,20 +56,30 @@ public class CryptoMine : MonoBehaviour
         private VisualElement powerUp1;
         private VisualElement powerUp2;
         private VisualElement powerUp3;
-        private DropdownField powerUp1Dropdown;
-        private DropdownField powerUp2Dropdown;
-        private DropdownField powerUp3Dropdown;
+        
         private DropdownField cryptoRigDropdown;
+        private Button changePowerUp1;
+        private Button changePowerUp2;
+        private Button changePowerUp3;
         private Button mineButton;
 
         // Drill
         private Label hashLabel;
 
+        // PowerUp Selection
+        private VisualElement powerUpSelectorContainer;
+        private VisualElement selectPowerUpContainer;
+        private Button exitButton;
+
     // Web
     private int userId;
     private string url = "http://localhost:8080";
 
-
+    public struct PowerUp
+    {
+        public string nombre;
+        public string descripcion;
+    }
     public struct GameSession
     {
         public double TKNs;
@@ -74,12 +89,12 @@ public class CryptoMine : MonoBehaviour
         public int clicks;
         public int score;
     }
+    static PowerUp[] userPowerUps;
     static GameSession session;
 
     void Awake()
     {
-        //userId = PlayerPrefs.GetInt("UserId", 1);
-        userId = 4;
+        userId = PlayerPrefs.GetInt("UserId", 1);
         if (instance == null)
         {
             instance = this;
@@ -87,7 +102,7 @@ public class CryptoMine : MonoBehaviour
         }
         else
         {
-            Destroy(gameObject); // Prevent duplicates on scene load
+            Destroy(gameObject); 
         }
     }
     
@@ -101,6 +116,8 @@ public class CryptoMine : MonoBehaviour
         game = GetComponent<UIDocument>();
         VisualElement root = game.rootVisualElement;
 
+        
+
     // Initializing uxml variables
 
         // HUD Elements
@@ -112,13 +129,33 @@ public class CryptoMine : MonoBehaviour
         blocksMinedLabel.text = totalMinedBlocks.ToString();
         totalScoreLabel.text = score.ToString() + "pts";
 
+        
+        // PowerUp Selection
+        exitButton = game.rootVisualElement.Q<Button>("ExitWindow");
+        exitButton.RegisterCallback<ClickEvent>(evt => {
+            powerUpSelectorContainer.style.display = DisplayStyle.None;
+            exitButton.style.display = DisplayStyle.None;
+            print("Exit");
+        });
+
         // Main Container Elements
         powerUp1 = root.Q<VisualElement>("PowerUp1");
         powerUp2 = root.Q<VisualElement>("PowerUp2");
         powerUp3 = root.Q<VisualElement>("PowerUp3");
-        powerUp1Dropdown = root.Q<DropdownField>("PowerUp1Dropdown");
-        powerUp2Dropdown = root.Q<DropdownField>("PowerUp2Dropdown");
-        powerUp3Dropdown = root.Q<DropdownField>("PowerUp3Dropdown");
+        changePowerUp1 = root.Q<Button>("ChangePowerUp1");
+        changePowerUp1.RegisterCallback<ClickEvent>(evt => {
+            showPowerUpInfo(0);
+        });
+        changePowerUp2 = root.Q<Button>("ChangePowerUp2");
+        changePowerUp2.RegisterCallback<ClickEvent>(evt => {
+            showPowerUpInfo(1);
+        });
+        changePowerUp3 = root.Q<Button>("ChangePowerUp3");
+        changePowerUp3.RegisterCallback<ClickEvent>(evt => {
+            showPowerUpInfo(2);
+        });
+        
+
         cryptoRigDropdown = root.Q<DropdownField>("CryptoRigDropdown");
         
 
@@ -126,6 +163,8 @@ public class CryptoMine : MonoBehaviour
         mineButton = root.Q<Button>("MineButton");
         mineButton.RegisterCallback<ClickEvent>(MineCrypto);
         hashLabel = root.Q<Label>("HashLabel");
+
+        
 
         // Game Variables
         // minedCrypto = 0;
@@ -140,11 +179,9 @@ public class CryptoMine : MonoBehaviour
             {"TenfoldXP", TenfoldXP},
             {"TripleReward", TripleReward}
         };
-        powerUp1Dropdown.choices = powerUps.Keys.ToList();
-        powerUp2Dropdown.choices = powerUps.Keys.ToList();
-        powerUp3Dropdown.choices = powerUps.Keys.ToList();
+        
 
-        userPowerUps = PlayerPrefs.GetString("UserPowerUps", "") == "" ? new string[3] { "", "", "" } : PlayerPrefs.GetString("UserPowerUps", "").Split('-');
+        activeUserPowerUps = PlayerPrefs.GetString("UserPowerUps", "") == "" ? new string[3] { "", "", "" } : PlayerPrefs.GetString("UserPowerUps", "").Split('-');
         StartCoroutine(RetrieveUserPowerUps());
 
         cryptoRigDropdown.choices = new List<string> { "CPU", "GPU" };
@@ -153,11 +190,6 @@ public class CryptoMine : MonoBehaviour
         hashAttempts = new HashSet<int>();
         hashTarget = new HashSet<int>(); 
         GenerateHashTarget();
-
-
-        powerUp1Dropdown.RegisterCallback<ChangeEvent<string>>(evt => SelectPowerUp(evt, 0));
-        powerUp2Dropdown.RegisterCallback<ChangeEvent<string>>(evt => SelectPowerUp(evt, 1));
-        powerUp3Dropdown.RegisterCallback<ChangeEvent<string>>(evt => SelectPowerUp(evt, 2));
 
         cryptoRigDropdown.RegisterCallback<ChangeEvent<string>>(evt => {
             if (evt.newValue == "GPU")
@@ -168,33 +200,55 @@ public class CryptoMine : MonoBehaviour
             else
             {
                 PlayerPrefs.SetInt("AutoMine", 0);
-                //StopAllCoroutines();
+                StopAllCoroutines();
             }
         });
 
         
 
-        //StartCoroutine(AutoMine(0.5f));
-
     }
 
-    private void SelectPowerUp(ChangeEvent<string> evt, int index)
+    void showPowerUpInfo(int index)
     {
-        if (index == 0)
-        { 
-            powerUp1Dropdown.value = evt.newValue; 
-        }
-        else if (index == 1)
+        powerUpSelectorContainer = game.rootVisualElement.Q<VisualElement>("PowerUpSelectorContainer");
+        selectPowerUpContainer = game.rootVisualElement.Q<VisualElement>("PowerUpSelector");
+        
+        
+        if (selectPowerUpContainer.childCount > 0)
         {
-            powerUp2Dropdown.value = evt.newValue;
+            selectPowerUpContainer.Clear();
         }
-        else
+        foreach (PowerUp powerUp in userPowerUps)
         {
-            powerUp3Dropdown.value = evt.newValue;
+            var item = powerUpTemplate.CloneTree();
+            
+            item.Q<Label>("PowerUpName").text = powerUp.nombre;
+            item.Q<Label>("PowerUpDescription").text = powerUp.descripcion;
+            item.Q<VisualElement>("PowerUpIcon").style.backgroundImage = new StyleBackground(Resources.Load<Sprite>($"PowerUps/{powerUp.nombre}"));
+            item.Q<Button>("Activate").RegisterCallback<ClickEvent>(evt => {
+                if (index == 0)
+                {
+                    powerUp1.style.backgroundImage = new StyleBackground(Resources.Load<Sprite>($"PowerUps/{powerUp.nombre}"));
+                }
+                else if (index == 1)
+                {
+                    powerUp2.style.backgroundImage = new StyleBackground(Resources.Load<Sprite>($"PowerUps/{powerUp.nombre}"));
+                }
+                else
+                {
+                    powerUp3.style.backgroundImage = new StyleBackground(Resources.Load<Sprite>($"PowerUps/{powerUp.nombre}"));
+                }
+                activeUserPowerUps[index] = powerUp.nombre;
+            });
+            selectPowerUpContainer.Add(item);  
         }
-       
-        userPowerUps[index] = evt.newValue;
+        exitButton.style.display = DisplayStyle.Flex;
+        selectPowerUpContainer.style.display = DisplayStyle.Flex;
+        powerUpSelectorContainer.style.display = DisplayStyle.Flex;
+
     }
+   
+
 
     private double ApplyPowerUps(int index, double points)
     {
@@ -205,14 +259,14 @@ public class CryptoMine : MonoBehaviour
         else
         {   
             print("AplliedPowerups");
-            points = powerUps[userPowerUps[index]](points);
+            points = powerUps[activeUserPowerUps[index]](points);
             return ApplyPowerUps(--index, points);
         }
     }
     private double ApplyPowerUps(double points)
     {
         int powerUpCount = 0;
-        foreach (string powerUp in userPowerUps)
+        foreach (string powerUp in activeUserPowerUps)
         {
             if (powerUp != "")
             {
@@ -229,6 +283,9 @@ public class CryptoMine : MonoBehaviour
         hashLabel.text =  GenerateRandomString();
         if (hashTarget.Contains(hashUser))
         {
+            StartCoroutine(ShowPink());
+            flyingCoins.GetComponent<ParticleSystem>().Play();
+            
             double crypto = ApplyPowerUps(hashReward);
             sessionMinedCrypto += crypto;
             totalMinedCrypto += crypto;
@@ -279,7 +336,7 @@ public class CryptoMine : MonoBehaviour
     private string GenerateRandomString()
     {
     const string chars = "abcdefghijklmnopqrstuvwxyz0123456789012345678901234567890123456789";
-    return new string(Enumerable.Repeat(chars, 8)
+    return new string(Enumerable.Repeat(chars, 12)
         .Select(s => chars[randomizer.Next(chars.Length)]).ToArray());
     }
 
@@ -299,7 +356,7 @@ public class CryptoMine : MonoBehaviour
 
     void OnApplicationQuit()
     {
-        PlayerPrefs.SetString("UserPowerUps", String.Join("-", userPowerUps));
+        PlayerPrefs.SetString("UserPowerUps", String.Join("-", activeUserPowerUps));
         //SaveUserPowerUps();
         SaveGameSession();
         print("Application quitting");
@@ -326,9 +383,15 @@ public class CryptoMine : MonoBehaviour
 
         if (webRequest.result == UnityWebRequest.Result.Success)
         {
-            powerUp1Dropdown.choices = webRequest.downloadHandler.text.Split('-').ToList();
-            powerUp2Dropdown.choices = webRequest.downloadHandler.text.Split('-').ToList();
-            powerUp3Dropdown.choices = webRequest.downloadHandler.text.Split('-').ToList();
+            string jsonString = webRequest.downloadHandler.text;
+            userPowerUps = JsonConvert.DeserializeObject<PowerUp[]>(jsonString);
+
+            foreach (var powerUp in userPowerUps)
+            {
+                print($"PowerUp: {powerUp.nombre}, Description: {powerUp.descripcion}");
+                
+            }
+            
             
         }
         else
@@ -340,7 +403,7 @@ public class CryptoMine : MonoBehaviour
     private void SaveUserPowerUps()
     {
         // Used Copilot for entering the correct format to accept strings in a Post
-        UnityWebRequest webRequest = UnityWebRequest.Post($"{url}/cryptomine/saveUserPowerUps/{userId}", string.Join("-", userPowerUps), "application/x-www-form-urlencoded");
+        UnityWebRequest webRequest = UnityWebRequest.Post($"{url}/cryptomine/saveUserPowerUps/{userId}", string.Join("-", activeUserPowerUps), "application/x-www-form-urlencoded");
         webRequest.SendWebRequest();
 
         while (!webRequest.isDone) { }
@@ -407,13 +470,23 @@ public class CryptoMine : MonoBehaviour
             {
                 totalMinedBlocks = System.Convert.ToInt32(data["totalBloquesMinados"]);
             }
+            if (data.ContainsKey("puntajeTotal"))
+            {
+                score = System.Convert.ToInt32(data["puntajeTotal"]);
+            }
         }
         else
         {
             Debug.LogError($"Error loading user data: {webRequest.error}");
         }
     }
-
+    private IEnumerator ShowPink()
+    {
+        var pink = game.rootVisualElement.Q<VisualElement>("CorrectColor");
+        pink.style.display = DisplayStyle.Flex;
+        yield return new WaitForSeconds(.2f);
+        pink.style.display = DisplayStyle.None;
+    }
     // PowerUps
     private double DoubleReward(double points)
     {
