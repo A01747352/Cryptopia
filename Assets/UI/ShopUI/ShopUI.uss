@@ -88,11 +88,6 @@
     background-color: rgba(186, 186, 186, 0);
 }
 
-.pu {
-    background-image: url("project://database/Assets/NewUI.psd?fileID=-7514559138517575200&guid=88580963f0bc34a4993c39e31de83996&type=3#button_02");
-    background-size: 85% 80%;
-}
-
 .catCards {
     background-image: url("project://database/Assets/CRYPTOChiks/CoreAssets.psd?fileID=-3322688564714298789&guid=6a175b91a67904e5c8e418dfac6490a9&type=3#button_01");
     background-size: 70% 60%;
@@ -127,4 +122,44 @@
     -unity-text-outline-width: 1px;
     -unity-text-outline-color: rgb(255, 211, 217);
     -unity-font-definition: url("project://database/Assets/Fonts/PressStart2P-Regular.ttf?fileID=12800000&guid=2eeec31d665c5ed46b90940027895e85&type=3#PressStart2P-Regular");
+}
+
+.powerups {
+    flex-direction: row;
+}
+
+.pu {
+    padding-left: 0;
+    background-size: 60% 60%;
+}
+
+.pwrtxt {
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0);
+    color: rgb(237, 99, 53);
+    -unity-text-outline-width: 1px;
+    -unity-text-outline-color: rgb(255, 211, 217);
+    font-size: 30px;
+    -unity-font-definition: url("project://database/Assets/Fonts/PressStart2P-Regular.ttf?fileID=12800000&guid=2eeec31d665c5ed46b90940027895e85&type=3#PressStart2P-Regular");
+    margin-left: 88px;
+    -unity-font-style: bold;
+}
+
+.ret {
+    position: absolute;
+    background-image: url("project://database/Assets/CRYPTOChiks/CoreAssets.psd?fileID=-2534132609857860464&guid=6a175b91a67904e5c8e418dfac6490a9&type=3#button_return_ex");
+    margin-top: 982px;
+    margin-right: -8px;
+    margin-left: -5px;
+    padding-left: -5px;
+}
+
+.pwrinfo {
+    position: absolute;
+    font-size: 15px;
+    -unity-font-definition: url("project://database/Assets/Fonts/PressStart2P-Regular.ttf?fileID=12800000&guid=2eeec31d665c5ed46b90940027895e85&type=3#PressStart2P-Regular");
+    -unity-font-style: bold;
+    color: rgb(255, 211, 217);
+    margin-left: 46px;
+    margin-top: 123px;
 }

@@ -1,7 +1,7 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/ShopUI/ShopUI.uss?fileID=7433441132597879392&amp;guid=c04e3150d5c854a4e87504cb546b69cb&amp;type=3#ShopUI" />
     <engine:VisualElement name="container_main" class="mainContainer" style="flex-grow: 1; background-color: rgb(255, 142, 158);">
-        <engine:VisualElement name="container_left" class="leftContainer catCard" style="flex-grow: 1;">
+        <engine:VisualElement name="container_left" class="leftContainer" style="flex-grow: 1;">
             <engine:VisualElement name="container_title" class="titleContainer" style="flex-grow: 1;">
                 <engine:Label text="CRYPTOSHOP" name="title" class="title" />
             </engine:VisualElement>
@@ -10,7 +10,7 @@
                 <engine:Label text="&#10;Buy some CATS!!!" name="cats_txt02" class="catsTXT" style="margin-top: -13px; margin-left: 277px;" />
                 <engine:VisualElement name="cats" class="cats" style="flex-grow: 1;">
                     <engine:VisualElement name="cat_card01" class="catCard catCards" style="flex-grow: 1;">
-                        <engine:VisualElement name="cat01" class="cat catsSprites" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Pet%20Cats%20pack/Sprites/Cat-1/Cat-1-Licking%201.png?fileID=-1230147584&amp;guid=0ba83ae3e39fa1e418bf74f5e82b1f5d&amp;type=3#Cat-1-Licking 1_3&quot;);" />
+                        <engine:VisualElement name="cat01" class="catsSprites" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Pet%20Cats%20pack/Sprites/Cat-1/Cat-1-Licking%201.png?fileID=-1230147584&amp;guid=0ba83ae3e39fa1e418bf74f5e82b1f5d&amp;type=3#Cat-1-Licking 1_3&quot;);" />
                         <engine:Button text="750 Tks" name="buy_cat01" class="catsBuyButton" />
                     </engine:VisualElement>
                     <engine:VisualElement name="cat_card02" class="catCards" style="flex-grow: 1;">
@@ -28,7 +28,20 @@
                 </engine:VisualElement>
             </engine:VisualElement>
             <engine:VisualElement name="container_powerups" class="powerupsContainer" style="flex-grow: 1;">
-                <engine:VisualElement name="powerups" class="pu" style="flex-grow: 1;" />
+                <engine:VisualElement name="powerups2" class="powerups" style="flex-grow: 1; background-image: none;">
+                    <engine:Label text="Want to earn more tokens?" name="pwrtxt01" class="pwrtxt" />
+                    <engine:Label text="Get yourself some POWERUPS!!!" name="pwrtxt02" class="pwrtxt" style="margin-top: 56px;" />
+                    <engine:Label text="All powerups cost 1,000 Tks, click each powerup to buy it." name="pwrtxtinfo" class="pwrinfo" />
+                    <engine:Label text="From left to right, double reward, triple reward, every fifth" name="pwrtxtinfo2" class="pwrinfo" style="margin-top: 152px;" />
+                    <engine:Label text="block a bonus, 10 times the XP and extra 10% to the rewards." name="pwrtxtinfo3" class="pwrinfo" style="margin-top: 184px;" />
+                </engine:VisualElement>
+                <engine:VisualElement name="powerups1" class="powerups" style="flex-grow: 1; background-image: none; flex-direction: row;">
+                    <engine:VisualElement name="pu01" class="pu" style="flex-grow: 1; background-image: resource(&apos;CryptoIcons/2x_multiplier&apos;);" />
+                    <engine:VisualElement name="pu02" class="pu" style="flex-grow: 1; background-image: resource(&apos;CryptoIcons/3x_multiplier&apos;);" />
+                    <engine:VisualElement name="pu03" class="pu" style="flex-grow: 1; background-image: resource(&apos;CryptoIcons/5block&apos;);" />
+                    <engine:VisualElement name="pu04" class="pu" style="flex-grow: 1; background-image: resource(&apos;CryptoIcons/10x_XP&apos;);" />
+                    <engine:VisualElement name="pu05" class="pu" style="flex-grow: 1; background-image: resource(&apos;CryptoIcons/10%_multiplier&apos;);" />
+                </engine:VisualElement>
             </engine:VisualElement>
         </engine:VisualElement>
         <engine:VisualElement name="container_right" class="rightContainer" style="flex-grow: 1;">
@@ -43,6 +56,7 @@
                     <engine:Button text="10,000 Tks" name="buy_skin02_button" class="skinsBuyButton" />
                 </engine:VisualElement>
             </engine:VisualElement>
+            <engine:Button name="return" class="ret" style="background-image: url(&quot;project://database/Assets/CRYPTOChiks/CoreAssets.psd?fileID=-2534132609857860464&amp;guid=6a175b91a67904e5c8e418dfac6490a9&amp;type=3#button_return_ex&quot;); background-color: rgba(188, 188, 188, 0); background-size: 100% 100%; width: 177px; height: 89px; margin-left: 647px; margin-bottom: -7px; position: absolute;" />
         </engine:VisualElement>
     </engine:VisualElement>
 </engine:UXML>
