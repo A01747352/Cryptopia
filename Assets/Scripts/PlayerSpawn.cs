@@ -31,25 +31,38 @@ public class PlayerSpawn : MonoBehaviour
     {
         string currentScene = SceneManager.GetActiveScene().name;
 
-        // Set position based on current scene
-        if (currentScene == "City")
+        // Check if a saved position exists
+        if (PlayerPrefs.HasKey("SavedPlayerX"))
         {
-            // If it's the first time playing, use the default starting position
-            if (PlayerPrefs.GetInt("HasEnteredPark", 0) == 0)
-            {
-                transform.position = cityStartPosition; // First-time start position
-            }
-            else
-            {
-                transform.position = cityReturnPosition; // Returning from Park
-            }
-            spriteRenderer.flipX = false; // Normal direction
+            float x = PlayerPrefs.GetFloat("SavedPlayerX");
+            float y = PlayerPrefs.GetFloat("SavedPlayerY");
+            float z = PlayerPrefs.GetFloat("SavedPlayerZ");
+
+            transform.position = new Vector3(x, y, z);
+            Debug.Log($"[PlayerSpawn] Loaded saved position: {transform.position}");
         }
-        else if (currentScene == "Park")
+        else
         {
-            transform.position = parkSpawnPosition; // Entering Park
-            spriteRenderer.flipX = true; // Flip when entering Park
-            PlayerPrefs.SetInt("HasEnteredPark", 1); // Save that the player has entered Park
+            // No saved position, use default spawn rules
+            if (currentScene == "City")
+            {
+                if (PlayerPrefs.GetInt("HasEnteredPark", 0) == 0)
+                {
+                    transform.position = cityStartPosition; // First-time start position
+                }
+                else
+                {
+                    transform.position = cityReturnPosition; // Returning from Park
+                }
+                spriteRenderer.flipX = false; // Normal direction
+            }
+            else if (currentScene == "Park")
+            {
+                transform.position = parkSpawnPosition; // Entering Park
+                spriteRenderer.flipX = true; // Flip when entering Park
+                PlayerPrefs.SetInt("HasEnteredPark", 1); // Save that the player has entered Park
+            }
+            Debug.Log($"[PlayerSpawn] No saved position found, used default spawn for scene: {currentScene}");
         }
 
         // Disable movement for 1 second to prevent accidental re-triggering
