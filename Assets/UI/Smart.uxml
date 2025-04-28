@@ -1,0 +1,27 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/SmartContract.uss?fileID=7433441132597879392&amp;guid=af0fb8b04a61e954ebdfdc97a9271d25&amp;type=3#SmartContract" />
+    <engine:VisualElement name="Contenedor" class="contenedorgeneral" style="flex-grow: 1; justify-content: flex-start; padding-top: 40px;">
+        <engine:Label text="Smart Contracts" name="Titulo" class="titulo" style="align-items: auto; align-self: center;" />
+        <engine:VisualElement name="Contenedor-Contratos" class="contenedor-contratos" style="flex-grow: 1;">
+            <engine:VisualElement name="Contrato1" class="contrato" style="flex-grow: 1;">
+                <engine:VisualElement name="ImagenContrato" class="imagencontrato" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Smart/SC_Front.png?fileID=2800000&amp;guid=4f8153f53e1c74640a745da0a062e84f&amp;type=3#SC_Front&quot;); width: 450px;">
+                    <engine:Button text="&quot;Activate&quot;" name="ActivateButtonC1" class="boton" />
+                    <engine:Label text="Label" name="TextoC1" class="textocontrato" style="align-self: center;" />
+                </engine:VisualElement>
+            </engine:VisualElement>
+            <engine:VisualElement name="Contrato2" class="contrato" style="flex-grow: 1;">
+                <engine:VisualElement name="ImagenContrato" class="imagencontrato" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Smart/SC_Front.png?fileID=2800000&amp;guid=4f8153f53e1c74640a745da0a062e84f&amp;type=3#SC_Front&quot;); width: 450px;">
+                    <engine:Label text="Label" name="TextoC2" class="textocontrato" style="align-self: center;" />
+                    <engine:Button text="&quot;Activate&quot;" name="ActivateButtonC2" class="boton" />
+                </engine:VisualElement>
+            </engine:VisualElement>
+            <engine:VisualElement name="Contrato3" class="contrato" style="flex-grow: 1;">
+                <engine:VisualElement name="ImagenContrato" class="imagencontrato" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Smart/SC_Front.png?fileID=2800000&amp;guid=4f8153f53e1c74640a745da0a062e84f&amp;type=3#SC_Front&quot;); width: 450px;">
+                    <engine:Label text="Label" name="TextoC3" class="textocontrato" style="align-self: center;" />
+                    <engine:Button text="&quot;Activate&quot;" name="ActivateButtonC3" class="boton" />
+                </engine:VisualElement>
+            </engine:VisualElement>
+        </engine:VisualElement>
+        <engine:Button name="Regresar" class="botonregreso" style="width: 7%; height: 7%; margin-bottom: 40px; margin-top: 40px; margin-right: 40px; margin-left: 40px;" />
+    </engine:VisualElement>
+</engine:UXML>
