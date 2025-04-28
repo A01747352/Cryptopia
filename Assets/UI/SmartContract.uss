@@ -11,10 +11,11 @@
 .titulo {
     font-size: 60px;
     font-weight: bold;
-    color: black;
+    color: rgb(0, 0, 0);
     text-align: center;
     -unity-font-style: bold;
-    -unity-text-align: upper-center;
+    -unity-text-align: middle-center;
+    -unity-font-definition: url("project://database/Assets/Fonts/PressStart2P-Regular%20SDF.asset?fileID=11400000&guid=21ac1a085446d534a995ca40c6379324&type=2#PressStart2P-Regular SDF");
 }
 
 .contenedor-contratos {
@@ -46,6 +47,10 @@
     font-weight: bold;
     align-self: center;
     margin-top: 10px;
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
 }
 
 .imagencontrato {
@@ -82,12 +87,14 @@
     width: 50%;
     height: 10%;
     border-radius: 10px;
-    color: black;
-    font-size: 16px;
+    color: rgb(255, 255, 255);
+    font-size: 20px;
     font-weight: bold;
     align-self: center;
     margin-top: 700px;
     margin-bottom: 0;
+    background-image: url("project://database/Assets/NewUI.psd?fileID=708982046668999232&guid=88580963f0bc34a4993c39e31de83996&type=3#button_01");
+    -unity-font-definition: url("project://database/Assets/Fonts/PressStart2P-Regular%20SDF.asset?fileID=11400000&guid=21ac1a085446d534a995ca40c6379324&type=2#PressStart2P-Regular SDF");
 }
 
 .botonregreso {
@@ -95,4 +102,23 @@
     align-self: flex-start;
     justify-content: flex-start;
     align-content: auto;
+    background-image: url("project://database/Assets/NewUI.psd?fileID=-1393384716567362197&guid=88580963f0bc34a4993c39e31de83996&type=3#button_return_ex");
+    -unity-background-scale-mode: scale-to-fit;
+    background-color: rgba(0, 0, 0, 0);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+}
+
+.boton:hover {
+    transition-timing-function: ease-out-bounce;
+    transition-duration: 0.1s;
+    scale: 1.1 1.1;
+}
+
+.botonregreso:hover {
+    transition-timing-function: ease-out-bounce;
+    transition-duration: 0.1s;
+    scale: 1.1 1.1;
 }
