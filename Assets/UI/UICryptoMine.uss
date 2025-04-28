@@ -87,21 +87,22 @@
 
 .scoreContainer {
     justify-content: space-around;
-    height: 200px;
+    height: 280px;
 }
 
 .scoreLabels {
     color: rgb(159, 159, 159);
     -unity-font-definition: url("project://database/Assets/Fonts/GrapeSoda%20SDF.asset?fileID=11400000&guid=d51c98973ae254cea92209cda6e50712&type=2#GrapeSoda SDF");
-    font-size: 40px;
-    height: 34px;
+    font-size: 60px;
+    height: 38px;
 }
 
 .scoreValues {
     -unity-text-align: upper-left;
     -unity-font-definition: url("project://database/Assets/Fonts/GrapeSoda%20SDF.asset?fileID=11400000&guid=d51c98973ae254cea92209cda6e50712&type=2#GrapeSoda SDF");
-    font-size: 30px;
+    font-size: 50px;
     color: rgb(255, 255, 255);
+    margin-top: 15px;
 }
 
 .scoreLabelContainers {
