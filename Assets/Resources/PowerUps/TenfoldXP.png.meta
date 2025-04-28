@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      TenfoldXP_0: -772958281737218473
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
