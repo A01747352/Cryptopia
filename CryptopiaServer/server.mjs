@@ -20,7 +20,7 @@ The urls can be more specific too but the format should be descriptive.
 
 async function dbConnect() {
     return await mysql.createConnection({
-        host: 'cryptochicks-db.c7uwe4okm9f3.us-east-2.rds.amazonaws.com',
+        host: 'database-3.c7uwe4okm9f3.us-east-2.rds.amazonaws.com',
         user: "admin",
         password: "Ivanyaduermete",
         database: 'Cryptopia',
@@ -384,6 +384,139 @@ app.post('/trivia/saveGame', async (req, res) =>
             }
         }
     });
+
+// Endpoint para Obtener Contratos Aleatorios
+app.get('/smartcontracts/random', async (req, res) => {
+    let connection;
+    try {
+        connection = await dbConnect();
+        const [rows] = await connection.query(
+            'SELECT idSmartContract, descripcion, JSON_UNQUOTE(JSON_EXTRACT(condicion, "$")) AS condicion, idRecompensa FROM smartcontract ORDER BY RAND() LIMIT 3'
+        );
+        res.send(rows); // Devuelve los contratos aleatorios
+    } catch (err) {
+        console.error("Error en /smartcontracts/random:", err); // Registra el error completo
+        res.status(500).send({ error: err.name, message: err.message });
+    } finally {
+        if (connection) {
+            connection.end();
+        }
+    }
+});
+
+//Endpoint para Procesar Recompensas
+app.get('/reward/:rewardId/:userId', async (req, res) => {
+    const { rewardId, userId } = req.params;
+    let connection;
+    try {
+        connection = await dbConnect();
+        const [reward] = await connection.query(
+            'SELECT tipo, referencia, cantidad FROM recompensa WHERE idRecompensa = ?',
+            [rewardId]
+        );
+
+        if (reward.length === 0) {
+            res.status(404).send({ error: "Recompensa no encontrada" });
+            return;
+        }
+
+        const { tipo, referencia, cantidad } = reward[0];
+
+        if (tipo === "PowerUp") {
+            // Desbloquear PowerUp
+            await connection.query(
+                'INSERT INTO powerupdesbloqueado (idPowerUp, idUsuario, activado, idSmartContract) VALUES (?, ?, 0, ?)',
+                [referencia, userId, rewardId]
+            );
+            res.send({ success: true, message: "PowerUp desbloqueado" });
+        } else if (tipo === "Tkns") {
+            // Añadir Tkns al Wallet
+            await connection.query(
+                'UPDATE wallet SET cantidad = cantidad + ? WHERE idUsuario = ? AND idCriptomoneda = 1',
+                [cantidad, userId]
+            );
+            res.send({ success: true, message: `${cantidad} Tkns añadidos al Wallet` });
+        } else {
+            res.status(400).send({ error: "Tipo de recompensa desconocido" });
+        }
+    } catch (err) {
+        const { name, message } = err;
+        console.error("Error en /reward:", message);
+        res.status(500).send({ error: name, message });
+    } finally {
+        if (connection) {
+            connection.end();
+        }
+    }
+});
+
+// Endpoint para verificar las condiciones de los contratos
+app.get('/smartcontracts/check/:userId', async (req, res) => {
+    const userId = req.params.userId;
+    let connection;
+    try {
+        connection = await dbConnect();
+        const [contracts] = await connection.query(
+            'SELECT sc.idSmartContract, sc.condicion, sc.idRecompensa FROM smartcontract sc ' +
+            'LEFT JOIN smartcontractcumplido scc ON sc.idSmartContract = scc.idSmartContract AND scc.idUsuario = ? ' +
+            'WHERE scc.idSmartContract IS NULL', 
+            [userId]
+        );
+
+        const completedContracts = [];
+        for (const contract of contracts) {
+            const condition = JSON.parse(contract.condicion);
+            const isConditionMet = await evaluateCondition(condition, userId, connection);
+            if (isConditionMet) {
+                completedContracts.push(contract);
+                await connection.query(
+                    'INSERT INTO smartcontractcumplido (idSmartContract, idUsuario) VALUES (?, ?)', 
+                    [contract.idSmartContract, userId]
+                );
+            }
+        }
+
+        res.send(completedContracts);
+    } catch (err) {
+        const { name, message } = err;
+        console.error("Error en /smartcontracts/check:", message);
+        res.status(500).send({ error: name, message });
+    } finally {
+        if (connection) {
+            connection.end();
+        }
+    }
+});
+
+// Función para evaluar las condiciones
+async function evaluateCondition(condition, userId, connection) {
+    if (condition.GamesCryptography) {
+        const [rows] = await connection.query(
+            'SELECT COUNT(*) AS partidas FROM partidacriptografia WHERE idUsuario = ?', 
+            [userId]
+        );
+        return rows[0].partidas >= condition.GamesCryptography;
+    } else if (condition.TriviaWins) {
+        const [rows] = await connection.query(
+            'SELECT COUNT(*) AS victorias FROM partidatrivia WHERE idUsuario = ? AND resultado = "victoria"', 
+            [userId]
+        );
+        return rows[0].victorias >= condition.TriviaWins;
+    } else if (condition.TotalScore) {
+        const [rows] = await connection.query(
+            'SELECT SUM(puntaje) AS totalPuntaje FROM partidatrivia WHERE idUsuario = ?', 
+            [userId]
+        );
+        return rows[0].totalPuntaje >= condition.TotalScore;
+    } else if (condition.MinedBlocks) {
+        const [rows] = await connection.query(
+            'SELECT SUM(bloquesMinados) AS totalBloques FROM sesioncryptomine WHERE idUsuario = ?', 
+            [userId]
+        );
+        return rows[0].totalBloques >= condition.MinedBlocks;
+    }
+    return false;
+}
 
 
 app.use((req, res) => {

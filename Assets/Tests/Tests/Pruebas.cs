@@ -6,7 +6,7 @@ using System.Collections;
 
 public class Pruebas
 {
-    // 3. Dummy test para asegurar que el framework de tests funciona
+    // Dummy test para asegurar que el framework de tests funciona
     [Test]
     public void DummyTest()
     {
@@ -19,36 +19,45 @@ public class Pruebas
     }
 
     [UnityTest]
-    public IEnumerator SamrtTest()
+    public IEnumerator SmartTest()
     {
+        // ARRANGE: Preparar el nombre de la escena esperada
+        string expectedSceneName = "Smart";
+
         // ACT: Cambiar a la escena de los contratos "Smart"
-        SceneManager.LoadScene("Smart");
+        SceneManager.LoadScene(expectedSceneName);
         yield return new WaitForSeconds(1f);
 
         // ASSERT: Verificar que la escena activa sea "Smart"
-        Assert.AreEqual("Smart", SceneManager.GetActiveScene().name, "La escena Smart no se cargó correctamente.");
+        Assert.AreEqual(expectedSceneName, SceneManager.GetActiveScene().name, "La escena Smart no se cargó correctamente.");
     }
 
     [UnityTest]
     public IEnumerator CryptomineSceneLoadsCorrectly()
     {
-        // ACT: Cambiar a la escena "Cryptomine"
-        SceneManager.LoadScene("CryptoMine");
+        // ARRANGE: Preparar el nombre de la escena esperada
+        string expectedSceneName = "CryptoMine";
+
+        // ACT: Cambiar a la escena "CryptoMine"
+        SceneManager.LoadScene(expectedSceneName);
         yield return new WaitForSeconds(1f);
 
-        // ASSERT: Verificar que la escena activa sea "Cryptomine"
-        Assert.AreEqual("CryptoMine", SceneManager.GetActiveScene().name, "La escena Cryptomine no se cargó correctamente.");
+        // ASSERT: Verificar que la escena activa sea "CryptoMine"
+        Assert.AreEqual(expectedSceneName, SceneManager.GetActiveScene().name, "La escena CryptoMine no se cargó correctamente.");
     }
 
     [UnityTest]
     public IEnumerator MiniGameSceneLoadsCorrectly()
     {
+        // ARRANGE: Preparar el nombre de la escena esperada
+        string expectedSceneName = "MiniGame";
+
         // ACT: Cambiar a la escena "MiniGame"
-        SceneManager.LoadScene("MiniGame");
+        SceneManager.LoadScene(expectedSceneName);
         yield return new WaitForSeconds(1f);
 
         // ASSERT: Verificar que la escena activa sea "MiniGame"
-        Assert.AreEqual("MiniGame", SceneManager.GetActiveScene().name, "La escena MiniGame no se cargó correctamente.");
+        Assert.AreEqual(expectedSceneName, SceneManager.GetActiveScene().name, "La escena MiniGame no se cargó correctamente.");
     }
 
     [UnityTest]
@@ -56,7 +65,6 @@ public class Pruebas
     {
         // ARRANGE: Asegurarse de que el juego no esté pausado
         Time.timeScale = 1f;
-        Assert.AreEqual(1f, Time.timeScale, "El juego no está en tiempo normal.");
 
         // ACT: Pausar el juego
         Time.timeScale = 0f;
@@ -71,7 +79,6 @@ public class Pruebas
     {
         // ARRANGE: Asegurarse de que el juego esté pausado
         Time.timeScale = 0f;
-        Assert.AreEqual(0f, Time.timeScale, "El juego no está pausado.");
 
         // ACT: Reanudar el juego
         Time.timeScale = 1f;
@@ -84,11 +91,14 @@ public class Pruebas
     [UnityTest]
     public IEnumerator CryptographySceneLoadsCorrectly()
     {
+        // ARRANGE: Preparar el nombre de la escena esperada
+        string expectedSceneName = "Cryptography";
+
         // ACT: Cambiar a la escena "Cryptography"
-        SceneManager.LoadScene("Cryptography");
+        SceneManager.LoadScene(expectedSceneName);
         yield return new WaitForSeconds(1f);
 
         // ASSERT: Verificar que la escena activa sea "Cryptography"
-        Assert.AreEqual("Cryptography", SceneManager.GetActiveScene().name, "La escena Cryptography no se cargó correctamente.");
+        Assert.AreEqual(expectedSceneName, SceneManager.GetActiveScene().name, "La escena Cryptography no se cargó correctamente.");
     }
 }
