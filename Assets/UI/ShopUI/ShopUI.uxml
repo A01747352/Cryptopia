@@ -56,7 +56,7 @@
                     <engine:Button text="10,000 Tks" name="buy_skin02_button" class="skinsBuyButton" />
                 </engine:VisualElement>
             </engine:VisualElement>
-            <engine:Button name="return" class="ret" style="background-image: url(&quot;project://database/Assets/CRYPTOChiks/CoreAssets.psd?fileID=-2534132609857860464&amp;guid=6a175b91a67904e5c8e418dfac6490a9&amp;type=3#button_return_ex&quot;); background-color: rgba(188, 188, 188, 0); background-size: 100% 100%; width: 177px; height: 89px; margin-left: 647px; margin-bottom: -7px; position: absolute;" />
+            <engine:Button name="return" class="ret" style="background-image: url(&quot;project://database/Assets/CRYPTOChiks/CoreAssets.psd?fileID=-2534132609857860464&amp;guid=6a175b91a67904e5c8e418dfac6490a9&amp;type=3#button_return_ex&quot;); background-color: rgba(188, 188, 188, 0); background-size: 100% 100%; width: 177px; height: 89px; margin-left: 647px; margin-bottom: -7px; position: absolute; display: none;" />
         </engine:VisualElement>
     </engine:VisualElement>
 </engine:UXML>

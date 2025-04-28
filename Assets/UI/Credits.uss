@@ -1,5 +1,5 @@
 .button {
-    background-image: url("project://database/Assets/Sprites%20UI.psd?fileID=3323203286905999864&guid=62e23b6e7c6ab3944a50a3fbe783e045&type=3#Return_Button_01");
+    background-image: url("project://database/Assets/NewUI.psd?fileID=-1393384716567362197&guid=88580963f0bc34a4993c39e31de83996&type=3#button_return_ex");
     -unity-background-scale-mode: scale-to-fit;
     width: 84px;
     height: 44px;
