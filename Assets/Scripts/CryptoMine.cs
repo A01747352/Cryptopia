@@ -73,7 +73,7 @@ public class CryptoMine : MonoBehaviour
 
     // Web
     private int userId;
-    private string url = "http://localhost:8080";
+    private string url = Variables.Variables.url;
 
     public struct PowerUp
     {

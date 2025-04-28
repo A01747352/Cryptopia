@@ -77,7 +77,7 @@ public class TriviaManager : MonoBehaviour
     private int totalQuestions = 5;
     [SerializeField] private int userId = 1;  // Changed from static to serialized field
     private int idGame;  // Changed from static to instance variable
-    [SerializeField] private string url = "http://localhost:8080";  // Made configurable in Inspector
+    private string url = Variables.Variables.url; // Made configurable in Inspector
 
     private List<QuestionWithAnswers> loadedQuestions = new List<QuestionWithAnswers>();
     private QuestionWithAnswers currentQuestion;
