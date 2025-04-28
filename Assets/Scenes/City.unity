@@ -1174,7 +1174,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minPosition: {x: -19.5556, y: -11}
   maxPosition: {x: 97.778, y: 11}
-  smoothSpeed: 0.125
+  smoothSpeed: 0.1
 --- !u!1 &554317000
 GameObject:
   m_ObjectHideFlags: 0
@@ -7545,6 +7545,10 @@ PrefabInstance:
       propertyPath: rb
       value: 
       objectReference: {fileID: 1860640348}
+    - target: {fileID: 7484722300410468452, guid: 695c4d4c8b373b849becd39bea482ab7, type: 3}
+      propertyPath: moveSpeed
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
