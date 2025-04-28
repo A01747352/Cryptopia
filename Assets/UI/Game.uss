@@ -1,7 +1,8 @@
 .screen {
     flex-direction: row;
     max-height: 999px;
-    height: 200px;
+    height: 100px;
+    width: -28px;
 }
 
 .topBar {

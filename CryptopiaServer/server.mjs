@@ -347,9 +347,8 @@ app.get('/cryptomine/retrieveUserPowerUps/:userId', async (req, res) => {
     let userId = req.params.userId;
     try {
         connection = await dbConnect();
-        const [rows] = await connection.execute('SELECT pu.nombre FROM powerupdesbloqueado AS pud LEFT JOIN powerup AS pu ON pud.idPowerUp = pu.idPowerUp WHERE pud.idUsuario = ?;', [userId]);
-        const response = rows.map(row => row.nombre).join('-');
-        res.send(response);
+        const [rows] = await connection.execute('SELECT pu.nombre, pu.descripcion FROM powerupdesbloqueado AS pud LEFT JOIN powerup AS pu ON pud.idPowerUp = pu.idPowerUp WHERE pud.idUsuario = ?;', [userId]);
+        res.send(rows);
     }
     catch (err) {
         const { name, message } = err;
@@ -392,11 +391,13 @@ app.get('/cryptomine/loadUserData/:userId', async (req, res) => {
         console.log("Conexion exitosa");
         const [rows] = await connection.execute('SELECT cantidad FROM wallet WHERE idUsuario = ? AND idCriptomoneda = 1;', [userId]);
         const TKNs = rows.length > 0 ? rows[0].cantidad : 0; // Default to 0 if no rows are returned
-        const [rows2] = await connection.execute('SELECT SUM(bloquesMinados) AS totalBloquesMinados FROM sesioncryptomine WHERE idUsuario = ?;', [userId]);
+        const [rows2] = await connection.execute('SELECT SUM(sc.bloquesMinados) AS totalBloquesMinados, up.puntajeTotal AS PuntajeTotal FROM sesioncryptomine AS sc INNER JOIN userprogress AS up WHERE idUsuario = ?;', [userId]);
         const totalBloquesMinados = rows2[0].totalBloquesMinados || 0;
+        const puntajeTotal = rows2[0].PuntajeTotal || 0;
         const response = {
             TKNs: TKNs,
-            totalBloquesMinados: totalBloquesMinados
+            totalBloquesMinados: totalBloquesMinados,
+            puntajeTotal: puntajeTotal
         };
         res.send(response);
         console.log(response);

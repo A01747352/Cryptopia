@@ -1,0 +1,13 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/UICryptoMine.uss?fileID=7433441132597879392&amp;guid=af1c8aaab62db421bae6d78047159b0d&amp;type=3#UICryptoMine" />
+    <engine:VisualElement name="SelectPowerUpContainer" class="selectPowerUpContainer" style="flex-grow: 0; justify-content: space-around;">
+        <engine:VisualElement name="PowerUpIcon" class="SelectIcon" style="flex-grow: 0; width: 100px; height: 100px;" />
+        <engine:VisualElement name="DescriptionContainer" class="descriptionContainer" style="flex-grow: 0;">
+            <engine:Label text="PowerUp" name="PowerUpName" class="powerUpName" />
+            <engine:VisualElement name="PowerUpLowerContainer" style="flex-grow: 1; flex-direction: row; justify-content: space-between;">
+                <engine:Label text="&apos;When active, this power up doubles the reward you receive&apos;" name="PowerUpDescription" class="powerUpDescription" />
+                <engine:Button text="Activate" name="Activate" style="background-color: rgb(255, 142, 158); border-top-width: 5px; border-right-width: 5px; border-bottom-width: 5px; border-left-width: 5px; -unity-font-definition: url(&quot;project://database/Assets/Fonts/GrapeSoda%20SDF.asset?fileID=11400000&amp;guid=d51c98973ae254cea92209cda6e50712&amp;type=2#GrapeSoda SDF&quot;); font-size: 20px; border-left-color: rgb(199, 207, 221); border-right-color: rgb(199, 207, 221); border-top-color: rgb(199, 207, 221); border-bottom-color: rgb(199, 207, 221);" />
+            </engine:VisualElement>
+        </engine:VisualElement>
+    </engine:VisualElement>
+</engine:UXML>
