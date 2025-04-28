@@ -1,12 +1,12 @@
 .BG {
     align-items: flex-start;
     align-self: center;
-    background-image: url("project://database/Assets/Sprites%20UI.psd?fileID=7251897061182455530&guid=62e23b6e7c6ab3944a50a3fbe783e045&type=3#Background");
-    background-color: rgba(88, 115, 197, 0);
-    -unity-background-image-tint-color: rgb(48, 91, 168);
+    background-image: url("project://database/Assets/Question.psd?fileID=21863403685173999&guid=e2197f8926dc3954e9b3017ebcdfb424&type=3#Fondo");
+    -unity-background-image-tint-color: rgb(239, 241, 255);
 }
 
 .Upper {
+    height: 287px;
 }
 
 .button {
@@ -23,14 +23,38 @@
     font-size: 24px;
     -unity-font-style: bold;
     -unity-text-align: middle-center;
-    background-size: 101% 100%;
     padding-left: 31px;
     padding-right: -31px;
 }
 
 .Question {
+    height: 213px;
 }
 
 .questionText {
     font-size: 15px;
+    background-size: 76px 100%;
+}
+
+.button {
+    justify-content: flex-end;
+    align-self: center;
+    align-content: center;
+    width: 650px;
+    height: 216px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    color: rgb(255, 255, 255);
+    font-size: 24px;
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+    padding-left: 31px;
+    padding-right: -31px;
+    background-color: rgba(0, 0, 0, 0);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
 }
