@@ -80,7 +80,7 @@ public class Cryptography : MonoBehaviour
     static int userId;
     static int idGame;
     
-    private string url = "http://localhost:8080";
+    private string url = Variables.Variables.url;
     
     void OnEnable()
     {

@@ -12,6 +12,7 @@ public class SmartContract : MonoBehaviour
     private Button backButton; // Botón para regresar a la escena "Park"
 
     private List<SmartContractData> smartContracts = new List<SmartContractData>();
+    private string url = Variables.Variables.url;
 
     private void Start()
     {
@@ -48,7 +49,7 @@ public class SmartContract : MonoBehaviour
 
     private IEnumerator LoadSmartContractsFromServer()
     {
-        UnityWebRequest request = UnityWebRequest.Get("http://localhost:8080/smartcontracts/random");
+        UnityWebRequest request = UnityWebRequest.Get($"{url}/smartcontracts/random");
         yield return request.SendWebRequest();
 
         if (request.result == UnityWebRequest.Result.Success)
@@ -86,7 +87,7 @@ public class SmartContract : MonoBehaviour
 
     private IEnumerator CheckConditionAndAssignReward(SmartContractData contract)
     {
-        UnityWebRequest request = UnityWebRequest.Get($"http://localhost:8080/smartcontracts/check/{contract.idSmartContract}");
+        UnityWebRequest request = UnityWebRequest.Get($"{url}/smartcontracts/check/{contract.idSmartContract}");
         yield return request.SendWebRequest();
 
         if (request.result == UnityWebRequest.Result.Success)
@@ -110,7 +111,7 @@ public class SmartContract : MonoBehaviour
 
     private IEnumerator AssignReward(int rewardId)
     {
-        UnityWebRequest request = UnityWebRequest.Get($"http://localhost:8080/reward/{rewardId}/1"); // Cambia "1" por el ID del usuario actual
+        UnityWebRequest request = UnityWebRequest.Get($"{url}/reward/{rewardId}/1"); // Cambia "1" por el ID del usuario actual
         yield return request.SendWebRequest();
 
         if (request.result == UnityWebRequest.Result.Success)

@@ -23,7 +23,7 @@ public class RegisterUIHandler : MonoBehaviour
     private DropdownField genderDropdown;
     private DropdownField countryDropdown;
     private DropdownField occupationDropdown;
-    string url = "http://localhost:8080";
+    private string url = Variables.Variables.url;
     public struct Register
     {
         public string user;
