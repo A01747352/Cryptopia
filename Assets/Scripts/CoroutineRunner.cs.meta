@@ -1,11 +1,10 @@
 fileFormatVersion: 2
-guid: eda14e29895c640ebb008e610ae5bcac
+guid: 9dffb7c4915d64e0b8b8bfba0f1482b7
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences:
-  - flyingCoins: {instanceID: 0}
-  executionOrder: 100
+  defaultReferences: []
+  executionOrder: -80
   icon: {instanceID: 0}
   userData: 
   assetBundleName: 

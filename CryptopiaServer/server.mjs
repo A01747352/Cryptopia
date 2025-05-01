@@ -349,6 +349,7 @@ app.get('/cryptomine/retrieveUserPowerUps/:userId', async (req, res) => {
         connection = await dbConnect();
         const [rows] = await connection.execute('SELECT pu.nombre, pu.descripcion FROM powerupdesbloqueado AS pud LEFT JOIN powerup AS pu ON pud.idPowerUp = pu.idPowerUp WHERE pud.idUsuario = ?;', [userId]);
         res.send(rows);
+        console.log(rows);
     }
     catch (err) {
         const { name, message } = err;
@@ -400,7 +401,7 @@ app.get('/cryptomine/loadUserData/:userId', async (req, res) => {
             puntajeTotal: puntajeTotal
         };
         res.send(response);
-        console.log(response);
+        console.log("User Data: ", response);
     }
     catch (err) {
         const { name, message } = err;
