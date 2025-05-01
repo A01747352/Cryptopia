@@ -58,3 +58,13 @@
     border-top-color: rgba(0, 0, 0, 0);
     border-bottom-color: rgba(0, 0, 0, 0);
 }
+
+.continuar-button {
+    width: 400px;
+    height: 100px;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    left: 278px;
+    top: 524px;
+    background-image: url("project://database/Assets/NewUI.psd?fileID=-1791011846567012031&guid=88580963f0bc34a4993c39e31de83996&type=3#button_01");
+}
