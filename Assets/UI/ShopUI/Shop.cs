@@ -19,7 +19,7 @@ public class Shop : MonoBehaviour
     private VisualElement containerDupe;
     private Button okButton;
     private Button okDupe;
-    private int userId = 1;
+    private int userId;
 
     // URL from the Variables class directly
     private string url = Variables.Variables.url;
@@ -48,6 +48,11 @@ public class Shop : MonoBehaviour
         { "pu04", 10 },
         { "pu05", 11 }
     };
+    void Awake()
+    {
+        userId = PlayerPrefs.GetInt("UserId", 1);
+        
+    }
 
     void Start()
     {
