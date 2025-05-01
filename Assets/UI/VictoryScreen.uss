@@ -9,7 +9,7 @@
 .mainContainer {
     width: 800px;
     height: 85%;
-    background-image: url("project://database/Assets/Sprites%20UI.psd?fileID=6969808719853940402&guid=62e23b6e7c6ab3944a50a3fbe783e045&type=3#Container_01");
+    background-image: url("project://database/Assets/NewUI%20w%20coins.psd?fileID=6106400125728684779&guid=5e86398a4f17edd408778995f9982758&type=3#container_02");
     justify-content: flex-start;
     flex-direction: column;
     align-self: center;
@@ -32,15 +32,16 @@
     align-self: center;
     -unity-text-align: middle-left;
     bottom: 15px;
-    font-size: 120px;
-    -unity-font-definition: url("project://database/Assets/Fonts/GrapeSoda%20SDF.asset?fileID=11400000&guid=d51c98973ae254cea92209cda6e50712&type=2#GrapeSoda SDF");
+    font-size: 45px;
+    -unity-font-definition: url("project://database/Assets/Fonts/PressStart2P-Regular%20SDF.asset?fileID=11400000&guid=21ac1a085446d534a995ca40c6379324&type=2#PressStart2P-Regular SDF");
+    padding-left: 10px;
 }
 
 .summaryLabel {
     -unity-text-align: middle-center;
     margin-top: 30px;
-    -unity-font-definition: url("project://database/Assets/Fonts/GrapeSoda%20SDF.asset?fileID=11400000&guid=d51c98973ae254cea92209cda6e50712&type=2#GrapeSoda SDF");
-    font-size: 75px;
+    -unity-font-definition: url("project://database/Assets/Fonts/PressStart2P-Regular%20SDF.asset?fileID=11400000&guid=21ac1a085446d534a995ca40c6379324&type=2#PressStart2P-Regular SDF");
+    font-size: 45px;
     color: rgb(255, 255, 255);
     -unity-font-style: normal;
 }
@@ -75,12 +76,14 @@
     justify-content: flex-start;
     align-self: center;
     left: 39px;
+    margin-bottom: 10px;
+    margin-top: 20px;
 }
 
 .summaryStatsKeys {
-    -unity-font-definition: url("project://database/Assets/Fonts/GrapeSoda%20SDF.asset?fileID=11400000&guid=d51c98973ae254cea92209cda6e50712&type=2#GrapeSoda SDF");
-    -unity-font-style: normal;
-    font-size: 40px;
+    -unity-font-definition: url("project://database/Assets/Fonts/PressStart2P-Regular%20SDF.asset?fileID=11400000&guid=21ac1a085446d534a995ca40c6379324&type=2#PressStart2P-Regular SDF");
+    -unity-font-style: bold;
+    font-size: 18px;
     width: 184px;
     align-self: center;
     color: rgb(0, 0, 0);
@@ -88,10 +91,11 @@
 }
 
 .summaryStatsValues {
-    -unity-font-definition: url("project://database/Assets/Fonts/GrapeSoda%20SDF.asset?fileID=11400000&guid=d51c98973ae254cea92209cda6e50712&type=2#GrapeSoda SDF");
+    -unity-font-definition: url("project://database/Assets/Fonts/PressStart2P-Regular%20SDF.asset?fileID=11400000&guid=21ac1a085446d534a995ca40c6379324&type=2#PressStart2P-Regular SDF");
     -unity-text-align: middle-left;
     color: rgb(255, 255, 255);
-    font-size: 45px;
+    font-size: 18px;
+    margin-left: 6px;
 }
 
 .summaryButton:hover {

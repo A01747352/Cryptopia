@@ -28,7 +28,7 @@
                 <engine:Label text="Summary" name="SummaryLabel" class="summaryText summaryLabel" />
                 <engine:VisualElement name="TotalPointsContainer" class="summaryStatsContaiener" style="flex-grow: 0;">
                     <engine:Label text="Total Points:" name="TotalPointsKey" class="totalPointsLabel summaryStats summaryStatsKeys" />
-                    <engine:Label text="Label" name="TotalPointsValue" class="summaryStatsValues" />
+                    <engine:Label text="Label" name="TotalPointsValue" class="summaryStatsValues" style="margin-left: 48px;" />
                 </engine:VisualElement>
                 <engine:VisualElement name="TKNsContainer" class="summaryStatsContaiener">
                     <engine:Label text="TKN&apos;s:" name="TKNsKey" class="summaryStats summaryStatsKeys" style="width: 114px; margin-right: -3px;" />
@@ -36,17 +36,17 @@
                 </engine:VisualElement>
                 <engine:VisualElement name="FinalResultContainer" class="summaryStatsContaiener" style="flex-grow: 0;">
                     <engine:Label text="Mistakes:" name="FinalResultKey" class="summaryStats summaryStatsKeys" style="width: 152px; margin-right: 13px;" />
-                    <engine:Label text="Label" name="FinalResultValue" class="summaryStatsValues" />
+                    <engine:Label text="Label" name="FinalResultValue" class="summaryStatsValues" style="margin-left: 10px;" />
                 </engine:VisualElement>
                 <engine:VisualElement name="SummaryLowerContainer" class="summaryLowerContainer" style="flex-grow: 0;">
-                    <engine:Button text="Button" name="BackToMainButton" class="summaryButton" style="background-image: url(&quot;project://database/Assets/Sprites%20UI.psd?fileID=-3248817540606541918&amp;guid=62e23b6e7c6ab3944a50a3fbe783e045&amp;type=3#Pause_Menu_Button_02&quot;);" />
+                    <engine:Button text="Button" name="BackToMainButton" class="summaryButton" style="background-image: url(&quot;project://database/Assets/NewUI.psd?fileID=-2798877267648287088&amp;guid=88580963f0bc34a4993c39e31de83996&amp;type=3#button_return&quot;);" />
                     <engine:VisualElement name="Character" class="character" style="flex-grow: 0; background-image: url(&quot;project://database/Assets/Characters/Idle.png?fileID=-2834552850196481573&amp;guid=a6d7d65e18178a24eac1b764c624c85d&amp;type=3#Idle_5&quot;);" />
-                    <engine:Button text="Button" name="RestartButton" class="summaryButton" style="background-image: url(&quot;project://database/Assets/Sprites%20UI.psd?fileID=3720184069377556504&amp;guid=62e23b6e7c6ab3944a50a3fbe783e045&amp;type=3#Pause_Menu_Button_01&quot;);" />
+                    <engine:Button text="Button" name="RestartButton" class="summaryButton" style="background-image: url(&quot;project://database/Assets/NewUI.psd?fileID=-4903454496307731718&amp;guid=88580963f0bc34a4993c39e31de83996&amp;type=3#button_play&quot;);" />
                 </engine:VisualElement>
             </engine:VisualElement>
         </engine:VisualElement>
     </engine:VisualElement>
-    <engine:VisualElement name="DefeatScreen" class="victoryScreen" style="flex-grow: 1; display: none; background-color: rgba(166, 57, 63, 0.4); position: absolute;">
+    <engine:VisualElement name="DefeatScreen" class="victoryScreen" style="flex-grow: 1; display: none; background-color: rgba(166, 57, 63, 0.4); position: absolute; top: 0; left: -1px;">
         <engine:VisualElement name="MainContainer" class="mainContainer" style="flex-grow: 0;">
             <engine:VisualElement name="TitleContainer" class="titleContainer" style="flex-grow: 0;">
                 <engine:Label text="Defeat" name="Title" class="title" style="color: rgb(255, 255, 255);" />
@@ -55,16 +55,16 @@
                 <engine:Label text="Summary" name="SummaryLabel" class="summaryText summaryLabel" />
                 <engine:VisualElement name="TotalPointsContainer" class="summaryStatsContaiener" style="flex-grow: 0;">
                     <engine:Label text="Lost Points:" name="TotalPointsKey" class="totalPointsLabel summaryStats summaryStatsKeys" />
-                    <engine:Label text="Label" name="TotalPointsValue" class="summaryStatsValues" />
+                    <engine:Label text="Label" name="TotalPointsValue" class="summaryStatsValues" style="margin-left: 28px;" />
                 </engine:VisualElement>
                 <engine:VisualElement name="FinalResultContainer" class="summaryStatsContaiener" style="flex-grow: 0;">
                     <engine:Label text="Result:" name="FinalResultKey" class="summaryStats summaryStatsKeys" style="width: 116px; margin-right: 13px;" />
-                    <engine:Label text="Label" name="FinalResultValue" class="summaryStatsValues" />
+                    <engine:Label text="Label" name="FinalResultValue" class="summaryStatsValues" style="margin-left: 10px;" />
                 </engine:VisualElement>
                 <engine:VisualElement name="SummaryLowerContainer" class="summaryLowerContainer" style="flex-grow: 0;">
-                    <engine:Button text="Button" name="BackToMainButton" class="summaryButton" style="background-image: url(&quot;project://database/Assets/Sprites%20UI.psd?fileID=-3248817540606541918&amp;guid=62e23b6e7c6ab3944a50a3fbe783e045&amp;type=3#Pause_Menu_Button_02&quot;);" />
+                    <engine:Button text="Button" name="BackToMainButton" class="summaryButton" style="background-image: url(&quot;project://database/Assets/NewUI.psd?fileID=-2798877267648287088&amp;guid=88580963f0bc34a4993c39e31de83996&amp;type=3#button_return&quot;);" />
                     <engine:VisualElement name="Character" class="character" style="flex-grow: 0; background-image: url(&quot;project://database/Assets/Characters/Idle.png?fileID=-2834552850196481573&amp;guid=a6d7d65e18178a24eac1b764c624c85d&amp;type=3#Idle_5&quot;);" />
-                    <engine:Button text="Button" name="RestartButton" class="summaryButton" style="background-image: url(&quot;project://database/Assets/Sprites%20UI.psd?fileID=3720184069377556504&amp;guid=62e23b6e7c6ab3944a50a3fbe783e045&amp;type=3#Pause_Menu_Button_01&quot;);" />
+                    <engine:Button text="Button" name="RestartButton" class="summaryButton" style="background-image: url(&quot;project://database/Assets/NewUI.psd?fileID=-4903454496307731718&amp;guid=88580963f0bc34a4993c39e31de83996&amp;type=3#button_play&quot;);" />
                 </engine:VisualElement>
             </engine:VisualElement>
         </engine:VisualElement>
