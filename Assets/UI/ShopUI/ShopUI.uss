@@ -98,6 +98,7 @@
     height: 100%;
     width: 100%;
     margin-top: 30px;
+    -unity-background-scale-mode: scale-and-crop;
 }
 
 .catsBuyButton {
