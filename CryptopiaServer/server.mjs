@@ -349,6 +349,7 @@ app.get('/cryptomine/retrieveUserPowerUps/:userId', async (req, res) => {
         connection = await dbConnect();
         const [rows] = await connection.execute('SELECT pu.nombre, pu.descripcion FROM powerupdesbloqueado AS pud LEFT JOIN powerup AS pu ON pud.idPowerUp = pu.idPowerUp WHERE pud.idUsuario = ?;', [userId]);
         res.send(rows);
+        console.log(rows);
     }
     catch (err) {
         const { name, message } = err;
@@ -400,7 +401,7 @@ app.get('/cryptomine/loadUserData/:userId', async (req, res) => {
             puntajeTotal: puntajeTotal
         };
         res.send(response);
-        console.log(response);
+        console.log("User Data: ", response);
     }
     catch (err) {
         const { name, message } = err;
@@ -573,6 +574,29 @@ app.get('/reward/:rewardId/:userId', async (req, res) => {
     }
 });
 
+app.get('/reward/:rewardId/:userId', async (req, res) => {
+    const rewardId = req.params.rewardId;
+    const userId = req.params.userId;
+    let connection;
+
+    try {
+        connection = await dbConnect();
+        await connection.query(
+            'INSERT INTO recompensas (idRecompensa, idUsuario) VALUES (?, ?)', 
+            [rewardId, userId]
+        );
+        res.send({ success: true, message: "Recompensa asignada correctamente" });
+    } catch (err) {
+        const { name, message } = err;
+        console.error("Error al asignar recompensa:", message);
+        res.status(500).send({ error: name, message });
+    } finally {
+        if (connection) {
+            connection.end();
+        }
+    }
+});
+
 // Endpoint para verificar las condiciones de los contratos
 app.get('/smartcontracts/check/:userId', async (req, res) => {
     const userId = req.params.userId;
@@ -580,26 +604,24 @@ app.get('/smartcontracts/check/:userId', async (req, res) => {
     try {
         connection = await dbConnect();
         const [contracts] = await connection.query(
-            'SELECT sc.idSmartContract, sc.condicion, sc.idRecompensa FROM smartcontract sc ' +
+            'SELECT sc.idSmartContract, sc.descripcion, sc.condicion, sc.idRecompensa FROM smartcontract sc ' +
             'LEFT JOIN smartcontractcumplido scc ON sc.idSmartContract = scc.idSmartContract AND scc.idUsuario = ? ' +
             'WHERE scc.idSmartContract IS NULL', 
             [userId]
         );
 
-        const completedContracts = [];
+        const contractStatuses = [];
         for (const contract of contracts) {
-            const condition = JSON.parse(contract.condicion);
-            const isConditionMet = await evaluateCondition(condition, userId, connection);
-            if (isConditionMet) {
-                completedContracts.push(contract);
-                await connection.query(
-                    'INSERT INTO smartcontractcumplido (idSmartContract, idUsuario) VALUES (?, ?)', 
-                    [contract.idSmartContract, userId]
-                );
-            }
+            const condition = JSON.parse(contract.condicion); // Parsear la condición como JSON
+            contractStatuses.push({
+                idSmartContract: contract.idSmartContract,
+                descripcion: contract.descripcion,
+                condicion: condition, // Incluir la condición como JSON
+                idRecompensa: contract.idRecompensa
+            });
         }
 
-        res.send(completedContracts);
+        res.send(contractStatuses); // Devolver los contratos con sus condiciones
     } catch (err) {
         const { name, message } = err;
         console.error("Error en /smartcontracts/check:", message);
@@ -611,36 +633,28 @@ app.get('/smartcontracts/check/:userId', async (req, res) => {
     }
 });
 
-// Función para evaluar las condiciones
-async function evaluateCondition(condition, userId, connection) {
-    if (condition.GamesCryptography) {
-        const [rows] = await connection.query(
-            'SELECT COUNT(*) AS partidas FROM partidacriptografia WHERE idUsuario = ?', 
-            [userId]
-        );
-        return rows[0].partidas >= condition.GamesCryptography;
-    } else if (condition.TriviaWins) {
-        const [rows] = await connection.query(
-            'SELECT COUNT(*) AS victorias FROM partidatrivia WHERE idUsuario = ? AND resultado = "victoria"', 
-            [userId]
-        );
-        return rows[0].victorias >= condition.TriviaWins;
-    } else if (condition.TotalScore) {
-        const [rows] = await connection.query(
-            'SELECT SUM(puntaje) AS totalPuntaje FROM partidatrivia WHERE idUsuario = ?', 
-            [userId]
-        );
-        return rows[0].totalPuntaje >= condition.TotalScore;
-    } else if (condition.MinedBlocks) {
-        const [rows] = await connection.query(
-            'SELECT SUM(bloquesMinados) AS totalBloques FROM sesioncryptomine WHERE idUsuario = ?', 
-            [userId]
-        );
-        return rows[0].totalBloques >= condition.MinedBlocks;
-    }
-    return false;
-}
+app.post('/smartcontracts/registerCompleted/:idSmartContract', async (req, res) => {
+    const idSmartContract = req.params.idSmartContract;
+    const userId = req.body.userId; // Asegúrate de enviar el userId en el cuerpo de la solicitud
+    let connection;
 
+    try {
+        connection = await dbConnect();
+        await connection.query(
+            'INSERT INTO smartcontractcumplido (idSmartContract, idUsuario) VALUES (?, ?)', 
+            [idSmartContract, userId]
+        );
+        res.send({ success: true, message: "Contrato registrado como cumplido" });
+    } catch (err) {
+        const { name, message } = err;
+        console.error("Error al registrar contrato cumplido:", message);
+        res.status(500).send({ error: name, message });
+    } finally {
+        if (connection) {
+            connection.end();
+        }
+    }
+});
 
 app.use((req, res) => {
     const url = req.originalUrl;

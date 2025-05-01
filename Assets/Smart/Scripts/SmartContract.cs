@@ -5,6 +5,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Networking;
 
+[System.Serializable]
+public class SmartContractData
+{
+    public int idSmartContract;
+    public string descripcion;
+    public string condicion;
+    public int idRecompensa;
+}
+
+[System.Serializable]
+public class SmartContractWrapper
+{
+    public SmartContractData[] contracts;
+}
 public class SmartContract : MonoBehaviour
 {
     private Label[] contractTexts; // Referencias a los textos de los contratos
@@ -82,6 +96,11 @@ public class SmartContract : MonoBehaviour
         if (index < 0 || index >= smartContracts.Count) return;
 
         SmartContractData contract = smartContracts[index];
+
+        // Mostrar mensaje de "Contrato activado"
+        Debug.Log($"Contrato activado: {contract.descripcion}");
+
+        // Iniciar la verificación de la condición en segundo plano
         StartCoroutine(CheckConditionAndAssignReward(contract));
     }
 
@@ -92,20 +111,74 @@ public class SmartContract : MonoBehaviour
 
         if (request.result == UnityWebRequest.Result.Success)
         {
-            bool conditionMet = bool.Parse(request.downloadHandler.text);
-            if (conditionMet)
+            string responseText = request.downloadHandler.text;
+            Debug.Log($"Respuesta del servidor: {responseText}");
+
+            // Deserializar la respuesta como un arreglo de contratos
+            SmartContractData[] contractStatuses = JsonUtility.FromJson<SmartContractWrapper>($"{{\"contracts\":{responseText}}}").contracts;
+
+            foreach (var status in contractStatuses)
             {
-                // Asignar recompensa
-                StartCoroutine(AssignReward(contract.idRecompensa));
-            }
-            else
-            {
-                Debug.Log("La condición no se ha cumplido.");
+                if (status.idSmartContract == contract.idSmartContract)
+                {
+                    // Guardar la condición localmente
+                    StartCoroutine(VerifyConditionPeriodically(status));
+                    break;
+                }
             }
         }
         else
         {
             Debug.LogError($"Error al verificar la condición: {request.error}");
+        }
+    }
+
+    private IEnumerator VerifyConditionPeriodically(SmartContractData contract)
+    {
+        while (true)
+        {
+            // Verificar la condición localmente
+            bool conditionMet = CheckConditionLocally(contract.condicion);
+
+            if (conditionMet)
+            {
+                // Mostrar mensaje de "Contrato cumplido"
+                Debug.Log($"Contrato cumplido: {contract.descripcion}");
+
+                // Registrar el contrato como cumplido en la base de datos
+                StartCoroutine(RegisterCompletedContract(contract));
+
+                yield break; // Salir del bucle
+            }
+
+            // Esperar un tiempo antes de volver a verificar
+            yield return new WaitForSeconds(5f);
+        }
+    }
+
+    private bool CheckConditionLocally(string conditionJson)
+    {
+        // Aquí debes implementar la lógica para verificar la condición localmente
+        // Por ejemplo, comparar los datos del usuario con las condiciones del contrato
+        Debug.Log($"Verificando condición: {conditionJson}");
+        return false; // Cambia esto según la lógica de verificación
+    }
+
+    private IEnumerator RegisterCompletedContract(SmartContractData contract)
+    {
+        UnityWebRequest request = UnityWebRequest.Get($"{url}/smartcontracts/registerCompleted/{contract.idSmartContract}");
+        yield return request.SendWebRequest();
+
+        if (request.result == UnityWebRequest.Result.Success)
+        {
+            Debug.Log($"Contrato registrado como cumplido: {contract.descripcion}");
+
+            // Asignar la recompensa al usuario
+            StartCoroutine(AssignReward(contract.idRecompensa));
+        }
+        else
+        {
+            Debug.LogError($"Error al registrar el contrato como cumplido: {request.error}");
         }
     }
 
@@ -128,19 +201,4 @@ public class SmartContract : MonoBehaviour
     {
         SceneManager.LoadScene("City");
     }
-}
-
-[System.Serializable]
-public class SmartContractData
-{
-    public int idSmartContract;
-    public string descripcion;
-    public string condicion;
-    public int idRecompensa;
-}
-
-[System.Serializable]
-public class SmartContractWrapper
-{
-    public SmartContractData[] contracts;
 }
