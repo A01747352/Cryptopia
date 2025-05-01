@@ -401,7 +401,7 @@ app.get('/cryptomine/loadUserData/:userId', async (req, res) => {
             puntajeTotal: puntajeTotal
         };
         res.send(response);
-        console.log(response);
+        console.log("User Data: ", response);
     }
     catch (err) {
         const { name, message } = err;

@@ -5,7 +5,7 @@ public class UIDocumentManager : MonoBehaviour
 {
     public static UIDocumentManager Instance { get; private set; }
 
-    private UIDocument uiDocument;
+    public UIDocument uiDocument;
 
     private void Awake()
     {
@@ -16,6 +16,7 @@ public class UIDocumentManager : MonoBehaviour
         }
 
         Instance = this;
+        print($"Instance of {nameof(UIDocumentManager)} created.");
         DontDestroyOnLoad(gameObject); // Persist across scenes
 
         uiDocument = GetComponent<UIDocument>();
@@ -24,5 +25,9 @@ public class UIDocumentManager : MonoBehaviour
     public UIDocument GetUIDocument()
     {
         return uiDocument;
+    }
+    public VisualElement GetRootVisualElement()
+    {
+        return uiDocument.rootVisualElement;
     }
 }
