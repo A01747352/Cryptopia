@@ -1,7 +1,7 @@
 .BG {
     align-items: flex-start;
     align-self: center;
-    background-image: url("project://database/Assets/Question.psd?fileID=21863403685173999&guid=e2197f8926dc3954e9b3017ebcdfb424&type=3#Fondo");
+    background-image: url("project://database/Assets/Question%201.psd?fileID=-6315817286293055469&guid=f0d03aa5260fb35458c3e9c5df8e2286&type=3#Layer 21");
     -unity-background-image-tint-color: rgb(239, 241, 255);
 }
 
@@ -40,14 +40,14 @@
     justify-content: flex-end;
     align-self: center;
     align-content: center;
-    width: 650px;
-    height: 216px;
+    width: 656px;
+    height: 229px;
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
     border-bottom-left-radius: 20px;
     color: rgb(255, 255, 255);
-    font-size: 24px;
+    font-size: 20px;
     -unity-font-style: bold;
     -unity-text-align: middle-center;
     padding-left: 31px;
@@ -57,6 +57,8 @@
     border-right-color: rgba(0, 0, 0, 0);
     border-top-color: rgba(0, 0, 0, 0);
     border-bottom-color: rgba(0, 0, 0, 0);
+    background-image: none;
+    -unity-font-definition: url("project://database/Assets/Fonts/PressStart2P-Regular%20SDF.asset?fileID=11400000&guid=21ac1a085446d534a995ca40c6379324&type=2#PressStart2P-Regular SDF");
 }
 
 .continuar-button {

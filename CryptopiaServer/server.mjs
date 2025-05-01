@@ -314,20 +314,31 @@ app.post('/trivia/submitAnswer', async (req, res) => {
 });
 
 
-// Endpoint para guardar resultados del juego
+
 app.post('/trivia/saveGame', async (req, res) => {
     let { idPartida, resultado, porcentajeAciertos, puntaje, TKNs, idMinijuego, idUsuario } = req.body;
     console.log("Guardando juego de trivia:", req.body);
+
+    // Valores por defecto en caso de que falten en el request
+    resultado = resultado || '';
+    porcentajeAciertos = porcentajeAciertos || 0;
+    puntaje = puntaje || 0;
+    TKNs = TKNs || 0;
+    idMinijuego = idMinijuego || 2; // Default para Trivia
+    
+    // La fecha de partida se generará automáticamente en el servidor
+    // idSmartContract puede ser NULL, no lo incluimos
 
     let connection;
     try {
         connection = await dbConnect();
 
-        // Actualizar la partida de trivia
+        // Usar procedimiento almacenado con los campos correctos
         await connection.execute(
-            'CALL saveGameTrivia(?, ?, ?, ?, ?, ?);',
-            [idPartida, idUsuario, resultado, porcentajeAciertos, puntaje, TKNs]
+            'CALL saveGameTriviaCorrect(?, ?, ?, ?, ?, ?, ?);',
+            [idPartida, resultado, porcentajeAciertos, puntaje, TKNs, idMinijuego, idUsuario]
         );
+        
         res.send({ success: true });
     } catch (err) {
         console.error("Error guardando resultados de trivia:", err);
