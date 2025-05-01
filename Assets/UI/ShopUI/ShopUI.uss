@@ -132,6 +132,11 @@
 .pu {
     padding-left: 0;
     background-size: 60% 60%;
+    width: 117.5px;
+    height: 110px;
+    -unity-background-scale-mode: scale-and-crop;
+    margin-top: 200px;
+    margin-left: 75px;
 }
 
 .pwrtxt {
@@ -146,15 +151,6 @@
     -unity-font-style: bold;
 }
 
-.ret {
-    position: absolute;
-    background-image: url("project://database/Assets/CRYPTOChiks/CoreAssets.psd?fileID=-2534132609857860464&guid=6a175b91a67904e5c8e418dfac6490a9&type=3#button_return_ex");
-    margin-top: 982px;
-    margin-right: -8px;
-    margin-left: -5px;
-    padding-left: -5px;
-}
-
 .pwrinfo {
     position: absolute;
     font-size: 15px;
@@ -163,4 +159,52 @@
     color: rgb(255, 211, 217);
     margin-left: 46px;
     margin-top: 123px;
+}
+
+.ret {
+    position: absolute;
+    background-image: url("project://database/Assets/CRYPTOChiks/CoreAssets.psd?fileID=-2534132609857860464&guid=6a175b91a67904e5c8e418dfac6490a9&type=3#button_return_ex");
+    width: 130px;
+    height: 62px;
+    -unity-background-scale-mode: scale-and-crop;
+    background-color: rgba(0, 0, 0, 0);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    margin-top: 8px;
+    margin-left: 8px;
+}
+
+.catsBuyButton:hover {
+    scale: 1.1 1.1;
+    transition-timing-function: ease-out-bounce;
+    transition-duration: 0.1s;
+}
+
+.skinsBuyButton:hover {
+    scale: 1.1 1.1;
+    transition-timing-function: ease-out-bounce;
+    transition-duration: 0.1s;
+}
+
+.pu:hover {
+    scale: 1.1 1.1;
+    transition-timing-function: ease-out-bounce;
+    transition-duration: 0.1s;
+}
+
+.ret:hover {
+    scale: 1.1 1.1;
+    transition-timing-function: ease-out-bounce;
+    transition-duration: 0.1s;
+}
+
+.accept {
+}
+
+.accept:hover {
+    scale: 1.1 1.1;
+    transition-timing-function: ease-out-bounce;
+    transition-duration: 0.1s;
 }
