@@ -521,16 +521,57 @@ app.post('/trading/registerTransaction/:userId', async (req, res) =>
 
 
 // Endpoint para Obtener Contratos Aleatorios
-app.get('/smartcontracts/random', async (req, res) => {
+app.get('/smartcontracts/random/:userId', async (req, res) => {
+    const userId = req.params.userId;
     let connection;
     try {
         connection = await dbConnect();
         const [rows] = await connection.query(
-            'SELECT idSmartContract, descripcion, JSON_UNQUOTE(JSON_EXTRACT(condicion, "$")) AS condicion, idRecompensa FROM smartcontract ORDER BY RAND() LIMIT 3'
+            `SELECT idSmartContract, descripcion, JSON_UNQUOTE(JSON_EXTRACT(condicion, "$")) AS condicion, idRecompensa
+             FROM smartcontract
+             WHERE idSmartContract NOT IN (
+                SELECT idSmartContract FROM smartcontractcumplido WHERE idUsuario = ?
+             )
+             ORDER BY RAND()
+             LIMIT 3`,
+            [userId]
         );
-        res.send(rows); // Devuelve los contratos aleatorios
+        res.send(rows);
     } catch (err) {
-        console.error("Error en /smartcontracts/random:", err); // Registra el error completo
+        console.error("Error en /smartcontracts/random/:userId:", err);
+        res.status(500).send({ error: err.name, message: err.message });
+    } finally {
+        if (connection) connection.end();
+    }
+});
+
+// Endpoint para Verificar las Condiciones de los Contratos
+app.get('/smartcontracts/check/:userId', async (req, res) => {
+    const userId = req.params.userId;
+    let connection;
+    try {
+        connection = await dbConnect();
+        const [contracts] = await connection.query(
+            'SELECT sc.idSmartContract, sc.descripcion, sc.condicion, sc.idRecompensa FROM smartcontract sc ' +
+            'LEFT JOIN smartcontractcumplido scc ON sc.idSmartContract = scc.idSmartContract AND scc.idUsuario = ? ' +
+            'WHERE scc.idSmartContract IS NULL', 
+            [userId]
+        );
+
+        const contractStatuses = [];
+        for (const contract of contracts) {
+            const condition = JSON.parse(contract.condicion); // Parsear la condición como JSON
+            contractStatuses.push({
+                idSmartContract: contract.idSmartContract,
+                descripcion: contract.descripcion,
+                condicion: condition, // Incluir la condición como JSON
+                idRecompensa: contract.idRecompensa
+            });
+        }
+
+        res.send(contractStatuses); // Devolver los contratos con sus condiciones
+    } catch (err) {
+        console.error("Error en /smartcontracts/check:", err);
         res.status(500).send({ error: err.name, message: err.message });
     } finally {
         if (connection) {
@@ -539,10 +580,34 @@ app.get('/smartcontracts/random', async (req, res) => {
     }
 });
 
-//Endpoint para Procesar Recompensas
-app.get('/reward/:rewardId/:userId', async (req, res) => {
-    const { rewardId, userId } = req.params;
+// Endpoint para Registrar un Contrato como Cumplido
+app.post('/smartcontracts/registerCompleted/:idSmartContract', async (req, res) => {
+    const idSmartContract = req.params.idSmartContract;
+    const userId = req.body.userId; // Se espera que el userId venga en el cuerpo de la solicitud
     let connection;
+
+    try {
+        connection = await dbConnect();
+        await connection.query(
+            'INSERT INTO smartcontractcumplido (idSmartContract, idUsuario) VALUES (?, ?)', 
+            [idSmartContract, userId]
+        );
+        res.send({ success: true, message: "Contrato registrado como cumplido" });
+    } catch (err) {
+        console.error("Error al registrar contrato cumplido:", err);
+        res.status(500).send({ error: err.name, message: err.message });
+    } finally {
+        if (connection) {
+            connection.end();
+        }
+    }
+});
+
+// Endpoint para Asignar Recompensas
+app.post('/reward/assign', async (req, res) => {
+    const { rewardId, userId } = req.body;
+    let connection;
+    
     try {
         connection = await dbConnect();
         const [reward] = await connection.query(
@@ -575,91 +640,8 @@ app.get('/reward/:rewardId/:userId', async (req, res) => {
             res.status(400).send({ error: "Tipo de recompensa desconocido" });
         }
     } catch (err) {
-        const { name, message } = err;
-        console.error("Error en /reward:", message);
-        res.status(500).send({ error: name, message });
-    } finally {
-        if (connection) {
-            connection.end();
-        }
-    }
-});
-
-app.get('/reward/:rewardId/:userId', async (req, res) => {
-    const rewardId = req.params.rewardId;
-    const userId = req.params.userId;
-    let connection;
-
-    try {
-        connection = await dbConnect();
-        await connection.query(
-            'INSERT INTO recompensas (idRecompensa, idUsuario) VALUES (?, ?)', 
-            [rewardId, userId]
-        );
-        res.send({ success: true, message: "Recompensa asignada correctamente" });
-    } catch (err) {
-        const { name, message } = err;
-        console.error("Error al asignar recompensa:", message);
-        res.status(500).send({ error: name, message });
-    } finally {
-        if (connection) {
-            connection.end();
-        }
-    }
-});
-
-// Endpoint para verificar las condiciones de los contratos
-app.get('/smartcontracts/check/:userId', async (req, res) => {
-    const userId = req.params.userId;
-    let connection;
-    try {
-        connection = await dbConnect();
-        const [contracts] = await connection.query(
-            'SELECT sc.idSmartContract, sc.descripcion, sc.condicion, sc.idRecompensa FROM smartcontract sc ' +
-            'LEFT JOIN smartcontractcumplido scc ON sc.idSmartContract = scc.idSmartContract AND scc.idUsuario = ? ' +
-            'WHERE scc.idSmartContract IS NULL', 
-            [userId]
-        );
-
-        const contractStatuses = [];
-        for (const contract of contracts) {
-            const condition = JSON.parse(contract.condicion); // Parsear la condición como JSON
-            contractStatuses.push({
-                idSmartContract: contract.idSmartContract,
-                descripcion: contract.descripcion,
-                condicion: condition, // Incluir la condición como JSON
-                idRecompensa: contract.idRecompensa
-            });
-        }
-
-        res.send(contractStatuses); // Devolver los contratos con sus condiciones
-    } catch (err) {
-        const { name, message } = err;
-        console.error("Error en /smartcontracts/check:", message);
-        res.status(500).send({ error: name, message });
-    } finally {
-        if (connection) {
-            connection.end();
-        }
-    }
-});
-
-app.post('/smartcontracts/registerCompleted/:idSmartContract', async (req, res) => {
-    const idSmartContract = req.params.idSmartContract;
-    const userId = req.body.userId; 
-    let connection;
-
-    try {
-        connection = await dbConnect();
-        await connection.query(
-            'INSERT INTO smartcontractcumplido (idSmartContract, idUsuario) VALUES (?, ?)', 
-            [idSmartContract, userId]
-        );
-        res.send({ success: true, message: "Contrato registrado como cumplido" });
-    } catch (err) {
-        const { name, message } = err;
-        console.error("Error al registrar contrato cumplido:", message);
-        res.status(500).send({ error: name, message });
+        console.error("Error en /reward/assign:", err);
+        res.status(500).send({ error: err.name, message: err.message });
     } finally {
         if (connection) {
             connection.end();
