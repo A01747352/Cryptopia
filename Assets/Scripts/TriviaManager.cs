@@ -95,6 +95,11 @@ public class TriviaManager : MonoBehaviour
         }
     }
 
+    void Awake()
+    {
+        userId = PlayerPrefs.GetInt("UserId", 1);
+    }
+
     void OnEnable()
     {
         // Obtener el UIDocument y el root
@@ -638,6 +643,12 @@ public class TriviaManager : MonoBehaviour
     // Al finalizar el juego, mostrar el panel final con el puntaje
     void EndGame()
     {
+
+        
+        UiDocumentm.Instance.IncrementGamesPlayedAfterGame();
+        gameObject.GetComponent<AudioSource>().Stop();
+            GameObject.Find("VictorySound").GetComponent<AudioSource>().Play();
+            
         // Calcular porcentaje de aciertos y tokens
         int totalAnswered = correctAnswers + incorrectAnswers;
         if (totalAnswered == 0) totalAnswered = 1;
@@ -687,6 +698,8 @@ public class TriviaManager : MonoBehaviour
 
     private IEnumerator SaveGame(bool isVictory, float percentage)
     {
+
+
         var gameStats = new
         {
             idPartida = idGame,
