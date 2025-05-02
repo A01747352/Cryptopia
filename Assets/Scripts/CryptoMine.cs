@@ -45,7 +45,7 @@ public class CryptoMine : MonoBehaviour
     
     // Units
     private double hashReward = 1;
-    private int hashProbability = 5;
+    private int hashProbability = 25;
     private int hashPool = 200;
 
     // UI Elements
