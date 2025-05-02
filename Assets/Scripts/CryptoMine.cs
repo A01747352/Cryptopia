@@ -28,7 +28,7 @@ public class CryptoMine : MonoBehaviour
     private double sessionMinedCrypto = 0;
     private double totalMinedCrypto;
     private int sessionMinedBlocks = 0;
-    private int totalMinedBlocks;
+    public int totalMinedBlocks;
     private int pointsPerBlock = 100;
     private int score = 0;
     private int totalClicks;
