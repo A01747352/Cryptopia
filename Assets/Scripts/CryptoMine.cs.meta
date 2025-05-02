@@ -5,7 +5,7 @@ MonoImporter:
   serializedVersion: 2
   defaultReferences:
   - flyingCoins: {instanceID: 0}
-  executionOrder: 100
+  executionOrder: 200
   icon: {instanceID: 0}
   userData: 
   assetBundleName: 

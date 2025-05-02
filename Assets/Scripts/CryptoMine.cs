@@ -369,6 +369,8 @@ public class CryptoMine : MonoBehaviour
             GenerateHashTarget();
             ++sessionMinedBlocks;
             ++totalMinedBlocks;
+            UiDocumentm.Instance.IncrementMinedBlocksAfterAction();
+
 
             score += pointsPerBlock;
             PlayerPrefs.SetInt("TotalScore", PlayerPrefs.GetInt("TotalScore", 0) + pointsPerBlock);
