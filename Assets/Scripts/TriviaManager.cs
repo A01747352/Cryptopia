@@ -645,7 +645,15 @@ public class TriviaManager : MonoBehaviour
     {
 
         
-        UiDocumentm.Instance.IncrementGamesPlayedAfterGame();
+        if (SmartContract.Instance != null && SmartContract.Instance.IsConditionTrackedByActiveContract("TriviaWins"))
+            {
+                UiDocumentm.Instance.IncrementTriviaWins();
+            }
+            else
+            {
+                Debug.Log("SmartContract no inicializado o no requiere TriviaWins.");
+            }
+
         gameObject.GetComponent<AudioSource>().Stop();
             GameObject.Find("VictorySound").GetComponent<AudioSource>().Play();
             

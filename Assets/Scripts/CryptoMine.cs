@@ -384,8 +384,14 @@ public class CryptoMine : MonoBehaviour
             GenerateHashTarget();
             ++sessionMinedBlocks;
             ++totalMinedBlocks;
-            UiDocumentm.Instance.IncrementMinedBlocksAfterAction();
-
+            if (SmartContract.Instance != null && SmartContract.Instance.IsConditionTrackedByActiveContract("MinedBlocks"))
+                {
+                    UiDocumentm.Instance.IncrementMinedBlocksAfterAction();
+                }
+                else
+                {
+                    Debug.Log("SmartContract no inicializado o no requiere MinedBlocks.");
+                }
 
             score += pointsPerBlock;
             PlayerPrefs.SetInt("TotalScore", PlayerPrefs.GetInt("TotalScore", 0) + pointsPerBlock);

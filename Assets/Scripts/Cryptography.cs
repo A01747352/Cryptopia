@@ -222,7 +222,14 @@ private IEnumerator LoadProblem()
             score = 0;
             tkns = 0;
             StartCoroutine(SaveGame(false));
-            UiDocumentm.Instance.IncrementGamesPlayedAfterGame();
+            if (SmartContract.Instance != null && SmartContract.Instance.IsConditionTrackedByActiveContract("GamesPlayed"))
+                {
+                    UiDocumentm.Instance.IncrementGamesPlayedAfterGame();
+                }
+                else
+                {
+                    Debug.Log("SmartContract no inicializado o no requiere esta estadística.");
+                }
             
         }
         else if (questionsNum == (totalQuestions + 1) && mistakes < 3) 
@@ -240,7 +247,23 @@ private IEnumerator LoadProblem()
             PlayerPrefs.SetInt("TotalScore", previousScore + score);
             PlayerPrefs.SetFloat("TKNs", PlayerPrefs.GetFloat("TKNs", 0) + tkns);
             PlayerPrefs.Save();
-            UiDocumentm.Instance.IncrementGamesPlayedAfterGame();
+            if (SmartContract.Instance != null && SmartContract.Instance.IsConditionTrackedByActiveContract("WinCryptography"))
+                {
+                    UiDocumentm.Instance.IncrementWinCryptography();
+                }
+                else
+                {
+                    Debug.Log("SmartContract no inicializado o no requiere esta estadística.");
+                }
+            if (SmartContract.Instance != null && SmartContract.Instance.IsConditionTrackedByActiveContract("GamesPlayed"))
+                {
+                    UiDocumentm.Instance.IncrementGamesPlayedAfterGame();
+                }
+                else
+                {
+                    Debug.Log("SmartContract no inicializado o no requiere esta estadística.");
+                }
+
         }
         else
         {
