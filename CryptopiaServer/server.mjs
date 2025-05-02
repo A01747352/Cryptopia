@@ -375,6 +375,7 @@ app.get('/cryptomine/retrieveUserPowerUps/:userId', async (req, res) => {
 
 app.post('/cryptomine/saveSession/:userId', async (req, res) => {
     let userId = req.params.userId;
+    console.log("Guardando sesión de minería:", req.body);
     let { TKNs, startSession, endSession, minedBlocks, clicks, score } = req.body;
     let connection;
     try {
@@ -432,7 +433,7 @@ app.get('/trading/getUserWallet/:userId', async (req, res) => {
     let connection;
     try {
         connection = await dbConnect();
-        const [rows] = await connection.execute('SELECT c.nombre, c.tokenId, c.abreviatura, w.cantidad FROM criptomoneda AS c LEFT JOIN wallet AS w ON c.idCriptomoneda = w.idCriptomoneda AND w.idUsuario = 1;', [userId]);
+        const [rows] = await connection.execute('SELECT c.nombre, c.tokenId, c.abreviatura, w.cantidad FROM criptomoneda AS c LEFT JOIN wallet AS w ON c.idCriptomoneda = w.idCriptomoneda AND w.idUsuario = ?;', [userId]);
         const idTokens = rows.filter(row => row.tokenId !== 0).map(row => row.tokenId).join(',');
         const options = 
         {

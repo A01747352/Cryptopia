@@ -263,7 +263,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -1
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 0.5568628, b: 0.62352943, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -282,8 +282,8 @@ Transform:
   m_GameObject: {fileID: 493420163}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.0118, y: 0.0234, z: 0}
-  m_LocalScale: {x: 17.962523, y: 9.931707, z: 1}
+  m_LocalPosition: {x: 0.1453, y: -0.1101, z: 0}
+  m_LocalScale: {x: 19.136353, y: 10.893236, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -554,7 +554,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -4135,6 +4135,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   flyingCoins: {fileID: 1667888731}
   powerUpTemplate: {fileID: 9197481963319205126, guid: 7715b0ae515c64b16ab599f19b39c7c0, type: 3}
+  totalMinedBlocks: 0
 --- !u!4 &1853735126
 Transform:
   m_ObjectHideFlags: 0
