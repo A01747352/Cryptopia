@@ -51,7 +51,8 @@ public class Shop : MonoBehaviour
     };
     void Awake()
     {
-        userId = PlayerPrefs.GetInt("UserId", 1);        
+        //userId = PlayerPrefs.GetInt("UserId", 1);
+        userId = 1;   
     }
 
     void Start()
@@ -97,6 +98,13 @@ public class Shop : MonoBehaviour
         }
 
         // Add listeners for the other buttons
+        if (returnButton != null)
+        {
+            returnButton.clicked += () =>
+            {
+                SceneManager.LoadScene("City");  // Load the main menu scene
+            };
+        }
         if (acceptButton != null)
         {
             acceptButton.clicked += OnAcceptButtonClicked;
