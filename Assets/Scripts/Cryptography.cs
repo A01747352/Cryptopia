@@ -282,6 +282,8 @@ private IEnumerator LoadProblem()
                 StartCoroutine(NextQuestion(false));
 
             }
+
+            inputUsuario.value = "";
             
         }
     }
@@ -318,6 +320,8 @@ private IEnumerator LoadProblem()
             StartCoroutine(NextQuestion(false));
 
         }
+
+        inputUsuario.value = "";
         
     }
 
