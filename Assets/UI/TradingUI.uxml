@@ -5,7 +5,7 @@
         <engine:VisualElement name="TitleContainer" class="titleContainer" style="flex-grow: 1;">
             <engine:Label text="Trader" name="Title" class="Title" />
         </engine:VisualElement>
-        <engine:ScrollView name="ScrollCrypto" class="scrollCrypto" style="display: none;">
+        <engine:ScrollView name="ScrollCrypto" class="scrollCrypto" style="display: flex;">
             <engine:VisualElement name="CryptoContainer" class="cryptoContainer" style="flex-grow: 0;">
                 <engine:VisualElement name="CryptoCoinContainer" enabled="false" class="cryptoCoin cryptoCoinContainer" style="flex-grow: 0; display: none;">
                     <engine:VisualElement name="CryptoCoinData" class="cryptoCoinData" style="flex-grow: 0;">

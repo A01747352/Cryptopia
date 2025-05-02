@@ -24,6 +24,9 @@ public class CryptoMine : MonoBehaviour
     GameObject flyingCoins;
     [SerializeField]
     VisualTreeAsset powerUpTemplate;
+     
+
+
     // User Variables
     private double sessionMinedCrypto = 0;
     private double totalMinedCrypto;
@@ -78,6 +81,9 @@ public class CryptoMine : MonoBehaviour
     private bool userPowerUpsLoaded = false;
     private Coroutine AutoMineCoroutine;
 
+    // Variable to check if CryptoMine scene is on screen
+    private bool isCryptoMineSceneActive = true;
+
     public struct PowerUp
     {
         public string nombre;
@@ -98,7 +104,8 @@ public class CryptoMine : MonoBehaviour
 
     void Awake()
     {
-        userId = PlayerPrefs.GetInt("UserId", 1);
+        //userId = PlayerPrefs.GetInt("UserId", 1);
+        userId = 1;
         if (instance == null)
         {
             instance = this;
@@ -354,12 +361,20 @@ public class CryptoMine : MonoBehaviour
         ++totalClicks;
         GenerateUserHash();
         hashLabel.text =  GenerateRandomString();
+        if (isCryptoMineSceneActive)
+        {
+            GameObject.Find("MineSound").GetComponent<AudioSource>().Play();
+            print("Mining");
+        }
         if (hashTarget.Contains(hashUser))
         {
-            if (root.style.display == DisplayStyle.Flex)
+            if (isCryptoMineSceneActive)
             {
                 CoroutineRunner.Instance.StartCoroutine(ShowPink());
                 flyingCoins.GetComponent<ParticleSystem>().Play();
+                GameObject.Find("SoundCoins").GetComponent<AudioSource>().Play();
+                print("Coins flying");
+                
             }
             double crypto = ApplyPowerUps(hashReward);
             sessionMinedCrypto += crypto;
@@ -441,10 +456,12 @@ public class CryptoMine : MonoBehaviour
         {
             //game.enabled = false; // Or rootVisualElement.visible = false
             root.style.display = DisplayStyle.None;
+            isCryptoMineSceneActive = false;
         }
         else
         {
             root.style.display = DisplayStyle.Flex;
+            isCryptoMineSceneActive = true;
             //game.enabled = true;
         }
     }
