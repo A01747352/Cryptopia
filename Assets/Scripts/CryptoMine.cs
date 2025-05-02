@@ -76,6 +76,7 @@ public class CryptoMine : MonoBehaviour
     private int userId;
     private string url = Variables.Variables.url;
     private bool userPowerUpsLoaded = false;
+    private Coroutine AutoMineCoroutine;
 
     public struct PowerUp
     {
@@ -196,13 +197,13 @@ public class CryptoMine : MonoBehaviour
             if (evt.newValue == "GPU")
             {
                 PlayerPrefs.SetInt("AutoMine", 1);
-                CoroutineRunner.Instance.StartCoroutine(AutoMine(0.5f));
+                AutoMineCoroutine = CoroutineRunner.Instance.StartCoroutine(AutoMine(0.5f));
                 print("AutoMine Initiated");
             }
             else
             {
-                PlayerPrefs.SetInt("AutoMine", 0);
-                StopAllCoroutines();
+                StopCoroutine(AutoMineCoroutine);
+                AutoMineCoroutine = null;
             }
         });
         
