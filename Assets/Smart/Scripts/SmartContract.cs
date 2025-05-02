@@ -119,14 +119,18 @@ public class SmartContract : MonoBehaviour
     {
         if (index < 0 || index >= smartContracts.Count) return;
 
+        // Verificar si ya hay un contrato activo
+        if (contractCheckCoroutine != null)
+        {
+            // Imprimir un mensaje en la consola si ya hay un contrato activo
+            Debug.LogWarning("Ya tienes un contrato activo. Completa el contrato actual antes de seleccionar otro.");
+            return; // No se selecciona el nuevo contrato
+        }
+
+        // Si no hay contrato activo, proceder con la selección del contrato
         SmartContractData contract = smartContracts[index];
 
         Debug.Log($"Contrato activado: {contract.descripcion}");
-
-        if (contractCheckCoroutine != null)
-        {
-            StopCoroutine(contractCheckCoroutine);
-        }
 
         contractCheckCoroutine = CodeRunner.Instance.StartCoroutine(CheckConditionAndAssignReward(contract));
     }
