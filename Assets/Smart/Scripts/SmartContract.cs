@@ -73,23 +73,8 @@ public class SmartContract : MonoBehaviour
 
         backButton = root.Q<Button>("Regresar");
 
-        if (PlayerPrefs.HasKey("TotalMinedBlocks"))
-        {
-            totalMinedBlocks = PlayerPrefs.GetInt("TotalMinedBlocks");
-        }
-        else
-        {
-            totalMinedBlocks = 0;
-        }
-
-        if (PlayerPrefs.HasKey("TotalScore"))
-        {
-            totalScore = PlayerPrefs.GetInt("TotalScore");
-        }
-        else
-        {
-            totalScore = 0;
-        }
+        totalMinedBlocks = PlayerPrefs.GetInt("TotalMinedBlocks", 0);
+        totalScore = PlayerPrefs.GetInt("TotalScore", 0);
 
         for (int i = 0; i < contractButtons.Length; i++)
         {
@@ -183,7 +168,7 @@ public class SmartContract : MonoBehaviour
 
                 if (pair.Key == "MinedBlocks")
                 {
-                    currentValue = PlayerPrefs.GetInt("MinedBlocks", 0); // ✅ CORREGIDO
+                    currentValue = PlayerPrefs.GetInt("MinedBlocks", 0);
                 }
                 else if (pair.Key == "WinCryptography" || pair.Key == "TriviaWins")
                 {
@@ -266,17 +251,6 @@ public class SmartContract : MonoBehaviour
         PlayerPrefs.Save();
     }
 
-    public void IncrementGamesPlayed()
-    {
-        int gamesPlayed = PlayerPrefs.GetInt("GamesPlayed", 0);
-        gamesPlayed++;
-        PlayerPrefs.SetInt("GamesPlayed", gamesPlayed);
-        PlayerPrefs.Save();
-        Debug.Log($"Games Played: {gamesPlayed}");
-
-        CheckContracts();
-    }
-
     public void CheckContracts()
     {
         if (contractCheckCoroutine != null)
@@ -306,6 +280,22 @@ public class SmartContract : MonoBehaviour
         }
     }
 
+    public bool IsConditionTrackedByActiveContract(string key)
+    {
+        if (contractCheckCoroutine == null) return false;
+
+        foreach (var contract in smartContracts)
+        {
+            var conditionDict = JsonConvert.DeserializeObject<Dictionary<string, int>>(contract.condicion);
+            if (conditionDict != null && conditionDict.ContainsKey(key))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         if (scene.name != "Smart")
@@ -316,4 +306,3 @@ public class SmartContract : MonoBehaviour
         root.style.display = DisplayStyle.Flex;
     }
 }
-
