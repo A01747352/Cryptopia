@@ -95,6 +95,11 @@ public class TriviaManager : MonoBehaviour
         }
     }
 
+    void Awake()
+    {
+        userId = PlayerPrefs.GetInt("UserId", 1);
+    }
+
     void OnEnable()
     {
         // Obtener el UIDocument y el root
@@ -512,7 +517,7 @@ public class TriviaManager : MonoBehaviour
             correctAnswers++;
             score += points;
             if (resultText != null)
-                resultText.text = "¡Correcto!";
+                resultText.text = "Correct!";
             // (Opcional) Cambiar imagen de boxText o reproducir sonido
             AudioSource correctSound = GameObject.Find("SoundCorrect")?.GetComponent<AudioSource>();
             if (correctSound != null) correctSound.Play();
@@ -521,7 +526,7 @@ public class TriviaManager : MonoBehaviour
         {
             incorrectAnswers++;
             if (resultText != null)
-                resultText.text = "Incorrecto :(";
+                resultText.text = "Incorrect :(";
             AudioSource incorrectSound = GameObject.Find("SoundIncorrect")?.GetComponent<AudioSource>();
             if (incorrectSound != null) incorrectSound.Play();
         }
@@ -638,6 +643,12 @@ public class TriviaManager : MonoBehaviour
     // Al finalizar el juego, mostrar el panel final con el puntaje
     void EndGame()
     {
+
+        
+        UiDocumentm.Instance.IncrementGamesPlayedAfterGame();
+        gameObject.GetComponent<AudioSource>().Stop();
+            GameObject.Find("VictorySound").GetComponent<AudioSource>().Play();
+            
         // Calcular porcentaje de aciertos y tokens
         int totalAnswered = correctAnswers + incorrectAnswers;
         if (totalAnswered == 0) totalAnswered = 1;
@@ -660,7 +671,7 @@ public class TriviaManager : MonoBehaviour
 
         // 2. Mostrar panel final con el puntaje
         if (finalScoreText != null)
-            finalScoreText.text = $"¡Juego terminado! Tu puntaje final es: {score} ({percentage.ToString("F0")}%)";
+            finalScoreText.text = $"Your final score is: {score} ({percentage.ToString("F0")}%)";
         if (finalScorePanel != null)
             finalScorePanel.style.display = DisplayStyle.Flex;
 
@@ -687,6 +698,8 @@ public class TriviaManager : MonoBehaviour
 
     private IEnumerator SaveGame(bool isVictory, float percentage)
     {
+
+
         var gameStats = new
         {
             idPartida = idGame,
