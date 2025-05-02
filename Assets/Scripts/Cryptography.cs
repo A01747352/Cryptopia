@@ -214,6 +214,8 @@ private IEnumerator LoadProblem()
         gainedPoints.style.display = DisplayStyle.None;
         if (mistakes == 3)
         {
+            gameObject.GetComponent<AudioSource>().Stop();
+            GameObject.Find("DefeatSound").GetComponent<AudioSource>().Play();
             totalScoreDSLabel.text = score.ToString() + "pts";
             summaryDSResult.text = questionsNum.ToString() + "/" + totalQuestions.ToString();
             defeatScreen.style.display = DisplayStyle.Flex;
@@ -223,6 +225,8 @@ private IEnumerator LoadProblem()
         }
         else if (questionsNum == (totalQuestions + 1) && mistakes < 3) 
         {
+            gameObject.GetComponent<AudioSource>().Stop();
+            GameObject.Find("VictorySound").GetComponent<AudioSource>().Play();
             tkns = score * 0.003f;
             StartCoroutine(SaveGame(true));
             totalScoreVSLabel.text = score.ToString() + "pts";
