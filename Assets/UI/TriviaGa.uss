@@ -34,6 +34,17 @@
 .questionText {
     font-size: 15px;
     background-size: 76px 100%;
+    padding-top: 21px;
+    padding-right: 21px;
+    padding-bottom: 21px;
+    padding-left: 21px;
+    margin-top: 22px;
+    margin-right: 22px;
+    margin-bottom: 22px;
+    margin-left: 22px;
+    white-space: pre;
+    -unity-paragraph-spacing: 48px;
+    -unity-font-definition: url("project://database/Assets/TextMesh%20Pro/Examples%20&%20Extras/Fonts/Roboto-Bold.ttf?fileID=12800000&guid=4beb055f07aaff244873dec698d0363e&type=3#Roboto-Bold");
 }
 
 .button {
@@ -46,19 +57,22 @@
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
     border-bottom-left-radius: 20px;
-    color: rgb(255, 255, 255);
-    font-size: 20px;
+    color: rgb(16, 54, 129);
+    font-size: 28px;
     -unity-font-style: bold;
     -unity-text-align: middle-center;
-    padding-left: 31px;
-    padding-right: -31px;
+    padding-left: 35px;
+    padding-right: 35px;
     background-color: rgba(0, 0, 0, 0);
     border-left-color: rgba(0, 0, 0, 0);
     border-right-color: rgba(0, 0, 0, 0);
     border-top-color: rgba(0, 0, 0, 0);
     border-bottom-color: rgba(0, 0, 0, 0);
     background-image: none;
-    -unity-font-definition: url("project://database/Assets/Fonts/PressStart2P-Regular%20SDF.asset?fileID=11400000&guid=21ac1a085446d534a995ca40c6379324&type=2#PressStart2P-Regular SDF");
+    -unity-font-definition: url("project://database/Assets/TextMesh%20Pro/Examples%20&%20Extras/Fonts/Electronic%20Highway%20Sign.TTF?fileID=12800000&guid=8a2b9e2a607dd2143b58c44bc32410b4&type=3#Electronic Highway Sign");
+    -unity-paragraph-spacing: 28px;
+    padding-top: 56px;
+    padding-bottom: 53px;
 }
 
 .continuar-button {
@@ -69,4 +83,10 @@
     left: 278px;
     top: 524px;
     background-image: url("project://database/Assets/NewUI.psd?fileID=-1791011846567012031&guid=88580963f0bc34a4993c39e31de83996&type=3#button_01");
+}
+
+.button:hover {
+    scale: 1.04 1.04;
+    transition-timing-function: ease-out-bounce;
+    transition-duration: 0.1s;
 }
