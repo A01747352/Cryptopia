@@ -39,6 +39,7 @@ public class SmartContract : MonoBehaviour
     private Coroutine contractCheckCoroutine = null;  // Para manejar la corutina del contrato activo
 
     public static SmartContract Instance; // Singleton
+
     void Awake()
     {
         if (Instance != null && Instance != this)
@@ -54,7 +55,15 @@ public class SmartContract : MonoBehaviour
     private void Start()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
+        InitializeUIAndContracts();
 
+        // Cargar progreso guardado
+        totalMinedBlocks = PlayerPrefs.GetInt("TotalMinedBlocks", 0);
+        totalScore = PlayerPrefs.GetInt("TotalScore", 0);
+    }
+
+    private void InitializeUIAndContracts()
+    {
         UIDocument uiDoc = GameObject.Find("Smart").GetComponent<UIDocument>();
         root = uiDoc.rootVisualElement;
 
@@ -72,34 +81,25 @@ public class SmartContract : MonoBehaviour
 
         backButton = root.Q<Button>("Regresar");
 
-        // Intentamos cargar 'TotalMinedBlocks' y 'TotalScore' desde PlayerPrefs
-        if (PlayerPrefs.HasKey("TotalMinedBlocks"))
-        {
-            totalMinedBlocks = PlayerPrefs.GetInt("TotalMinedBlocks");
-        }
-        else
-        {
-            totalMinedBlocks = 0;
-        }
-
-        if (PlayerPrefs.HasKey("TotalScore"))
-        {
-            totalScore = PlayerPrefs.GetInt("TotalScore");
-        }
-        else
-        {
-            totalScore = 0;
-        }
-
         for (int i = 0; i < contractButtons.Length; i++)
         {
             int index = i;
+            contractButtons[i].clicked -= () => OnContractButtonClicked(index);
             contractButtons[i].clicked += () => OnContractButtonClicked(index);
         }
 
+        backButton.clicked -= OnBackButtonClicked;
         backButton.clicked += OnBackButtonClicked;
 
         CodeRunner.Instance.StartCoroutine(LoadSmartContractsFromServer());
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "Smart")
+        {
+            InitializeUIAndContracts();
+        }
     }
 
     private IEnumerator LoadSmartContractsFromServer()
@@ -138,13 +138,11 @@ public class SmartContract : MonoBehaviour
 
         Debug.Log($"Contrato activado: {contract.descripcion}");
 
-        // Si ya hay una corutina corriendo, la detenemos
         if (contractCheckCoroutine != null)
         {
             StopCoroutine(contractCheckCoroutine);
         }
 
-        // Empezamos la corutina para verificar solo este contrato
         contractCheckCoroutine = CodeRunner.Instance.StartCoroutine(CheckConditionAndAssignReward(contract));
     }
 
@@ -161,7 +159,7 @@ public class SmartContract : MonoBehaviour
                 yield break;
             }
 
-            yield return new WaitForSeconds(5f);  // Revisa cada 5 segundos
+            yield return new WaitForSeconds(5f);
         }
     }
 
@@ -169,28 +167,22 @@ public class SmartContract : MonoBehaviour
     {
         try
         {
-            // Mostrar el JSON recibido para depuración
             Debug.Log($"Verificando condición con JSON: {conditionJson}");
-
-            // Usamos Newtonsoft.Json para deserializar el JSON en un Diccionario
             var conditionDict = JsonConvert.DeserializeObject<Dictionary<string, int>>(conditionJson);
 
-            // Verificamos si las condiciones fueron deserializadas correctamente
             if (conditionDict == null || conditionDict.Count == 0)
             {
                 Debug.LogError("Las condiciones deserializadas son null o vacías. Verifica el formato del JSON.");
                 return false;
             }
 
-            // Verificar las condiciones solo del contrato activo
             foreach (var pair in conditionDict)
             {
                 int currentValue = 0;
 
-                // Comprobamos la condición dependiendo de la clave
                 if (pair.Key == "MinedBlocks")
                 {
-                    currentValue = totalMinedBlocks; // Usar el valor de bloques minados desde PlayerPrefs
+                    currentValue = totalMinedBlocks;
                 }
                 else if (pair.Key == "WinCryptography" || pair.Key == "TriviaWins")
                 {
@@ -205,7 +197,6 @@ public class SmartContract : MonoBehaviour
                     currentValue = PlayerPrefs.GetInt("GamesPlayed", 0);
                 }
 
-                // Mostrar el valor que estamos comparando
                 Debug.Log($"Condición: {pair.Key} | Valor actual: {currentValue} | Valor requerido: {pair.Value}");
 
                 if (currentValue < pair.Value)
@@ -268,45 +259,37 @@ public class SmartContract : MonoBehaviour
 
     private void OnApplicationQuit()
     {
-        // Guardamos el progreso al salir o cambiar de escena
         PlayerPrefs.SetInt("TotalMinedBlocks", totalMinedBlocks);
-        PlayerPrefs.SetInt("TotalScore", totalScore); // Guardamos también el TotalScore
-        PlayerPrefs.SetInt("GamesPlayed", PlayerPrefs.GetInt("GamesPlayed", 0)); // Guardamos también GamesPlayed
-        PlayerPrefs.Save();  // Aseguramos que los cambios se guarden
+        PlayerPrefs.SetInt("TotalScore", totalScore);
+        PlayerPrefs.SetInt("GamesPlayed", PlayerPrefs.GetInt("GamesPlayed", 0));
+        PlayerPrefs.Save();
     }
 
-    // Incrementa el número de juegos jugados y actualiza PlayerPrefs
     public void IncrementGamesPlayed()
     {
         int gamesPlayed = PlayerPrefs.GetInt("GamesPlayed", 0);
         gamesPlayed++;
         PlayerPrefs.SetInt("GamesPlayed", gamesPlayed);
-        PlayerPrefs.Save(); // Guardar el progreso de inmediato
+        PlayerPrefs.Save();
         Debug.Log($"Games Played: {gamesPlayed}");
 
-        // Aquí se puede llamar a la función que verifica el progreso del contrato.
         CheckContracts();
     }
 
-    // Función para verificar todos los contratos
     public void CheckContracts()
     {
-        // Detener cualquier corutina previa
         if (contractCheckCoroutine != null)
         {
             StopCoroutine(contractCheckCoroutine);
         }
 
-        // Empezamos la corutina para verificar los contratos activos
         contractCheckCoroutine = StartCoroutine(CheckContractsPeriodically());
     }
 
-    // Corutina que verifica todos los contratos periódicamente
     private IEnumerator CheckContractsPeriodically()
     {
         while (true)
         {
-            // Revisamos cada contrato y verificamos si se cumplen las condiciones
             foreach (var contract in smartContracts)
             {
                 bool conditionMet = CheckConditionLocally(contract.condicion);
@@ -314,20 +297,11 @@ public class SmartContract : MonoBehaviour
                 if (conditionMet)
                 {
                     Debug.Log($"Contrato cumplido: {contract.descripcion}");
-                    yield return RegisterCompletedContract(contract); // Registrar el contrato como completado
+                    yield return RegisterCompletedContract(contract);
                 }
             }
 
-            // Esperamos 5 segundos antes de revisar nuevamente
             yield return new WaitForSeconds(5f);
-        }
-    }
-
-    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        if (scene.name != "Smart")
-        {
-            return;
         }
     }
 }
