@@ -6,6 +6,7 @@ using UnityEngine.UIElements;
 using UnityEngine.SceneManagement;
 using UnityEngine.Networking;
 using System;
+using UnityEngine.Rendering;
 
 public class Shop : MonoBehaviour
 {
@@ -50,8 +51,7 @@ public class Shop : MonoBehaviour
     };
     void Awake()
     {
-        userId = PlayerPrefs.GetInt("UserId", 1);
-        
+        userId = PlayerPrefs.GetInt("UserId", 1);        
     }
 
     void Start()
@@ -161,12 +161,48 @@ public class Shop : MonoBehaviour
     {
         if (currentItemId != -1)  // Ensure we have a valid itemId
         {
-            StartCoroutine(AddOwnedItem(currentItemId));  // Use the manually assigned itemId
+            StartCoroutine(EnoughToBuy(currentItemId));  // Use the manually assigned itemId
         }
 
         HideConfirmationContainer();  // Hide the confirmation container
     }
 
+    private void EnogughTKN()
+    {
+        
+        StartCoroutine(EnoughToBuy(currentItemId));  // Use the manually assigned itemId
+        
+    }
+    private void StartBuy()
+    {
+        if (currentItemId != -1)  // Ensure we have a valid itemId
+        {
+            StartCoroutine(AddOwnedItem(currentItemId));  // Use the manually assigned itemId
+        }
+    }
+    private IEnumerator EnoughToBuy(int currentItemId)
+    {
+        UnityWebRequest webRequest = UnityWebRequest.Get($"{url}/cryptoShop/price/{userId}/{currentItemId}");
+        yield return webRequest.SendWebRequest();
+
+        if (webRequest.result == UnityWebRequest.Result.Success)
+        {
+            // Check if the response is "True" or "False"
+            if (webRequest.downloadHandler.text == "True")
+            {
+                StartBuy();
+            }
+            else
+            {
+                Debug.LogError($"Not enough tokens to buy item {currentItemId}.");
+            }
+        }
+        else
+        {
+            Debug.LogError($"Failed to check item ownership. Error: {webRequest.error}");
+            ShowConfirmationContainer();  // Show confirmation container in case of an error
+        }
+    }
     private IEnumerator AddOwnedItem(int itemId)
     {
         Items item;

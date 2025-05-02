@@ -635,7 +635,7 @@ app.get('/smartcontracts/check/:userId', async (req, res) => {
 
 app.post('/smartcontracts/registerCompleted/:idSmartContract', async (req, res) => {
     const idSmartContract = req.params.idSmartContract;
-    const userId = req.body.userId; // Asegúrate de enviar el userId en el cuerpo de la solicitud
+    const userId = req.body.userId; 
     let connection;
 
     try {
@@ -659,24 +659,47 @@ app.post('/smartcontracts/registerCompleted/:idSmartContract', async (req, res) 
 // Endpoints para CryptoShop
 
 app.get('/cryptoShop/ownsItem/:userId/:itemId', async (req, res) => {
-    const { userId, itemId } = req.params; // Extract userId and itemId from the request params
+    const { userId, itemId } = req.params;
     let connection;
     try {
         connection = await dbConnect();
-        console.log("Conexion exitosa");
-
-        // Query to check if the user already owns the item
         const [rows] = await connection.execute(
             'SELECT * FROM owneditems WHERE idUsuario = ? AND idItem = ?', [userId, itemId]
         );
 
         if (rows.length > 0) {
-            // User already owns the item
-            res.status(200).send("True"); // Send "True" if the user owns the item
+            res.status(200).send("True"); 
         } else {
-            // User does not own the item
-            res.status(200).send("False"); // Send "False" if the user does not own the item
+            res.status(200).send("False");
         }
+    } catch (err) {
+        console.error("Error al verificar propiedad de artículo por usuario:", err);
+        res.status(500).send({ error: err.name, message: err.message });
+    } finally {
+        if (connection) {
+            connection.end();
+        }
+    }
+});
+
+app.get('/cryptoShop/price/:userId/:itemId', async (req, res) => {
+    const { userId, itemId } = req.params;
+    let connection;
+    try {
+        connection = await dbConnect();
+        const [price] = await connection.execute(
+            'SELECT costo FROM shopitems WHERE idItem = ?', [itemId]
+        );
+        const [tkns] = await connection.execute(
+            'SELECT cantidad FROM wallet WHERE idUsuario = ? AND idCriptomoneda = 1', [userId]
+        );
+
+        if (tkns[0].cantidad >= price[0].costo) {
+            res.status(200).send("True");
+        } else {
+            res.status(200).send("False");
+        }
+        
     } catch (err) {
         console.error("Error al verificar propiedad de artículo por usuario:", err);
         res.status(500).send({ error: err.name, message: err.message });
@@ -692,7 +715,7 @@ app.get('/cryptoShop/ownsItem/:userId/:itemId', async (req, res) => {
 
 // Agregar artículo comprado por usuario
 app.post('/cryptoShop/buy', async (req, res) => {
-    const { userId, itemId } = req.body; // Extract from request body
+    const { userId, itemId } = req.body;
     let connection;
     try {
         connection = await dbConnect();
