@@ -1,0 +1,210 @@
+.mainContainer {
+    flex-direction: row;
+}
+
+.leftContainer {
+    width: 55%;
+}
+
+.rightContainer {
+    width: 45%;
+}
+
+.titleContainer {
+    height: 20%;
+    -unity-text-align: middle-center;
+    justify-content: center;
+    align-self: center;
+    background-size: 100% 100%;
+    width: 55%;
+}
+
+.catsContainer {
+    height: 35%;
+}
+
+.powerupsContainer {
+    height: 35%;
+}
+
+.title {
+    font-size: 80px;
+    -unity-font-definition: url("project://database/Assets/Fonts/PressStart2P-Regular.ttf?fileID=12800000&guid=2eeec31d665c5ed46b90940027895e85&type=3#PressStart2P-Regular");
+    -unity-text-align: middle-center;
+    color: rgb(205, 16, 77);
+    -unity-text-outline-color: rgb(255, 210, 216);
+    -unity-text-outline-width: 5px;
+    -unity-font-style: bold;
+}
+
+.skinsContainer {
+    flex-direction: row;
+}
+
+.skinsBuyButton {
+    height: 5%;
+    width: 300px;
+    align-self: center;
+    justify-content: flex-start;
+    align-content: flex-start;
+    align-items: center;
+    -unity-text-align: middle-center;
+    position: absolute;
+    margin-top: 913px;
+    background-image: url("project://database/Assets/CRYPTOChiks/CoreAssets.psd?fileID=5533259361339235805&guid=6a175b91a67904e5c8e418dfac6490a9&type=3#button_01");
+    -unity-font-definition: url("project://database/Assets/Fonts/PressStart2P-Regular.ttf?fileID=12800000&guid=2eeec31d665c5ed46b90940027895e85&type=3#PressStart2P-Regular");
+    color: rgb(255, 255, 255);
+}
+
+.skin {
+    justify-content: center;
+    align-self: auto;
+    height: 70%;
+    background-size: 70% 70%;
+}
+
+.buyableSkinContainer {
+    background-image: url("project://database/Assets/NewUI.psd?fileID=-8177893096301847432&guid=88580963f0bc34a4993c39e31de83996&type=3#Container_03");
+    background-size: 85% 75%;
+}
+
+.skin_text {
+    position: absolute;
+    font-size: 40px;
+    color: rgb(237, 99, 53);
+    -unity-font-definition: url("project://database/Assets/Fonts/PressStart2P-Regular.ttf?fileID=12800000&guid=2eeec31d665c5ed46b90940027895e85&type=3#PressStart2P-Regular");
+    margin-top: 67px;
+    margin-left: 104px;
+    -unity-text-outline-width: 1px;
+    -unity-text-outline-color: rgb(255, 210, 216);
+}
+
+.cats {
+    background-image: none;
+    background-size: 90% 80%;
+    flex-direction: row;
+    padding-left: 53px;
+    padding-right: 52px;
+    background-color: rgba(186, 186, 186, 0);
+}
+
+.catCards {
+    background-image: url("project://database/Assets/CRYPTOChiks/CoreAssets.psd?fileID=-3322688564714298789&guid=6a175b91a67904e5c8e418dfac6490a9&type=3#button_01");
+    background-size: 70% 60%;
+}
+
+.catsSprites {
+    background-size: 100% 120%;
+    height: 100%;
+    width: 100%;
+    margin-top: 30px;
+    -unity-background-scale-mode: scale-and-crop;
+}
+
+.catsBuyButton {
+    position: absolute;
+    background-image: url("project://database/Assets/CRYPTOChiks/CoreAssets.psd?fileID=5533259361339235805&guid=6a175b91a67904e5c8e418dfac6490a9&type=3#button_01");
+    -unity-font-definition: url("project://database/Assets/Fonts/PressStart2P-Regular.ttf?fileID=12800000&guid=2eeec31d665c5ed46b90940027895e85&type=3#PressStart2P-Regular");
+    color: rgb(255, 255, 255);
+    background-size: 100% 100%;
+    width: 150px;
+    height: 50px;
+    margin-left: 44px;
+    margin-top: 301px;
+}
+
+.catsTXT {
+    position: absolute;
+    color: rgb(237, 99, 53);
+    font-size: 30px;
+    margin-left: 96px;
+    margin-top: -23px;
+    -unity-font-style: bold;
+    -unity-text-outline-width: 1px;
+    -unity-text-outline-color: rgb(255, 211, 217);
+    -unity-font-definition: url("project://database/Assets/Fonts/PressStart2P-Regular.ttf?fileID=12800000&guid=2eeec31d665c5ed46b90940027895e85&type=3#PressStart2P-Regular");
+}
+
+.powerups {
+    flex-direction: row;
+}
+
+.pu {
+    padding-left: 0;
+    background-size: 60% 60%;
+    width: 117.5px;
+    height: 110px;
+    -unity-background-scale-mode: scale-and-crop;
+    margin-top: 200px;
+    margin-left: 75px;
+}
+
+.pwrtxt {
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0);
+    color: rgb(237, 99, 53);
+    -unity-text-outline-width: 1px;
+    -unity-text-outline-color: rgb(255, 211, 217);
+    font-size: 30px;
+    -unity-font-definition: url("project://database/Assets/Fonts/PressStart2P-Regular.ttf?fileID=12800000&guid=2eeec31d665c5ed46b90940027895e85&type=3#PressStart2P-Regular");
+    margin-left: 88px;
+    -unity-font-style: bold;
+}
+
+.pwrinfo {
+    position: absolute;
+    font-size: 15px;
+    -unity-font-definition: url("project://database/Assets/Fonts/PressStart2P-Regular.ttf?fileID=12800000&guid=2eeec31d665c5ed46b90940027895e85&type=3#PressStart2P-Regular");
+    -unity-font-style: bold;
+    color: rgb(255, 211, 217);
+    margin-left: 46px;
+    margin-top: 123px;
+}
+
+.ret {
+    position: absolute;
+    background-image: url("project://database/Assets/CRYPTOChiks/CoreAssets.psd?fileID=-2534132609857860464&guid=6a175b91a67904e5c8e418dfac6490a9&type=3#button_return_ex");
+    width: 130px;
+    height: 62px;
+    -unity-background-scale-mode: scale-and-crop;
+    background-color: rgba(0, 0, 0, 0);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    margin-top: 8px;
+    margin-left: 8px;
+}
+
+.catsBuyButton:hover {
+    scale: 1.1 1.1;
+    transition-timing-function: ease-out-bounce;
+    transition-duration: 0.1s;
+}
+
+.skinsBuyButton:hover {
+    scale: 1.1 1.1;
+    transition-timing-function: ease-out-bounce;
+    transition-duration: 0.1s;
+}
+
+.pu:hover {
+    scale: 1.1 1.1;
+    transition-timing-function: ease-out-bounce;
+    transition-duration: 0.1s;
+}
+
+.ret:hover {
+    scale: 1.1 1.1;
+    transition-timing-function: ease-out-bounce;
+    transition-duration: 0.1s;
+}
+
+.accept {
+}
+
+.accept:hover {
+    scale: 1.1 1.1;
+    transition-timing-function: ease-out-bounce;
+    transition-duration: 0.1s;
+}

@@ -23,7 +23,7 @@ public class RegisterUIHandler : MonoBehaviour
     private DropdownField genderDropdown;
     private DropdownField countryDropdown;
     private DropdownField occupationDropdown;
-    string url = "http://localhost:8080";
+    private string url = Variables.Variables.url;
     public struct Register
     {
         public string user;
@@ -40,6 +40,10 @@ public class RegisterUIHandler : MonoBehaviour
     }
 
     private Label errorMessageLabel;
+    private VisualElement popupOverlay;
+    private VisualElement successPopup;
+    private Label successMessageLabel;
+    private Button successOkButton;
 
 
     void OnEnable()
@@ -57,7 +61,10 @@ public class RegisterUIHandler : MonoBehaviour
         countryDropdown = root.Q<DropdownField>("country");
         occupationDropdown = root.Q<DropdownField>("occupation");
         errorMessageLabel = root.Q<Label>("errorMessage");
-
+        popupOverlay = root.Q<VisualElement>("popupOverlay");
+        successPopup = root.Q<VisualElement>("successPopup");
+        successMessageLabel = root.Q<Label>("successMessageLabel");
+        successOkButton = root.Q<Button>("successOkButton");
 
         // Configurar los Dropdowns
         SetupDropdowns();
@@ -75,7 +82,31 @@ public class RegisterUIHandler : MonoBehaviour
             backButton.clicked -= OnBackButtonClicked;
             backButton.clicked += OnBackButtonClicked;
         }
+
+        if (successOkButton != null)
+        {
+            successOkButton.clicked -= OnSuccessOkButtonClicked;
+            successOkButton.clicked += OnSuccessOkButtonClicked;
+        }
+        popupOverlay.style.display = DisplayStyle.None;
+        successPopup.style.display = DisplayStyle.None;
     }
+
+    private void ShowSuccessPopup(string message)
+    {
+        popupOverlay.style.display = DisplayStyle.Flex;
+        successPopup.style.display = DisplayStyle.Flex;
+        successMessageLabel.text = message;
+    }
+
+    private void OnSuccessOkButtonClicked()
+    {
+        successPopup.style.display = DisplayStyle.None;
+        popupOverlay.style.display = DisplayStyle.None;
+        OnBackButtonClicked(); // Go back to login screen
+    }
+
+
 
     // Configurar los Dropdowns con las listas
     void SetupDropdowns()
@@ -239,16 +270,14 @@ public class RegisterUIHandler : MonoBehaviour
             }
             else if (response["result"] == "contrasenaInvalida")
             {
-                errorMessageLabel.text = "Password must be at least 8 characters long, include one uppercase, one lowercase, and one number.";
+                errorMessageLabel.text = "Password must be at least 8 characters, include one uppercase, one lowercase, and one number.";
                 HighlightField(passwordTextField);
             }
             else if (response["result"] == "registroExitoso")
             {
                 Debug.Log("User registered successfully.");
-                errorMessageLabel.style.color = Color.green; // cambia color del mensaje a verde
-                errorMessageLabel.text = "Registration successful!";
-                yield return new WaitForSeconds(2f); // espera 2 segundos
-                OnBackButtonClicked();
+                ShowSuccessPopup("Registration successful!");
+
             }
 
             else
@@ -258,6 +287,7 @@ public class RegisterUIHandler : MonoBehaviour
             }
         }
     }
+
 
     // Métodos para llenar los Dropdowns
     List<string> GetCountryList()

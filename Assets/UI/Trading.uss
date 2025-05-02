@@ -46,25 +46,25 @@
 }
 
 .Price {
-    font-size: 30px;
+    font-size: 20px;
     -unity-text-align: upper-center;
-    -unity-font-definition: url("project://database/Assets/Fonts/GrapeSoda%20SDF.asset?fileID=11400000&guid=d51c98973ae254cea92209cda6e50712&type=2#GrapeSoda SDF");
+    -unity-font-definition: url("project://database/Assets/Fonts/PressStart2P-Regular%20SDF.asset?fileID=11400000&guid=21ac1a085446d534a995ca40c6379324&type=2#PressStart2P-Regular SDF");
 }
 
 .abbreviation {
-    font-size: 50px;
+    font-size: 30px;
     -unity-text-align: upper-center;
-    -unity-font-definition: url("project://database/Assets/Fonts/GrapeSoda%20SDF.asset?fileID=11400000&guid=d51c98973ae254cea92209cda6e50712&type=2#GrapeSoda SDF");
+    -unity-font-definition: url("project://database/Assets/Fonts/PressStart2P-Regular%20SDF.asset?fileID=11400000&guid=21ac1a085446d534a995ca40c6379324&type=2#PressStart2P-Regular SDF");
 }
 
 .Title {
-    -unity-font-definition: url("project://database/Assets/Fonts/GrapeSoda%20SDF.asset?fileID=11400000&guid=d51c98973ae254cea92209cda6e50712&type=2#GrapeSoda SDF");
-    font-size: 140px;
+    -unity-font-definition: url("project://database/Assets/Fonts/PressStart2P-Regular%20SDF.asset?fileID=11400000&guid=21ac1a085446d534a995ca40c6379324&type=2#PressStart2P-Regular SDF");
+    font-size: 80px;
     background-image: url("project://database/Assets/CRYPTOChiks/CoreAssets.psd?fileID=-5991224337513594954&guid=6a175b91a67904e5c8e418dfac6490a9&type=3#button_01");
     width: 1527px;
     align-self: center;
     height: 152px;
-    -unity-text-align: upper-center;
+    -unity-text-align: middle-center;
     color: rgb(255, 255, 255);
 }
 
@@ -109,16 +109,18 @@
     height: 51px;
     align-self: center;
     width: 139px;
-    font-size: 40px;
-    -unity-font-definition: url("project://database/Assets/Fonts/GrapeSoda%20SDF.asset?fileID=11400000&guid=d51c98973ae254cea92209cda6e50712&type=2#GrapeSoda SDF");
+    font-size: 25px;
+    -unity-font-definition: url("project://database/Assets/Fonts/PressStart2P-Regular%20SDF.asset?fileID=11400000&guid=21ac1a085446d534a995ca40c6379324&type=2#PressStart2P-Regular SDF");
     background-color: rgb(206, 15, 77);
+    -unity-text-align: middle-center;
 }
 
 .sellButton {
     height: 51px;
     align-self: center;
     width: 139px;
-    font-size: 40px;
-    -unity-font-definition: url("project://database/Assets/Fonts/GrapeSoda%20SDF.asset?fileID=11400000&guid=d51c98973ae254cea92209cda6e50712&type=2#GrapeSoda SDF");
+    font-size: 25px;
+    -unity-font-definition: url("project://database/Assets/Fonts/PressStart2P-Regular%20SDF.asset?fileID=11400000&guid=21ac1a085446d534a995ca40c6379324&type=2#PressStart2P-Regular SDF");
     background-color: rgb(32, 204, 193);
+    -unity-text-align: middle-center;
 }

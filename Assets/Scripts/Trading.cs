@@ -8,7 +8,7 @@ using Unity.VisualScripting;
 
 public class Trading : MonoBehaviour
 {
-    string url = "http://localhost:8080";
+    private string url = Variables.Variables.url;
     private int userId;
     [SerializeField]   
     public VisualTreeAsset cryptoItemTemplate;
@@ -63,7 +63,7 @@ public class Trading : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
-        userId = PlayerPrefs.GetInt("userId", 1);
+        userId = PlayerPrefs.GetInt("UserId", 1);
         
     }
 

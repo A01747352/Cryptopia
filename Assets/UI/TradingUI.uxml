@@ -52,8 +52,8 @@
                     <engine:VisualElement style="flex-grow: 0; justify-content: space-around; height: 119px;">
                         <engine:TextField label="Sell:" placeholder-text="Insert Amount" name="TfCryptoCoin" class="tfTrader" style="margin-bottom: 0;" />
                         <engine:VisualElement style="flex-grow: 1; flex-direction: row; width: 407px; align-self: center;">
-                            <engine:Label text="TKN:" name="RecieveTKN" class="recieveTKN" style="-unity-text-align: upper-right; -unity-font-definition: url(&quot;project://database/Assets/Fonts/GrapeSoda%20SDF.asset?fileID=11400000&amp;guid=d51c98973ae254cea92209cda6e50712&amp;type=2#GrapeSoda SDF&quot;); font-size: 35px; margin-top: 0; padding-top: 0;" />
-                            <engine:Label text="0.000000" name="RecieveTKNValue" class="recieveTKNValue" />
+                            <engine:Label text="TKN:" name="RecieveTKN" class="recieveTKN" style="-unity-text-align: upper-right; -unity-font-definition: url(&quot;project://database/Assets/Fonts/PressStart2P-Regular%20SDF.asset?fileID=11400000&amp;guid=21ac1a085446d534a995ca40c6379324&amp;type=2#PressStart2P-Regular SDF&quot;); font-size: 35px; margin-top: 0; padding-top: 0;" />
+                            <engine:Label text="0.000000" name="RecieveTKNValue" class="recieveTKNValue" style="-unity-font-definition: url(&quot;project://database/Assets/Fonts/PressStart2P-Regular%20SDF.asset?fileID=11400000&amp;guid=21ac1a085446d534a995ca40c6379324&amp;type=2#PressStart2P-Regular SDF&quot;); font-size: 22px;" />
                         </engine:VisualElement>
                     </engine:VisualElement>
                 </engine:VisualElement>
@@ -72,8 +72,8 @@
             <engine:Button text="Sell!" name="TraderSellButton" class="traderBuyButton" />
         </engine:VisualElement>
         <engine:Button name="GoBackButton" class="goBackButton" style="display: none;" />
-        <engine:VisualElement name="Alert" class="Alert" style="flex-grow: 0;">
-            <engine:Label text="label" name="AlertLabel" style="align-self: center; -unity-font-definition: url(&quot;project://database/Assets/Fonts/GrapeSoda%20SDF.asset?fileID=11400000&amp;guid=d51c98973ae254cea92209cda6e50712&amp;type=2#GrapeSoda SDF&quot;); font-size: 100px; white-space: normal; -unity-text-align: upper-center;" />
+        <engine:VisualElement name="Alert" class="Alert" style="flex-grow: 0; display: none;">
+            <engine:Label text="label" name="AlertLabel" style="align-self: center; -unity-font-definition: url(&quot;project://database/Assets/Fonts/PressStart2P-Regular%20SDF.asset?fileID=11400000&amp;guid=21ac1a085446d534a995ca40c6379324&amp;type=2#PressStart2P-Regular SDF&quot;); font-size: 55px; white-space: normal; -unity-text-align: middle-center;" />
         </engine:VisualElement>
     </engine:VisualElement>
 </engine:UXML>

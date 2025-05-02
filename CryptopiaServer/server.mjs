@@ -358,9 +358,9 @@ app.get('/cryptomine/retrieveUserPowerUps/:userId', async (req, res) => {
     let userId = req.params.userId;
     try {
         connection = await dbConnect();
-        const [rows] = await connection.execute('SELECT pu.nombre FROM powerupdesbloqueado AS pud LEFT JOIN powerup AS pu ON pud.idPowerUp = pu.idPowerUp WHERE pud.idUsuario = ?;', [userId]);
-        const response = rows.map(row => row.nombre).join('-');
-        res.send(response);
+        const [rows] = await connection.execute('SELECT pu.nombre, pu.descripcion FROM powerupdesbloqueado AS pud LEFT JOIN powerup AS pu ON pud.idPowerUp = pu.idPowerUp WHERE pud.idUsuario = ?;', [userId]);
+        res.send(rows);
+        console.log(rows);
     }
     catch (err) {
         const { name, message } = err;
@@ -403,14 +403,16 @@ app.get('/cryptomine/loadUserData/:userId', async (req, res) => {
         console.log("Conexion exitosa");
         const [rows] = await connection.execute('SELECT cantidad FROM wallet WHERE idUsuario = ? AND idCriptomoneda = 1;', [userId]);
         const TKNs = rows.length > 0 ? rows[0].cantidad : 0; // Default to 0 if no rows are returned
-        const [rows2] = await connection.execute('SELECT SUM(bloquesMinados) AS totalBloquesMinados FROM sesioncryptomine WHERE idUsuario = ?;', [userId]);
+        const [rows2] = await connection.execute('SELECT SUM(sc.bloquesMinados) AS totalBloquesMinados, up.puntajeTotal AS PuntajeTotal FROM sesioncryptomine AS sc INNER JOIN userprogress AS up WHERE idUsuario = ?;', [userId]);
         const totalBloquesMinados = rows2[0].totalBloquesMinados || 0;
+        const puntajeTotal = rows2[0].PuntajeTotal || 0;
         const response = {
             TKNs: TKNs,
-            totalBloquesMinados: totalBloquesMinados
+            totalBloquesMinados: totalBloquesMinados,
+            puntajeTotal: puntajeTotal
         };
         res.send(response);
-        console.log(response);
+        console.log("User Data: ", response);
     }
     catch (err) {
         const { name, message } = err;
@@ -516,6 +518,217 @@ app.post('/trading/registerTransaction/:userId', async (req, res) =>
         }
     }
 });
+
+
+// Endpoint para Obtener Contratos Aleatorios
+app.get('/smartcontracts/random/:userId', async (req, res) => {
+    const userId = req.params.userId;
+    let connection;
+    try {
+        connection = await dbConnect();
+        const [rows] = await connection.query(
+            `SELECT idSmartContract, descripcion, JSON_UNQUOTE(JSON_EXTRACT(condicion, "$")) AS condicion, idRecompensa
+             FROM smartcontract
+             WHERE idSmartContract NOT IN (
+                SELECT idSmartContract FROM smartcontractcumplido WHERE idUsuario = ?
+             )
+             ORDER BY RAND()
+             LIMIT 3`,
+            [userId]
+        );
+        res.send(rows);
+    } catch (err) {
+        console.error("Error en /smartcontracts/random/:userId:", err);
+        res.status(500).send({ error: err.name, message: err.message });
+    } finally {
+        if (connection) connection.end();
+    }
+});
+
+// Endpoint para Verificar las Condiciones de los Contratos
+app.get('/smartcontracts/check/:userId', async (req, res) => {
+    const userId = req.params.userId;
+    let connection;
+    try {
+        connection = await dbConnect();
+        const [contracts] = await connection.query(
+            'SELECT sc.idSmartContract, sc.descripcion, sc.condicion, sc.idRecompensa FROM smartcontract sc ' +
+            'LEFT JOIN smartcontractcumplido scc ON sc.idSmartContract = scc.idSmartContract AND scc.idUsuario = ? ' +
+            'WHERE scc.idSmartContract IS NULL', 
+            [userId]
+        );
+
+        const contractStatuses = [];
+        for (const contract of contracts) {
+            const condition = JSON.parse(contract.condicion); // Parsear la condición como JSON
+            contractStatuses.push({
+                idSmartContract: contract.idSmartContract,
+                descripcion: contract.descripcion,
+                condicion: condition, // Incluir la condición como JSON
+                idRecompensa: contract.idRecompensa
+            });
+        }
+
+        res.send(contractStatuses); // Devolver los contratos con sus condiciones
+    } catch (err) {
+        console.error("Error en /smartcontracts/check:", err);
+        res.status(500).send({ error: err.name, message: err.message });
+    } finally {
+        if (connection) {
+            connection.end();
+        }
+    }
+});
+
+// Endpoint para Registrar un Contrato como Cumplido
+app.post('/smartcontracts/registerCompleted/:idSmartContract', async (req, res) => {
+    const idSmartContract = req.params.idSmartContract;
+    const userId = req.body.userId; // Se espera que el userId venga en el cuerpo de la solicitud
+    let connection;
+
+    try {
+        connection = await dbConnect();
+        await connection.query(
+            'INSERT INTO smartcontractcumplido (idSmartContract, idUsuario) VALUES (?, ?)', 
+            [idSmartContract, userId]
+        );
+        res.send({ success: true, message: "Contrato registrado como cumplido" });
+    } catch (err) {
+        console.error("Error al registrar contrato cumplido:", err);
+        res.status(500).send({ error: err.name, message: err.message });
+    } finally {
+        if (connection) {
+            connection.end();
+        }
+    }
+});
+
+// Endpoint para Asignar Recompensas
+app.post('/reward/assign', async (req, res) => {
+    const { rewardId, userId } = req.body;
+    let connection;
+    
+    try {
+        connection = await dbConnect();
+        const [reward] = await connection.query(
+            'SELECT tipo, referencia, cantidad FROM recompensa WHERE idRecompensa = ?',
+            [rewardId]
+        );
+
+        if (reward.length === 0) {
+            res.status(404).send({ error: "Recompensa no encontrada" });
+            return;
+        }
+
+        const { tipo, referencia, cantidad } = reward[0];
+
+        if (tipo === "PowerUp") {
+            // Desbloquear PowerUp
+            await connection.query(
+                'INSERT INTO powerupdesbloqueado (idPowerUp, idUsuario, activado, idSmartContract) VALUES (?, ?, 0, ?)',
+                [referencia, userId, rewardId]
+            );
+            res.send({ success: true, message: "PowerUp desbloqueado" });
+        } else if (tipo === "Tkns") {
+            // Añadir Tkns al Wallet
+            await connection.query(
+                'UPDATE wallet SET cantidad = cantidad + ? WHERE idUsuario = ? AND idCriptomoneda = 1',
+                [cantidad, userId]
+            );
+            res.send({ success: true, message: `${cantidad} Tkns añadidos al Wallet` });
+        } else {
+            res.status(400).send({ error: "Tipo de recompensa desconocido" });
+        }
+    } catch (err) {
+        console.error("Error en /reward/assign:", err);
+        res.status(500).send({ error: err.name, message: err.message });
+    } finally {
+        if (connection) {
+            connection.end();
+        }
+    }
+});
+
+// Endpoints para CryptoShop
+
+app.get('/cryptoShop/ownsItem/:userId/:itemId', async (req, res) => {
+    const { userId, itemId } = req.params;
+    let connection;
+    try {
+        connection = await dbConnect();
+        const [rows] = await connection.execute(
+            'SELECT * FROM owneditems WHERE idUsuario = ? AND idItem = ?', [userId, itemId]
+        );
+
+        if (rows.length > 0) {
+            res.status(200).send("True"); 
+        } else {
+            res.status(200).send("False");
+        }
+    } catch (err) {
+        console.error("Error al verificar propiedad de artículo por usuario:", err);
+        res.status(500).send({ error: err.name, message: err.message });
+    } finally {
+        if (connection) {
+            connection.end();
+        }
+    }
+});
+
+app.get('/cryptoShop/price/:userId/:itemId', async (req, res) => {
+    const { userId, itemId } = req.params;
+    let connection;
+    try {
+        connection = await dbConnect();
+        const [price] = await connection.execute(
+            'SELECT costo FROM shopitems WHERE idItem = ?', [itemId]
+        );
+        const [tkns] = await connection.execute(
+            'SELECT cantidad FROM wallet WHERE idUsuario = ? AND idCriptomoneda = 1', [userId]
+        );
+
+        if (tkns[0].cantidad >= price[0].costo) {
+            res.status(200).send("True");
+        } else {
+            res.status(200).send("False");
+        }
+        
+    } catch (err) {
+        console.error("Error al verificar propiedad de artículo por usuario:", err);
+        res.status(500).send({ error: err.name, message: err.message });
+    } finally {
+        if (connection) {
+            connection.end();
+        }
+    }
+});
+
+
+
+
+// Agregar artículo comprado por usuario
+app.post('/cryptoShop/buy', async (req, res) => {
+    const { userId, itemId } = req.body;
+    let connection;
+    try {
+        connection = await dbConnect();
+        console.log("Conexion exitosa");
+        console.log("Agregando artículo comprado por usuario: INSERT INTO owneditems (idUsuario, idItem) VALUES (?, ?)',",[userId, itemId]);
+        await connection.execute(
+            'INSERT INTO owneditems (idUsuario, idItem) VALUES (?, ?)', [userId, itemId]
+        );
+        console.log("Artículo agregado a la compra del usuario:", req.body);
+        res.status(201).send({ success: true, message: "Artículo agregado a la compra del usuario" });
+    } catch (err) {
+        console.error("Error al agregar artículo comprado por usuario:", err);
+        res.status(500).send({ error: err.name, message: err.message });
+    } finally {
+        if (connection) {
+            connection.end();
+        }
+    }
+});
+
 
 
 

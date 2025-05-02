@@ -4,6 +4,8 @@
     align-self: flex-end;
     flex-direction: row;
     justify-content: space-around;
+    left: 140px;
+    bottom: 100px;
 }
 
 .mainContainer {
@@ -13,9 +15,10 @@
 
 .powerUp {
     background-color: rgba(0, 0, 0, 0.67);
-    width: 142px;
+    width: 140px;
     height: 140px;
     align-self: center;
+    background-image: url("project://database/Assets/MuchoPixels/City_Street_Tileset_Pack/Art/Textures/Buildings/mp_cs_buildings.png?fileID=7899992400651793162&guid=99a0526665290c14ab8e007005c34f1e&type=3#mp_cs_buildings_204");
 }
 
 .drillContainer {
@@ -29,6 +32,36 @@
     width: 218px;
     height: 208px;
     align-self: center;
+    background-color: rgba(0, 0, 0, 0);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    background-image: url("project://database/Assets/MuchoPixels/City_Street_Tileset_Pack/Art/Textures/Doors&Windows/mp_cs_doors_windows.png?fileID=2678718475434535260&guid=0e3c6f5bdb832144d843ce0bf0ba12ef&type=3#mp_cs_doors_windows_261");
+    transition-timing-function: ease-in-out-sine;
+    transition-duration: 0.2s;
+}
+
+.mineButton:hover {
+    scale: 1.1 1.1;
+}
+
+.exitWindow:hover {
+    position: absolute;
+    width: 74px;
+    height: 72px;
+    left: 1338px;
+    top: 110px;
+    font-size: 80px;
+    -unity-font-definition: url("project://database/Assets/Fonts/GrapeSoda%20SDF.asset?fileID=11400000&guid=d51c98973ae254cea92209cda6e50712&type=2#GrapeSoda SDF");
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    color: rgb(255, 255, 255);
+    -unity-text-outline-width: 1px;
+    -unity-text-outline-color: rgb(0, 0, 0);
+    background-color: rgb(135, 140, 150);
 }
 
 .hud {
@@ -39,27 +72,37 @@
 .scoreBox {
     width: 710px;
     flex-direction: row;
+    right: -100px;
+    top: 100px;
 }
 
 .coin {
-    width: 279px;
+    width: 200px;
+    background-image: resource('CryptoIcons/Token');
+    margin-top: 15px;
+    margin-left: 26px;
+    margin-right: 25px;
+    height: 200px;
 }
 
 .scoreContainer {
     justify-content: space-around;
+    height: 280px;
 }
 
 .scoreLabels {
     color: rgb(159, 159, 159);
     -unity-font-definition: url("project://database/Assets/Fonts/GrapeSoda%20SDF.asset?fileID=11400000&guid=d51c98973ae254cea92209cda6e50712&type=2#GrapeSoda SDF");
-    font-size: 40px;
+    font-size: 60px;
+    height: 38px;
 }
 
 .scoreValues {
     -unity-text-align: upper-left;
     -unity-font-definition: url("project://database/Assets/Fonts/GrapeSoda%20SDF.asset?fileID=11400000&guid=d51c98973ae254cea92209cda6e50712&type=2#GrapeSoda SDF");
-    font-size: 30px;
+    font-size: 50px;
     color: rgb(255, 255, 255);
+    margin-top: 15px;
 }
 
 .scoreLabelContainers {
@@ -68,13 +111,10 @@
 .hashLabel {
     -unity-text-align: upper-center;
     align-self: center;
-    width: 218px;
-    font-size: 50px;
-    color: rgb(255, 255, 255);
-    -unity-font-style: bold;
-}
-
-.dropdownPowerUp {
+    width: 1159px;
+    font-size: 150px;
+    color: rgb(199, 207, 221);
+    -unity-font-definition: url("project://database/Assets/Fonts/GrapeSoda%20SDF.asset?fileID=11400000&guid=d51c98973ae254cea92209cda6e50712&type=2#GrapeSoda SDF");
 }
 
 .powerUpContainer {
@@ -83,4 +123,213 @@
 .cryptoRigDropdown {
     width: 229px;
     align-self: center;
+}
+
+.dropdownPowerUp {
+    -unity-font-definition: url("project://database/Assets/Fonts/GrapeSoda%20SDF.asset?fileID=11400000&guid=d51c98973ae254cea92209cda6e50712&type=2#GrapeSoda SDF");
+    width: 143px;
+    align-self: center;
+    font-size: 20px;
+    right: 2px;
+    height: 50px;
+}
+
+.dropdownPowerUp > VisualElement {
+    background-color: rgb(255, 255, 255);
+    background-image: url("project://database/Assets/MuchoPixels/City_Street_Tileset_Pack/Art/Textures/Buildings/mp_cs_buildings.png?fileID=-4673857431810071399&guid=99a0526665290c14ab8e007005c34f1e&type=3#mp_cs_buildings_410");
+}
+
+.dropdownPowerUp > VisualElement > VisualElement {
+    background-image: url("project://database/Assets/keys.png?fileID=-2724632973004961201&guid=42a58b5f0f1bb114487b0a0ff630d152&type=3#keys_52");
+    -unity-background-image-tint-color: rgb(255, 255, 255);
+    width: 30%;
+    height: 30px;
+    transition-timing-function: ease-in-out-sine;
+    transition-duration: 0.2s;
+}
+
+.dropdownPowerUp > VisualElement > VisualElement:hover {
+    background-image: url("project://database/Assets/keys.png?fileID=-2724632973004961201&guid=42a58b5f0f1bb114487b0a0ff630d152&type=3#keys_52");
+    -unity-background-image-tint-color: rgb(255, 255, 255);
+    width: 35%;
+    height: 35px;
+}
+
+.dropdownPowerUp > VisualElement > PopupTextElement {
+    -unity-background-image-tint-color: rgb(255, 255, 255);
+    width: 30%;
+    height: 30px;
+    transition-timing-function: ease-in-out-sine;
+    transition-duration: 0.2s;
+    background-image: url("project://database/Assets/MuchoPixels/City_Street_Tileset_Pack/Art/Textures/Buildings/mp_cs_buildings.png?fileID=-7728303158521391910&guid=99a0526665290c14ab8e007005c34f1e&type=3#mp_cs_buildings_303");
+}
+
+.powerUpSelector {
+    position: relative;
+    width: 90%;
+    height: 90%;
+    align-self: center;
+    flex-wrap: wrap;
+}
+
+.SelectIcon {
+    width: 120px;
+    height: 120px;
+    align-self: center;
+    margin-left: 16px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.selectPowerUpContainer {
+    height: 150px;
+    flex-direction: row;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background-color: rgb(26, 25, 50);
+    border-top-width: 10px;
+    border-right-width: 10px;
+    border-bottom-width: 10px;
+    border-left-width: 10px;
+    border-left-color: rgb(199, 207, 221);
+    border-right-color: rgb(199, 207, 221);
+    border-top-color: rgb(199, 207, 221);
+    border-bottom-color: rgb(199, 207, 221);
+}
+
+.descriptionContainer {
+    width: 75%;
+    height: 80%;
+    align-self: center;
+    margin-right: 31px;
+}
+
+.powerUpName {
+    -unity-font-definition: url("project://database/Assets/Fonts/GrapeSoda%20SDF.asset?fileID=11400000&guid=d51c98973ae254cea92209cda6e50712&type=2#GrapeSoda SDF");
+    font-size: 50px;
+    -unity-text-align: lower-left;
+    margin-left: 10px;
+    color: rgb(199, 207, 221);
+}
+
+.powerUpDescription {
+    -unity-font-definition: url("project://database/Assets/Fonts/GrapeSoda%20SDF.asset?fileID=11400000&guid=d51c98973ae254cea92209cda6e50712&type=2#GrapeSoda SDF");
+    font-size: 20px;
+    color: rgb(146, 161, 185);
+    width: 75%;
+    flex-wrap: wrap;
+    white-space: normal;
+    text-overflow: ellipsis;
+    margin-left: 10px;
+}
+
+.powerUpSelectorContainer {
+    position: absolute;
+    width: 833px;
+    height: 569px;
+    align-self: center;
+    top: 145px;
+    justify-content: center;
+    background-color: rgb(66, 76, 110);
+    border-top-width: 10px;
+    border-right-width: 10px;
+    border-bottom-width: 10px;
+    border-left-width: 10px;
+    border-left-color: rgb(199, 207, 221);
+    border-right-color: rgb(199, 207, 221);
+    border-top-color: rgb(199, 207, 221);
+    border-bottom-color: rgb(199, 207, 221);
+}
+
+.exitWindow {
+    position: absolute;
+    width: 74px;
+    height: 72px;
+    left: 1338px;
+    top: 110px;
+    font-size: 80px;
+    -unity-font-definition: url("project://database/Assets/Fonts/GrapeSoda%20SDF.asset?fileID=11400000&guid=d51c98973ae254cea92209cda6e50712&type=2#GrapeSoda SDF");
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    color: rgb(0, 0, 0);
+    -unity-text-outline-width: 1px;
+    -unity-text-outline-color: rgb(0, 0, 0);
+    background-color: rgb(199, 207, 221);
+}
+
+.exitWindow:active {
+    position: absolute;
+    width: 74px;
+    height: 72px;
+    left: 1338px;
+    top: 110px;
+    font-size: 80px;
+    -unity-font-definition: url("project://database/Assets/Fonts/GrapeSoda%20SDF.asset?fileID=11400000&guid=d51c98973ae254cea92209cda6e50712&type=2#GrapeSoda SDF");
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    color: rgb(255, 210, 216);
+    -unity-text-outline-width: 1px;
+    -unity-text-outline-color: rgb(0, 0, 0);
+    background-color: rgb(199, 207, 221);
+}
+
+.changePowerUp {
+    background-color: rgb(146, 161, 185);
+    border-top-width: 3px;
+    border-right-width: 3px;
+    border-bottom-width: 3px;
+    border-left-width: 3px;
+    border-left-color: rgb(199, 207, 221);
+    border-right-color: rgb(199, 207, 221);
+    border-top-color: rgb(199, 207, 221);
+    border-bottom-color: rgb(199, 207, 221);
+    -unity-font-definition: url("project://database/Assets/Fonts/GrapeSoda%20SDF.asset?fileID=11400000&guid=d51c98973ae254cea92209cda6e50712&type=2#GrapeSoda SDF");
+    color: rgb(26, 25, 50);
+    font-size: 30px;
+    transition-timing-function: ease-in-out-sine;
+    transition-duration: 0.2s;
+}
+
+.arrow {
+    background-image: url("project://database/Assets/MuchoPixels/City_Street_Tileset_Pack/Art/Textures/TilesetAll/mp_cs_tilemap_all.png?fileID=-2625053622930214763&guid=ae7e7eb7233244742b96ec8a3c900547&type=3#mp_cs_tilemap_all_337");
+    width: 154px;
+    height: 113px;
+    top: 18px;
+    -unity-background-image-tint-color: rgba(255, 255, 255, 0.62);
+}
+
+.hashContainer {
+    justify-content: center;
+}
+
+.correctColor {
+    width: 1167px;
+    height: 143px;
+    position: absolute;
+    background-color: rgba(233, 34, 198, 0.89);
+    left: 752px;
+    top: 64px;
+}
+
+.mineButton:active {
+    -unity-background-image-tint-color: rgb(164, 164, 164);
+}
+
+.changePowerUp:hover {
+    background-color: rgb(66, 76, 110);
+}
+
+.changePowerUp:active {
+    background-color: rgb(199, 207, 221);
+}
+
+.cryptoRigDropdown > VisualElement {
+    background-color: rgb(146, 161, 185);
+}
+
+.cryptoRigDropdown {
 }

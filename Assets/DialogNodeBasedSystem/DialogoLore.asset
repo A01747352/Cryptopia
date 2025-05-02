@@ -1,0 +1,305 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8938675029487310907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a32a464d8ccff4e40a60c45b40a1e648, type: 3}
+  m_Name: Sentence Node
+  m_EditorClassIdentifier: 
+  ConnectedNodesList: []
+  NodeGraph: {fileID: 11400000}
+  Rect:
+    serializedVersion: 2
+    x: 32.799988
+    y: 217.60004
+    width: 190
+    height: 135
+  IsDragging: 0
+  IsSelected: 0
+  _sentence:
+    CharacterName: CryptoChick
+    Text: Play trivia games to test your knowledge about blockchain, digital safety,
+      and tech culture.
+    CharacterSprite: {fileID: 0}
+  ParentNode: {fileID: 8646265899520185268}
+  ChildNode: {fileID: -2736929841092093665}
+  _isExternalFunc: 0
+  _externalFunctionName: 
+--- !u!114 &-6625632678347421713
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a32a464d8ccff4e40a60c45b40a1e648, type: 3}
+  m_Name: Sentence Node
+  m_EditorClassIdentifier: 
+  ConnectedNodesList: []
+  NodeGraph: {fileID: 11400000}
+  Rect:
+    serializedVersion: 2
+    x: -708.80005
+    y: 224.00006
+    width: 190
+    height: 135
+  IsDragging: 0
+  IsSelected: 0
+  _sentence:
+    CharacterName: CryptoChick
+    Text: Welcome to Cryptopia, a city where technology is part of everyday life,
+      and learning new things is always an adventure. Here, everything runs on blockchain,
+      cryptography, and digital currencies.
+    CharacterSprite: {fileID: 0}
+  ParentNode: {fileID: 0}
+  ChildNode: {fileID: 6047703053822964306}
+  _isExternalFunc: 0
+  _externalFunctionName: 
+--- !u!114 &-5106748267425383293
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a32a464d8ccff4e40a60c45b40a1e648, type: 3}
+  m_Name: Sentence Node
+  m_EditorClassIdentifier: 
+  ConnectedNodesList: []
+  NodeGraph: {fileID: 11400000}
+  Rect:
+    serializedVersion: 2
+    x: 1155.2004
+    y: 211.99998
+    width: 190
+    height: 135
+  IsDragging: 0
+  IsSelected: 0
+  _sentence:
+    CharacterName: CryptoChick
+    Text: Get ready to explore, solve, and play. The digital future starts with you.
+    CharacterSprite: {fileID: 0}
+  ParentNode: {fileID: 365032251165856550}
+  ChildNode: {fileID: 0}
+  _isExternalFunc: 0
+  _externalFunctionName: 
+--- !u!114 &-2736929841092093665
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a32a464d8ccff4e40a60c45b40a1e648, type: 3}
+  m_Name: Sentence Node
+  m_EditorClassIdentifier: 
+  ConnectedNodesList: []
+  NodeGraph: {fileID: 11400000}
+  Rect:
+    serializedVersion: 2
+    x: 248.79968
+    y: 216.00006
+    width: 190
+    height: 135
+  IsDragging: 0
+  IsSelected: 0
+  _sentence:
+    CharacterName: CryptoChick
+    Text: Experiment with cryptography minigame to learn how messages are decrypted.
+    CharacterSprite: {fileID: 0}
+  ParentNode: {fileID: -8938675029487310907}
+  ChildNode: {fileID: 2761921922022814910}
+  _isExternalFunc: 0
+  _externalFunctionName: 
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33f741ea10ebcf842a91c9b871dd032a, type: 3}
+  m_Name: DialogoLore
+  m_EditorClassIdentifier: 
+  NodesList:
+  - {fileID: -6625632678347421713}
+  - {fileID: 6047703053822964306}
+  - {fileID: 8646265899520185268}
+  - {fileID: -8938675029487310907}
+  - {fileID: -2736929841092093665}
+  - {fileID: 2761921922022814910}
+  - {fileID: 8510885117399339615}
+  - {fileID: 365032251165856550}
+  - {fileID: -5106748267425383293}
+  NodeToDrawLineFrom: {fileID: 0}
+  LinePosition: {x: 0, y: 0}
+--- !u!114 &365032251165856550
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a32a464d8ccff4e40a60c45b40a1e648, type: 3}
+  m_Name: Sentence Node
+  m_EditorClassIdentifier: 
+  ConnectedNodesList: []
+  NodeGraph: {fileID: 11400000}
+  Rect:
+    serializedVersion: 2
+    x: 928.80005
+    y: 212.80003
+    width: 190
+    height: 135
+  IsDragging: 0
+  IsSelected: 0
+  _sentence:
+    CharacterName: CryptoChick
+    Text: "Each building brings new challenges, new skills, and fun ways to learn.
+      You don\u2019t have to know everything\u2014Cryptopia is all about discovering
+      things at your own pace."
+    CharacterSprite: {fileID: 0}
+  ParentNode: {fileID: 8510885117399339615}
+  ChildNode: {fileID: -5106748267425383293}
+  _isExternalFunc: 0
+  _externalFunctionName: 
+--- !u!114 &2761921922022814910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a32a464d8ccff4e40a60c45b40a1e648, type: 3}
+  m_Name: Sentence Node
+  m_EditorClassIdentifier: 
+  ConnectedNodesList: []
+  NodeGraph: {fileID: 11400000}
+  Rect:
+    serializedVersion: 2
+    x: 475.20007
+    y: 216.00006
+    width: 190
+    height: 135
+  IsDragging: 0
+  IsSelected: 0
+  _sentence:
+    CharacterName: CryptoChick
+    Text: Try out the crypto mining simulator, where you mine blocks to help you
+      understand how digital currencies are created.
+    CharacterSprite: {fileID: 0}
+  ParentNode: {fileID: -2736929841092093665}
+  ChildNode: {fileID: 8510885117399339615}
+  _isExternalFunc: 0
+  _externalFunctionName: 
+--- !u!114 &6047703053822964306
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a32a464d8ccff4e40a60c45b40a1e648, type: 3}
+  m_Name: Sentence Node
+  m_EditorClassIdentifier: 
+  ConnectedNodesList: []
+  NodeGraph: {fileID: 11400000}
+  Rect:
+    serializedVersion: 2
+    x: -458.40002
+    y: 219.20013
+    width: 190
+    height: 135
+  IsDragging: 0
+  IsSelected: 0
+  _sentence:
+    CharacterName: CryptoChick
+    Text: "Luna is a curious girl who wants to understand how this world works. But
+      she\u2019s not alone, you\u2019ll be joining her on this journey."
+    CharacterSprite: {fileID: 0}
+  ParentNode: {fileID: -6625632678347421713}
+  ChildNode: {fileID: 8646265899520185268}
+  _isExternalFunc: 0
+  _externalFunctionName: 
+--- !u!114 &8510885117399339615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a32a464d8ccff4e40a60c45b40a1e648, type: 3}
+  m_Name: Sentence Node
+  m_EditorClassIdentifier: 
+  ConnectedNodesList: []
+  NodeGraph: {fileID: 11400000}
+  Rect:
+    serializedVersion: 2
+    x: 712.0001
+    y: 215.20006
+    width: 190
+    height: 135
+  IsDragging: 0
+  IsSelected: 0
+  _sentence:
+    CharacterName: CryptoChick
+    Text: "Buildings you can interact with are marked with a bright exclamation mark
+      (!) \u2014just walk up to them to enter and start exploring."
+    CharacterSprite: {fileID: 0}
+  ParentNode: {fileID: 2761921922022814910}
+  ChildNode: {fileID: 365032251165856550}
+  _isExternalFunc: 0
+  _externalFunctionName: 
+--- !u!114 &8646265899520185268
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a32a464d8ccff4e40a60c45b40a1e648, type: 3}
+  m_Name: Sentence Node
+  m_EditorClassIdentifier: 
+  ConnectedNodesList: []
+  NodeGraph: {fileID: 11400000}
+  Rect:
+    serializedVersion: 2
+    x: -188.80011
+    y: 216.80005
+    width: 190
+    height: 135
+  IsDragging: 0
+  IsSelected: 0
+  _sentence:
+    CharacterName: CryptoChick
+    Text: "In Cryptopia, you\u2019ll explore the city freely and visit different
+      buildings to discover interactive experiences:"
+    CharacterSprite: {fileID: 0}
+  ParentNode: {fileID: 6047703053822964306}
+  ChildNode: {fileID: -8938675029487310907}
+  _isExternalFunc: 0
+  _externalFunctionName: 

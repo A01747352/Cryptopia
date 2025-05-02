@@ -1,0 +1,28 @@
+.button {
+    background-image: url("project://database/Assets/NewUI.psd?fileID=-1393384716567362197&guid=88580963f0bc34a4993c39e31de83996&type=3#button_return_ex");
+    -unity-background-scale-mode: scale-to-fit;
+    width: 143px;
+    height: 71px;
+    background-color: rgba(0, 0, 0, 0);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    margin-bottom: 40px;
+    margin-left: 40px;
+}
+
+.button:hover {
+    scale: 1.1 1.1;
+    transition-timing-function: ease-out-bounce;
+    transition-duration: 0.2s;
+}
+
+.moreinfo:hover {
+    transition-duration: 0.1s;
+    transition-timing-function: ease-out-bounce;
+    scale: 1.1 1.1;
+}
+
+.moreinfo {
+}

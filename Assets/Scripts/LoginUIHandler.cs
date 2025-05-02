@@ -13,7 +13,7 @@ public class LoginUIHandler : MonoBehaviour
     private VisualElement root;
     private TextField userTextField;
     private TextField passwordTextField;
-    string url = "http://localhost:8080";
+    private string url = Variables.Variables.url;
     private Label errorMessageLabel;
 
 

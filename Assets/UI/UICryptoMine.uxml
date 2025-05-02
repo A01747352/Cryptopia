@@ -1,43 +1,67 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/UICryptoMine.uss?fileID=7433441132597879392&amp;guid=af1c8aaab62db421bae6d78047159b0d&amp;type=3#UICryptoMine" />
-    <engine:VisualElement name="HUD" class="hud" style="flex-grow: 1;">
-        <engine:VisualElement name="ScoreBox" class="scoreBox" style="flex-grow: 0;">
-            <engine:VisualElement name="Coin" class="coin" style="flex-grow: 0;" />
-            <engine:VisualElement name="ScoreContaienr" class="scoreContainer" style="flex-grow: 1;">
-                <engine:VisualElement name="CryptoMinedContainer" class="scoreLabelContainers" style="flex-grow: 1;">
-                    <engine:Label text="Crypto:" name="CryptoMinedLabel" class="scoreLabels" />
-                    <engine:Label text="Label" name="CryptoMinedValue" class="scoreValues" />
+    <engine:VisualElement name="RootContainer" style="flex-grow: 1;">
+        <engine:VisualElement name="CorrectColor" class="correctColor" style="flex-grow: 1; background-color: rgb(255, 142, 158); display: none;" />
+        <engine:VisualElement name="HUD" class="hud" style="flex-grow: 1;">
+            <engine:VisualElement name="ScoreBox" class="scoreBox" style="flex-grow: 0;">
+                <engine:VisualElement name="Coin" class="coin" style="flex-grow: 0;" />
+                <engine:VisualElement name="ScoreContaienr" class="scoreContainer" style="flex-grow: 1;">
+                    <engine:VisualElement name="CryptoMinedContainer" class="scoreLabelContainers" style="flex-grow: 1;">
+                        <engine:Label text="TKN:" name="CryptoMinedLabel" class="scoreLabels" />
+                        <engine:Label text="Label" name="CryptoMinedValue" class="scoreValues" />
+                    </engine:VisualElement>
+                    <engine:VisualElement name="BlocksMinedContainer" class="scoreLabelContainers" style="flex-grow: 1;">
+                        <engine:Label text="Blocks Mined:" name="BlocksMinedLabel" class="scoreLabels" />
+                        <engine:Label text="Label" name="BlocksMinedValue" class="scoreValues" />
+                    </engine:VisualElement>
+                    <engine:VisualElement name="TotalScoreContainer" class="scoreLabelContainers" style="flex-grow: 1;">
+                        <engine:Label text="Total Score:" name="TotalScoreLabel" class="scoreLabels" />
+                        <engine:Label text="Label" name="TotalScoreValue" class="scoreValues" />
+                    </engine:VisualElement>
                 </engine:VisualElement>
-                <engine:VisualElement name="BlocksMinedContainer" class="scoreLabelContainers" style="flex-grow: 1;">
-                    <engine:Label text="Blocks Mined:" name="BlocksMinedLabel" class="scoreLabels" />
-                    <engine:Label text="Label" name="BlocksMinedValue" class="scoreValues" />
-                </engine:VisualElement>
-                <engine:VisualElement name="TotalScoreContainer" class="scoreLabelContainers" style="flex-grow: 1;">
-                    <engine:Label text="Total Score:" name="TotalScoreLabel" class="scoreLabels" />
-                    <engine:Label text="Label" name="TotalScoreValue" class="scoreValues" />
-                </engine:VisualElement>
+            </engine:VisualElement>
+            <engine:VisualElement name="HashContainer" class="hashContainer" style="flex-grow: 1;">
+                <engine:Label text="--------------------" name="HashLabel" class="hashLabel" />
             </engine:VisualElement>
         </engine:VisualElement>
-    </engine:VisualElement>
-    <engine:VisualElement name="MainContainer" class="mainContainer" style="flex-grow: 1;">
-        <engine:VisualElement name="PowerUpWindow" class="powerUpWindow" style="flex-grow: 0;">
-            <engine:VisualElement name="PowerUp1Container" class="powerUpContainer" style="flex-grow: 0;">
-                <engine:VisualElement name="PowerUp1" class="powerUp" style="flex-grow: 0;" />
-                <engine:DropdownField name="PowerUp1Dropdown" class="dropdownPowerUp" />
+        <engine:VisualElement name="MainContainer" class="mainContainer" style="flex-grow: 1;">
+            <engine:VisualElement name="PowerUpWindow" class="powerUpWindow" style="flex-grow: 0;">
+                <engine:VisualElement name="PowerUp1Container" class="powerUpContainer" style="flex-grow: 0;">
+                    <engine:VisualElement name="PowerUp1" class="powerUp" style="flex-grow: 0;" />
+                    <engine:Button text="Equip" name="ChangePowerUp1" class="changePowerUp" />
+                </engine:VisualElement>
+                <engine:VisualElement name="Arrow" class="arrow" style="flex-grow: 0;" />
+                <engine:VisualElement name="PowerUp2Container" class="powerUpContainer" style="flex-grow: 0;">
+                    <engine:VisualElement name="PowerUp2" class="powerUp" style="flex-grow: 0;" />
+                    <engine:Button text="Equip" name="ChangePowerUp2" class="changePowerUp" />
+                </engine:VisualElement>
+                <engine:VisualElement name="Arrow" class="arrow" style="flex-grow: 0;" />
+                <engine:VisualElement name="PowerUp3Container" class="powerUpContainer" style="flex-grow: 0;">
+                    <engine:VisualElement name="PowerUp3" class="powerUp" style="flex-grow: 0;" />
+                    <engine:Button text="Equip" name="ChangePowerUp3" class="changePowerUp" />
+                </engine:VisualElement>
             </engine:VisualElement>
-            <engine:VisualElement name="PowerUp2Container" class="powerUpContainer" style="flex-grow: 0;">
-                <engine:VisualElement name="PowerUp2" class="powerUp" style="flex-grow: 0;" />
-                <engine:DropdownField name="PowerUp2Dropdown" class="dropdownPowerUp" />
-            </engine:VisualElement>
-            <engine:VisualElement name="PowerUp3Container" class="powerUpContainer" style="flex-grow: 0;">
-                <engine:VisualElement name="PowerUp3" class="powerUp" style="flex-grow: 0;" />
-                <engine:DropdownField name="PowerUp3Dropdown" class="dropdownPowerUp" />
+            <engine:VisualElement name="DrillContainer" class="drillContainer" style="flex-grow: 0;">
+                <engine:Button name="MineButton" class="mineButton" />
+                <engine:DropdownField name="CryptoRigDropdown" class="cryptoRigDropdown" style="-unity-font-definition: url(&quot;project://database/Assets/Fonts/GrapeSoda%20SDF.asset?fileID=11400000&amp;guid=d51c98973ae254cea92209cda6e50712&amp;type=2#GrapeSoda SDF&quot;); font-size: 30px;" />
             </engine:VisualElement>
         </engine:VisualElement>
-        <engine:VisualElement name="DrillContainer" class="drillContainer" style="flex-grow: 0;">
-            <engine:Label text="Label" name="HashLabel" class="hashLabel" />
-            <engine:Button text="Button" name="MineButton" class="mineButton" />
-            <engine:DropdownField name="CryptoRigDropdown" class="cryptoRigDropdown" />
+        <engine:VisualElement name="PowerUpSelectorContainer" class="powerUpSelectorContainer" style="flex-grow: 1; display: none;">
+            <engine:ScrollView name="ScrollPowerUpSelector" class="powerUpSelector">
+                <engine:VisualElement name="PowerUpSelector" style="flex-grow: 1;">
+                    <engine:VisualElement name="SelectPowerUpContainer" class="selectPowerUpContainer" style="flex-grow: 0; justify-content: space-around; display: flex;">
+                        <engine:VisualElement name="IconPowerUp" class="SelectIcon" style="flex-grow: 0;" />
+                        <engine:VisualElement name="DescriptionContainer" class="descriptionContainer" style="flex-grow: 0;">
+                            <engine:Label text="PowerUp" name="PowerUpName" class="powerUpName" />
+                            <engine:VisualElement name="PowerUpLowerContainer" style="flex-grow: 1; flex-direction: row; justify-content: space-between;">
+                                <engine:Label text="&apos;When active, this power up doubles the reward you receive&apos;" name="PowerUpDescription" class="powerUpDescription" />
+                                <engine:Button text="Activate" name="Activate" style="background-color: rgb(255, 142, 158); border-top-width: 5px; border-right-width: 5px; border-bottom-width: 5px; border-left-width: 5px; -unity-font-definition: url(&quot;project://database/Assets/Fonts/GrapeSoda%20SDF.asset?fileID=11400000&amp;guid=d51c98973ae254cea92209cda6e50712&amp;type=2#GrapeSoda SDF&quot;); font-size: 20px; border-left-color: rgb(255, 210, 216); border-right-color: rgb(255, 210, 216); border-top-color: rgb(255, 210, 216); border-bottom-color: rgb(255, 210, 216);" />
+                            </engine:VisualElement>
+                        </engine:VisualElement>
+                    </engine:VisualElement>
+                </engine:VisualElement>
+            </engine:ScrollView>
         </engine:VisualElement>
+        <engine:Button text="X" name="ExitWindow" class="exitWindow" style="display: none; color: rgb(26, 25, 49);" />
     </engine:VisualElement>
 </engine:UXML>

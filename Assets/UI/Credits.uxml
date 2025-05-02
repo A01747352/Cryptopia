@@ -2,4 +2,5 @@
     <Style src="project://database/Assets/UI/Credits.uss?fileID=7433441132597879392&amp;guid=ea88d95923755a44fb2b193d14382304&amp;type=3#Credits" />
     <engine:VisualElement name="screen" style="flex-grow: 1;" />
     <engine:Button name="toMenuButton" class="button" />
+    <engine:Button text="LEARN MORE" name="moreInfo" class="moreinfo" style="position: absolute; top: 964px; left: 1565px; width: 307px; height: 71px; background-image: url(&quot;project://database/Assets/NewUI.psd?fileID=708982046668999232&amp;guid=88580963f0bc34a4993c39e31de83996&amp;type=3#button_01&quot;); -unity-font-definition: url(&quot;project://database/Assets/Fonts/PressStart2P-Regular%20SDF.asset?fileID=11400000&amp;guid=21ac1a085446d534a995ca40c6379324&amp;type=2#PressStart2P-Regular SDF&quot;); color: rgb(255, 255, 255); font-size: 24px;" />
 </engine:UXML>

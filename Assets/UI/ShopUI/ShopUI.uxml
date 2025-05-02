@@ -1,0 +1,76 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/ShopUI/ShopUI.uss?fileID=7433441132597879392&amp;guid=c04e3150d5c854a4e87504cb546b69cb&amp;type=3#ShopUI" />
+    <engine:VisualElement name="container_main" class="mainContainer" style="flex-grow: 1; background-color: rgb(255, 142, 158);">
+        <engine:VisualElement name="container_left" class="leftContainer" style="flex-grow: 1;">
+            <engine:VisualElement name="container_title" class="titleContainer" style="flex-grow: 1;">
+                <engine:Label text="CRYPTOSHOP" name="title" class="title" />
+            </engine:VisualElement>
+            <engine:VisualElement name="container_cats" class="catsContainer cat" style="flex-grow: 1;">
+                <engine:Label text="Want more life in Cryptopia? " name="cats_txt" class="catsTXT" />
+                <engine:Label text="&#10;Buy some CATS!!!" name="cats_txt02" class="catsTXT" style="margin-top: -13px; margin-left: 277px;" />
+                <engine:VisualElement name="cats" class="cats" style="flex-grow: 1;">
+                    <engine:VisualElement name="cat_card01" class="catCard catCards" style="flex-grow: 1;">
+                        <engine:VisualElement name="cat01" class="catsSprites" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Pet%20Cats%20pack/Sprites/Cat-1/Cat-1-Licking%201.png?fileID=-1230147584&amp;guid=0ba83ae3e39fa1e418bf74f5e82b1f5d&amp;type=3#Cat-1-Licking 1_3&quot;);" />
+                        <engine:Button text="750 Tks" name="buy_cat01" class="catsBuyButton" />
+                    </engine:VisualElement>
+                    <engine:VisualElement name="cat_card02" class="catCards" style="flex-grow: 1;">
+                        <engine:VisualElement name="cat02" class="catsSprites" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Pet%20Cats%20pack/Sprites/Cat-2/Cat-2-Licking%201.png?fileID=1570926453&amp;guid=d2362876c3ea354468cb7816614b03eb&amp;type=3#Cat-2-Licking 1_3&quot;);" />
+                        <engine:Button text="750 Tks" name="buy_cat02" class="catsBuyButton" />
+                    </engine:VisualElement>
+                    <engine:VisualElement name="cat_card03" class="catCards" style="flex-grow: 1;">
+                        <engine:VisualElement name="cat03" class="catsSprites" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Pet%20Cats%20pack/Sprites/Cat-4/Cat-4-Licking%201.png?fileID=520730209&amp;guid=1da54fb549f0d20479096a395c4e037f&amp;type=3#Cat-4-Licking 1_0&quot;);" />
+                        <engine:Button text="750 Tks" name="buy_cat03" class="catsBuyButton" />
+                    </engine:VisualElement>
+                    <engine:VisualElement name="cat_card04" class="catCards" style="flex-grow: 1;">
+                        <engine:VisualElement name="cat04" class="catsSprites" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Pet%20Cats%20pack/Sprites/Cat-3/Cat-3-Licking%201.png?fileID=970402711&amp;guid=4ca7baa634788174db3724bd72751d5c&amp;type=3#Cat-3-Licking 1_2&quot;);" />
+                        <engine:Button text="750 Tks" name="buy_cat04" class="catsBuyButton" />
+                    </engine:VisualElement>
+                </engine:VisualElement>
+            </engine:VisualElement>
+            <engine:VisualElement name="container_powerups" class="powerupsContainer" style="flex-grow: 1;">
+                <engine:VisualElement name="powerups2" class="powerups" style="flex-grow: 1; background-image: none;">
+                    <engine:Label text="Want to earn more tokens?" name="pwrtxt01" class="pwrtxt" />
+                    <engine:Label text="Get yourself some POWERUPS!!!" name="pwrtxt02" class="pwrtxt" style="margin-top: 56px;" />
+                    <engine:Label text="All powerups cost 1,000 Tks, click each powerup to buy it." name="pwrtxtinfo" class="pwrinfo" />
+                    <engine:Label text="From left to right, double reward, triple reward, every fifth" name="pwrtxtinfo2" class="pwrinfo" style="margin-top: 152px;" />
+                    <engine:Label text="block a bonus, 10 times the XP and extra 10% to the rewards." name="pwrtxtinfo3" class="pwrinfo" style="margin-top: 184px;" />
+                </engine:VisualElement>
+                <engine:VisualElement name="powerups1" class="powerups" style="flex-grow: 1; background-image: none; flex-direction: row;">
+                    <engine:Button name="pu01" class="pu" style="background-image: url(&quot;project://database/Assets/NewUI%20w%20coins.psd?fileID=-7460403801220642574&amp;guid=5e86398a4f17edd408778995f9982758&amp;type=3#2x_multiplier&quot;);" />
+                    <engine:Button name="pu02" class="pu" style="background-image: url(&quot;project://database/Assets/NewUI%20w%20coins.psd?fileID=-5575691432997146163&amp;guid=5e86398a4f17edd408778995f9982758&amp;type=3#3x_multiplier&quot;);" />
+                    <engine:Button name="pu03" class="pu" style="background-image: url(&quot;project://database/Assets/NewUI%20w%20coins.psd?fileID=-1472911301378367929&amp;guid=5e86398a4f17edd408778995f9982758&amp;type=3#5block&quot;);" />
+                    <engine:Button name="pu04" class="pu" style="background-image: url(&quot;project://database/Assets/NewUI%20w%20coins.psd?fileID=-7247872468440151033&amp;guid=5e86398a4f17edd408778995f9982758&amp;type=3#10x_XP&quot;);" />
+                    <engine:Button name="pu05" class="pu" style="background-image: url(&quot;project://database/Assets/NewUI%20w%20coins.psd?fileID=-206591257652806514&amp;guid=5e86398a4f17edd408778995f9982758&amp;type=3#10%_multiplier&quot;);" />
+                </engine:VisualElement>
+            </engine:VisualElement>
+        </engine:VisualElement>
+        <engine:VisualElement name="container_right" class="rightContainer" style="flex-grow: 1;">
+            <engine:VisualElement name="container_skins" class="skinsContainer" style="flex-grow: 1;">
+                <engine:Label text="PREMIUM SKINS !!!" name="premium_skins" class="skin_text" />
+                <engine:VisualElement name="buyable_skin01" class="buyableSkinContainer" style="flex-grow: 1;">
+                    <engine:VisualElement name="skin01" class="skin" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Characters/Girl_2/Idle.png?fileID=4723107735738678597&amp;guid=68329c67fa45d9a4aa8932d57bcf5267&amp;type=3#Idle_0&quot;); width: auto; height: auto;" />
+                    <engine:Button text="10,000 Tks" name="buy_skin01_button" class="skinsBuyButton" />
+                </engine:VisualElement>
+                <engine:VisualElement name="buyable_skin02" class="buyableSkinContainer" style="flex-grow: 1;">
+                    <engine:VisualElement name="skin02" class="skin" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Characters/Girl_3/Idle.png?fileID=4723107735738678597&amp;guid=28233d59c2c786e4ba3642a182a5802c&amp;type=3#Idle_0&quot;);" />
+                    <engine:Button text="10,000 Tks" name="buy_skin02_button" class="skinsBuyButton" />
+                </engine:VisualElement>
+            </engine:VisualElement>
+        </engine:VisualElement>
+        <engine:Button name="return" class="ret" />
+    </engine:VisualElement>
+    <engine:VisualElement name="bkg" style="flex-grow: 1; position: absolute; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.39); display: none;" />
+    <engine:VisualElement name="container_confirm" style="flex-grow: 1; position: absolute; background-image: url(&quot;project://database/Assets/NewUI%20w%20coins.psd?fileID=-5140414615619701565&amp;guid=5e86398a4f17edd408778995f9982758&amp;type=3#container_01&quot;); width: 526px; height: 647px; top: 216px; left: 695px; bottom: 216px; right: 695px; color: rgb(255, 255, 255); display: none;">
+        <engine:Label text="Are you sure you want to purchase this item?" name="confirmText" style="margin-top: 185px; width: 80%; align-self: center; -unity-font-definition: url(&quot;project://database/Assets/Fonts/PressStart2P-Regular.ttf?fileID=12800000&amp;guid=2eeec31d665c5ed46b90940027895e85&amp;type=3#PressStart2P-Regular&quot;); font-size: 37px; -unity-text-align: middle-center; white-space: normal;" />
+        <engine:Button text="CONFIRM" name="accept" class="accept" style="width: 270px; background-image: url(&quot;project://database/Assets/NewUI.psd?fileID=-7514559138517575200&amp;guid=88580963f0bc34a4993c39e31de83996&amp;type=3#button_02&quot;); height: 65px; align-self: center; margin-top: 75px; -unity-font-definition: url(&quot;project://database/Assets/Fonts/PressStart2P-Regular.ttf?fileID=12800000&amp;guid=2eeec31d665c5ed46b90940027895e85&amp;type=3#PressStart2P-Regular&quot;); font-size: 30px; margin-bottom: 20px;" />
+        <engine:Button text="CANCEL&#10;" name="cancel" class="accept" style="width: 225px; background-image: url(&quot;project://database/Assets/NewUI.psd?fileID=-7514559138517575200&amp;guid=88580963f0bc34a4993c39e31de83996&amp;type=3#button_02&quot;); height: 65px; align-self: center; margin-top: 2px; -unity-font-definition: url(&quot;project://database/Assets/Fonts/PressStart2P-Regular.ttf?fileID=12800000&amp;guid=2eeec31d665c5ed46b90940027895e85&amp;type=3#PressStart2P-Regular&quot;); font-size: 30px;" />
+    </engine:VisualElement>
+    <engine:VisualElement name="container_success" style="flex-grow: 1; position: absolute; background-image: url(&quot;project://database/Assets/NewUI%20w%20coins.psd?fileID=-5140414615619701565&amp;guid=5e86398a4f17edd408778995f9982758&amp;type=3#container_01&quot;); width: 526px; height: 450px; top: 316px; left: 695px; bottom: 216px; right: 695px; color: rgb(255, 255, 255); display: none;">
+        <engine:Label text="Successfully Purchased" name="success" style="margin-top: 190px; width: 80%; align-self: center; -unity-font-definition: url(&quot;project://database/Assets/Fonts/PressStart2P-Regular.ttf?fileID=12800000&amp;guid=2eeec31d665c5ed46b90940027895e85&amp;type=3#PressStart2P-Regular&quot;); font-size: 34px; -unity-text-align: middle-center; white-space: normal;" />
+        <engine:Button text="CONTINUE" name="ok" class="accept" style="width: 270px; background-image: url(&quot;project://database/Assets/NewUI.psd?fileID=-7514559138517575200&amp;guid=88580963f0bc34a4993c39e31de83996&amp;type=3#button_02&quot;); height: 65px; align-self: center; margin-top: 45px; -unity-font-definition: url(&quot;project://database/Assets/Fonts/PressStart2P-Regular.ttf?fileID=12800000&amp;guid=2eeec31d665c5ed46b90940027895e85&amp;type=3#PressStart2P-Regular&quot;); font-size: 28px; margin-bottom: 20px;" />
+    </engine:VisualElement>
+    <engine:VisualElement name="container_dupe" style="flex-grow: 1; position: absolute; background-image: url(&quot;project://database/Assets/NewUI%20w%20coins.psd?fileID=-5140414615619701565&amp;guid=5e86398a4f17edd408778995f9982758&amp;type=3#container_01&quot;); width: 526px; height: 450px; top: 316px; left: 695px; bottom: 216px; right: 695px; color: rgb(255, 255, 255); display: none;">
+        <engine:Label text="You already own this item" name="dupe" style="margin-top: 170px; width: 80%; align-self: center; -unity-font-definition: url(&quot;project://database/Assets/Fonts/PressStart2P-Regular.ttf?fileID=12800000&amp;guid=2eeec31d665c5ed46b90940027895e85&amp;type=3#PressStart2P-Regular&quot;); font-size: 34px; -unity-text-align: middle-center; white-space: normal;" />
+        <engine:Button text="OK" name="ffs" class="accept" style="width: 270px; background-image: url(&quot;project://database/Assets/NewUI.psd?fileID=-7514559138517575200&amp;guid=88580963f0bc34a4993c39e31de83996&amp;type=3#button_02&quot;); height: 65px; align-self: center; margin-top: 40px; -unity-font-definition: url(&quot;project://database/Assets/Fonts/PressStart2P-Regular.ttf?fileID=12800000&amp;guid=2eeec31d665c5ed46b90940027895e85&amp;type=3#PressStart2P-Regular&quot;); font-size: 28px; margin-bottom: 20px;" />
+    </engine:VisualElement>
+</engine:UXML>
