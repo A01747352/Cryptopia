@@ -512,7 +512,7 @@ public class TriviaManager : MonoBehaviour
             correctAnswers++;
             score += points;
             if (resultText != null)
-                resultText.text = "¡Correcto!";
+                resultText.text = "Correct!";
             // (Opcional) Cambiar imagen de boxText o reproducir sonido
             AudioSource correctSound = GameObject.Find("SoundCorrect")?.GetComponent<AudioSource>();
             if (correctSound != null) correctSound.Play();
@@ -521,7 +521,7 @@ public class TriviaManager : MonoBehaviour
         {
             incorrectAnswers++;
             if (resultText != null)
-                resultText.text = "Incorrecto :(";
+                resultText.text = "Incorrect :(";
             AudioSource incorrectSound = GameObject.Find("SoundIncorrect")?.GetComponent<AudioSource>();
             if (incorrectSound != null) incorrectSound.Play();
         }
@@ -660,7 +660,7 @@ public class TriviaManager : MonoBehaviour
 
         // 2. Mostrar panel final con el puntaje
         if (finalScoreText != null)
-            finalScoreText.text = $"¡Juego terminado! Tu puntaje final es: {score} ({percentage.ToString("F0")}%)";
+            finalScoreText.text = $"Your final score is: {score} ({percentage.ToString("F0")}%)";
         if (finalScorePanel != null)
             finalScorePanel.style.display = DisplayStyle.Flex;
 
