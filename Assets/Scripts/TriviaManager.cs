@@ -62,6 +62,8 @@ public class TriviaManager : MonoBehaviour
     private Button[] answerButtons = new Button[4];
     private Button restartButton;
     private Button backButton;
+    // Nuevo botón "Continuar" para el panel de retroalimentación
+    private Button continuarButton;
     
     // (Opcional) Imágenes de fondo, mascota y expresión (cat)
     private Image backgroundImageUI;
@@ -163,6 +165,21 @@ public class TriviaManager : MonoBehaviour
 
         restartButton = root.Q<Button>("RestartButton");
         backButton = root.Q<Button>("BackButton");
+        
+        // Buscar el botón de continuar con diferentes nombres posibles
+        continuarButton = root.Q<Button>("Continuar");
+        if (continuarButton == null) {
+            continuarButton = root.Q<Button>("ContinuarButton");
+            if (continuarButton == null) {
+                continuarButton = root.Q<Button>("NextButton");
+                if (continuarButton == null) {
+                    continuarButton = root.Q<Button>("SiguienteButton");
+                    if (continuarButton == null) {
+                        Debug.LogWarning("No se encontró el botón de continuar. Asegúrate de agregarlo al UXML.");
+                    }
+                }
+            }
+        }
 
         // (Opcional) Obtener imágenes si las usas
         backgroundImageUI = root.Q<Image>("BackgroundPanel");
@@ -193,6 +210,15 @@ public class TriviaManager : MonoBehaviour
             backButton.clicked += BackToMain;
         else
             Debug.LogError("BackButton not found!");
+            
+        // Configurar el botón de continuar si existe
+        if (continuarButton != null) {
+            continuarButton.clicked += ContinuarSiguientePregunta;
+            // Si se encuentra en el panel de resultados, asegurarse de que esté visible
+            if (resultPanel != null && resultPanel.Contains(continuarButton)) {
+                continuarButton.style.display = DisplayStyle.Flex;
+            }
+        }
 
         // Inicializar el estado visual
         if (bg != null)
@@ -446,6 +472,12 @@ public class TriviaManager : MonoBehaviour
         // 2. Mostrar panel de retroalimentación
         if (resultPanel != null)
             resultPanel.style.display = DisplayStyle.Flex;
+            
+        // 3. Asegurarse de que el botón de continuar está activo y visible
+        if (continuarButton != null) {
+            continuarButton.SetEnabled(true);
+            continuarButton.style.display = DisplayStyle.Flex;
+        }
 
         bool isCorrect = false;
         string feedback = "";
@@ -496,7 +528,44 @@ public class TriviaManager : MonoBehaviour
 
         if (feedbackText != null)
             feedbackText.text = feedback;
-        StartCoroutine(ShowFeedbackAndNext());
+            
+        // Ya no iniciamos la corrutina que automatiza el paso a la siguiente pregunta
+        // El usuario debe hacer clic en el botón de continuar
+    }
+
+    // Nuevo método para el botón de continuar
+    public void ContinuarSiguientePregunta()
+    {
+        Debug.Log("Botón Continuar presionado - Avanzando a la siguiente pregunta");
+        
+        // Desactivar el botón para evitar múltiples clics
+        if (continuarButton != null) {
+            continuarButton.SetEnabled(false);
+        }
+        
+        // Ocultar panel de retroalimentación
+        if (resultPanel != null)
+            resultPanel.style.display = DisplayStyle.None;
+
+        // Actualizar índice y checar si termina o hay más preguntas
+        currentQuestionIndex++;
+        if (currentQuestionIndex < totalQuestions)
+        {
+            // Todavía hay preguntas -> Mostrar BG de nuevo
+            if (bg != null)
+                bg.style.display = DisplayStyle.Flex;
+            
+            // Cargar la siguiente pregunta
+            if (!usingLocalQuestions && loadedQuestions != null && loadedQuestions.Count > 0)
+                LoadNextDBQuestion();
+            else
+                LoadLocalQuestion();
+        }
+        else
+        {
+            // Juego terminado
+            EndGame();
+        }
     }
 
     private IEnumerator SendAnswerUser(int answerIndex, bool esCorrecta)
@@ -535,6 +604,8 @@ public class TriviaManager : MonoBehaviour
         }
     }
 
+    // Esta corrutina ya no se usa, pero la dejamos por compatibilidad
+    // Ahora utilizamos ContinuarSiguientePregunta() que es llamado por el botón
     IEnumerator ShowFeedbackAndNext()
     {
         yield return new WaitForSeconds(3f);
