@@ -106,3 +106,7 @@
 .character {
     width: 170px;
 }
+
+.Send:active {
+    -unity-background-image-tint-color: rgb(0, 155, 0);
+}

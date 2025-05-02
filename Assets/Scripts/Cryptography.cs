@@ -25,6 +25,7 @@ public class Cryptography : MonoBehaviour
     private VisualElement live2;
     private VisualElement live3;
     private Label gainedPoints;
+    private Button send;
 
     // Elementos de Victory Screen
     private Button restartVSButton;
@@ -71,7 +72,7 @@ public class Cryptography : MonoBehaviour
     private Problema problema;
 
 // Variables game variables
-    private static int score = 0;
+    private int score = 0;
     private int questionsNum = 1;
     private int mistakes = 0;
     private int totalQuestions = 5;
@@ -107,6 +108,8 @@ public class Cryptography : MonoBehaviour
 
         inputUsuario = root.Q<TextField>("InputUsuario");
         inputUsuario.RegisterCallback<KeyUpEvent>(EnterText);
+        send = root.Q<Button>("Send");
+        send.RegisterCallback<ClickEvent>(EnterText);
         displayLabel = root.Q<Label>("Problem");
         scoreLabel = root.Q<Label>("Score");
         qCountLabel = root.Q<Label>("QuestionCount");
@@ -211,6 +214,8 @@ private IEnumerator LoadProblem()
         gainedPoints.style.display = DisplayStyle.None;
         if (mistakes == 3)
         {
+            gameObject.GetComponent<AudioSource>().Stop();
+            GameObject.Find("DefeatSound").GetComponent<AudioSource>().Play();
             totalScoreDSLabel.text = score.ToString() + "pts";
             summaryDSResult.text = questionsNum.ToString() + "/" + totalQuestions.ToString();
             defeatScreen.style.display = DisplayStyle.Flex;
@@ -220,6 +225,8 @@ private IEnumerator LoadProblem()
         }
         else if (questionsNum == (totalQuestions + 1) && mistakes < 3) 
         {
+            gameObject.GetComponent<AudioSource>().Stop();
+            GameObject.Find("VictorySound").GetComponent<AudioSource>().Play();
             tkns = score * 0.003f;
             StartCoroutine(SaveGame(true));
             totalScoreVSLabel.text = score.ToString() + "pts";
@@ -277,6 +284,41 @@ private IEnumerator LoadProblem()
             }
             
         }
+    }
+    void EnterText(ClickEvent evt)
+    {
+        StartCoroutine(SendAnswerUser(inputUsuario.value));
+        if (problema.ValidarRespuesta(inputUsuario.value))
+        {
+            GameObject.Find("SoundCorrect").GetComponent<AudioSource>().Play();
+            displayLabel.text = "Correct!";
+            gainedPoints.text = "+" + problema.puntos.ToString() + "pts";
+            gainedPoints.style.display = DisplayStyle.Flex;
+            score += problema.puntos; 
+            scoreLabel.text = score.ToString() + "pts";
+            StartCoroutine(NextQuestion(true));
+        }
+        else 
+        {
+            GameObject.Find("SoundIncorrect").GetComponent<AudioSource>().Play();
+            displayLabel.text = "Incorrect :(";
+            ++mistakes;
+            if (mistakes == 1)
+            {
+                live1.style.visibility = Visibility.Hidden;
+            } 
+            else if (mistakes == 2)
+            {
+                live2.style.visibility = Visibility.Hidden;
+            }
+            else 
+            {
+                live3.style.visibility = Visibility.Hidden;
+            }
+            StartCoroutine(NextQuestion(false));
+
+        }
+        
     }
 
     private void BackToMain(ClickEvent evt)

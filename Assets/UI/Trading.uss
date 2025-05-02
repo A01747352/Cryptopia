@@ -113,6 +113,8 @@
     -unity-font-definition: url("project://database/Assets/Fonts/PressStart2P-Regular%20SDF.asset?fileID=11400000&guid=21ac1a085446d534a995ca40c6379324&type=2#PressStart2P-Regular SDF");
     background-color: rgb(206, 15, 77);
     -unity-text-align: middle-center;
+    transition-timing-function: ease-in-out-sine;
+    transition-duration: 0.2s;
 }
 
 .sellButton {
@@ -123,4 +125,22 @@
     -unity-font-definition: url("project://database/Assets/Fonts/PressStart2P-Regular%20SDF.asset?fileID=11400000&guid=21ac1a085446d534a995ca40c6379324&type=2#PressStart2P-Regular SDF");
     background-color: rgb(32, 204, 193);
     -unity-text-align: middle-center;
+    transition-duration: 0.2s;
+    transition-timing-function: ease-in-out-sine;
+}
+
+.buyButton:hover {
+    scale: 1.1 1.1;
+}
+
+.buyButton:active {
+    background-color: rgb(97, 7, 36);
+}
+
+.sellButton:hover {
+    scale: 1.1 1.1;
+}
+
+.sellButton:active {
+    background-color: rgb(20, 130, 123);
 }
