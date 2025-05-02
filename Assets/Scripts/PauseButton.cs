@@ -43,6 +43,7 @@ public class PauseButton : MonoBehaviour
     private void TogglePause()
     {
         isPaused = !isPaused;
+        gameObject.GetComponent<AudioSource>().Play();
 
         if (isPaused)
         {
