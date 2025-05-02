@@ -214,7 +214,6 @@ private IEnumerator LoadProblem()
         gainedPoints.style.display = DisplayStyle.None;
         if (mistakes == 3)
         {
-            UiDocumentm.Instance.IncrementGamesPlayedAfterGame();
             gameObject.GetComponent<AudioSource>().Stop();
             GameObject.Find("DefeatSound").GetComponent<AudioSource>().Play();
             totalScoreDSLabel.text = score.ToString() + "pts";
@@ -228,10 +227,8 @@ private IEnumerator LoadProblem()
         }
         else if (questionsNum == (totalQuestions + 1) && mistakes < 3) 
         {
-            UiDocumentm.Instance.IncrementGamesPlayedAfterGame();
             gameObject.GetComponent<AudioSource>().Stop();
             GameObject.Find("VictorySound").GetComponent<AudioSource>().Play();
-            UiDocumentm.Instance.IncrementGamesPlayedAfterGame();
             tkns = score * 0.003f;
             StartCoroutine(SaveGame(true));
             totalScoreVSLabel.text = score.ToString() + "pts";
@@ -243,6 +240,7 @@ private IEnumerator LoadProblem()
             PlayerPrefs.SetInt("TotalScore", previousScore + score);
             PlayerPrefs.SetFloat("TKNs", PlayerPrefs.GetFloat("TKNs", 0) + tkns);
             PlayerPrefs.Save();
+            UiDocumentm.Instance.IncrementGamesPlayedAfterGame();
         }
         else
         {
