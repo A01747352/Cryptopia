@@ -51,8 +51,7 @@ public class Shop : MonoBehaviour
     };
     void Awake()
     {
-        //userId = PlayerPrefs.GetInt("UserId", 1);
-        userId = 1;   
+        userId = PlayerPrefs.GetInt("UserId", 1);   
     }
 
     void Start()

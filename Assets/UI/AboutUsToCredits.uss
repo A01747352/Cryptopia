@@ -18,11 +18,11 @@
     transition-duration: 0.2s;
 }
 
-.moreinfo {
+.moreinfo:hover {
+    transition-duration: 0.1s;
+    transition-timing-function: ease-out-bounce;
+    scale: 1.1 1.1;
 }
 
-.moreinfo:hover {
-    scale: 1.1 1.1;
-    transition-timing-function: ease-out-bounce;
-    transition-duration: 0.1s;
+.moreinfo {
 }
