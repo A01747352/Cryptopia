@@ -30,15 +30,15 @@ public class SmartContract : MonoBehaviour
 
     private List<SmartContractData> smartContracts = new List<SmartContractData>();
     private string url = Variables.Variables.url;
-    private int userId = 1; // ⚠️ Cambiar por el ID real del jugador
+    private int userId = 1;
 
     private int totalMinedBlocks;
     private int totalScore;
 
-    private VisualElement root; // Para acceder al root de la UI
-    private Coroutine contractCheckCoroutine = null;  // Para manejar la corutina del contrato activo
+    private VisualElement root;
+    private Coroutine contractCheckCoroutine = null;
 
-    public static SmartContract Instance; // Singleton
+    public static SmartContract Instance;
 
     void Awake()
     {
@@ -55,15 +55,7 @@ public class SmartContract : MonoBehaviour
     private void Start()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
-        InitializeUIAndContracts();
 
-        // Cargar progreso guardado
-        totalMinedBlocks = PlayerPrefs.GetInt("TotalMinedBlocks", 0);
-        totalScore = PlayerPrefs.GetInt("TotalScore", 0);
-    }
-
-    private void InitializeUIAndContracts()
-    {
         UIDocument uiDoc = GameObject.Find("Smart").GetComponent<UIDocument>();
         root = uiDoc.rootVisualElement;
 
@@ -81,25 +73,33 @@ public class SmartContract : MonoBehaviour
 
         backButton = root.Q<Button>("Regresar");
 
+        if (PlayerPrefs.HasKey("TotalMinedBlocks"))
+        {
+            totalMinedBlocks = PlayerPrefs.GetInt("TotalMinedBlocks");
+        }
+        else
+        {
+            totalMinedBlocks = 0;
+        }
+
+        if (PlayerPrefs.HasKey("TotalScore"))
+        {
+            totalScore = PlayerPrefs.GetInt("TotalScore");
+        }
+        else
+        {
+            totalScore = 0;
+        }
+
         for (int i = 0; i < contractButtons.Length; i++)
         {
             int index = i;
-            contractButtons[i].clicked -= () => OnContractButtonClicked(index);
             contractButtons[i].clicked += () => OnContractButtonClicked(index);
         }
 
-        backButton.clicked -= OnBackButtonClicked;
         backButton.clicked += OnBackButtonClicked;
 
         CodeRunner.Instance.StartCoroutine(LoadSmartContractsFromServer());
-    }
-
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        if (scene.name == "Smart")
-        {
-            InitializeUIAndContracts();
-        }
     }
 
     private IEnumerator LoadSmartContractsFromServer()
@@ -168,11 +168,12 @@ public class SmartContract : MonoBehaviour
         try
         {
             Debug.Log($"Verificando condición con JSON: {conditionJson}");
+
             var conditionDict = JsonConvert.DeserializeObject<Dictionary<string, int>>(conditionJson);
 
             if (conditionDict == null || conditionDict.Count == 0)
             {
-                Debug.LogError("Las condiciones deserializadas son null o vacías. Verifica el formato del JSON.");
+                Debug.LogError("Las condiciones deserializadas son null o vacías.");
                 return false;
             }
 
@@ -182,7 +183,7 @@ public class SmartContract : MonoBehaviour
 
                 if (pair.Key == "MinedBlocks")
                 {
-                    currentValue = totalMinedBlocks;
+                    currentValue = PlayerPrefs.GetInt("MinedBlocks", 0); // ✅ CORREGIDO
                 }
                 else if (pair.Key == "WinCryptography" || pair.Key == "TriviaWins")
                 {
@@ -304,4 +305,15 @@ public class SmartContract : MonoBehaviour
             yield return new WaitForSeconds(5f);
         }
     }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name != "Smart")
+        {
+            root.style.display = DisplayStyle.None;
+            return;
+        }
+        root.style.display = DisplayStyle.Flex;
+    }
 }
+

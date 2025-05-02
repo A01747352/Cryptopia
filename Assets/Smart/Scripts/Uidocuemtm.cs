@@ -11,14 +11,12 @@ public class UiDocumentm : MonoBehaviour
     {
         if (Instance != null && Instance != this)
         {
-            Destroy(gameObject); // Destroy duplicates
+            Destroy(gameObject);
             return;
         }
 
         Instance = this;
-        print($"Instance of {nameof(UiDocumentm)} created.");
-        DontDestroyOnLoad(gameObject); // Persist across scenes
-
+        DontDestroyOnLoad(gameObject);
         uiDocument = GetComponent<UIDocument>();
     }
 
@@ -32,22 +30,17 @@ public class UiDocumentm : MonoBehaviour
         return uiDocument.rootVisualElement;
     }
 
-    // Aquí agregamos la funcionalidad del seguimiento del progreso y verificación de contratos
     public void IncrementGamesPlayed()
     {
         int current = PlayerPrefs.GetInt("GamesPlayed", 0) + 1;
-        Debug.Log($"GamesPlayed antes de actualizar: {current}");  // Verificar el valor antes de actualizar
         PlayerPrefs.SetInt("GamesPlayed", current);
         PlayerPrefs.Save();
-        Debug.Log($"GamesPlayed actualizado: {current}");  // Confirmar que se actualizó
-
-        SmartContract.Instance.CheckContracts(); // Verifica si se cumplió alguna condición
+        Debug.Log($"GamesPlayed actualizado: {current}");
     }
 
-    // Incrementar GamesPlayed siempre que el jugador participe, independientemente del resultado.
     public void IncrementGamesPlayedAfterGame()
     {
-        IncrementGamesPlayed(); // Llamada al método que incrementa GamesPlayed después de jugar
+        IncrementGamesPlayed();
     }
 
     public void IncrementWinCryptography()
@@ -56,8 +49,6 @@ public class UiDocumentm : MonoBehaviour
         PlayerPrefs.SetInt("WinCryptography", current);
         PlayerPrefs.Save();
         Debug.Log($"WinCryptography actualizado: {current}");
-
-        SmartContract.Instance.CheckContracts();
     }
 
     public void IncrementTriviaWins()
@@ -66,8 +57,6 @@ public class UiDocumentm : MonoBehaviour
         PlayerPrefs.SetInt("TriviaWins", current);
         PlayerPrefs.Save();
         Debug.Log($"TriviaWins actualizado: {current}");
-
-        SmartContract.Instance.CheckContracts();
     }
 
     public void IncrementTotalScore(int score)
@@ -76,17 +65,19 @@ public class UiDocumentm : MonoBehaviour
         PlayerPrefs.SetInt("TotalScore", current);
         PlayerPrefs.Save();
         Debug.Log($"TotalScore actualizado: {current}");
-
-        SmartContract.Instance.CheckContracts();
     }
 
-    public void IncrementMinedBlocks(int blocks)
+    // ✅ BLOQUES MINADOS (forma idéntica a GamesPlayed)
+    public void IncrementMinedBlocks()
     {
-        int current = PlayerPrefs.GetInt("MinedBlocks", 0) + blocks;
+        int current = PlayerPrefs.GetInt("MinedBlocks", 0) + 1;
         PlayerPrefs.SetInt("MinedBlocks", current);
         PlayerPrefs.Save();
         Debug.Log($"MinedBlocks actualizado: {current}");
+    }
 
-        SmartContract.Instance.CheckContracts();
+    public void IncrementMinedBlocksAfterAction()
+    {
+        IncrementMinedBlocks();
     }
 }

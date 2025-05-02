@@ -222,11 +222,14 @@ private IEnumerator LoadProblem()
             score = 0;
             tkns = 0;
             StartCoroutine(SaveGame(false));
+            UiDocumentm.Instance.IncrementGamesPlayedAfterGame();
+            
         }
         else if (questionsNum == (totalQuestions + 1) && mistakes < 3) 
         {
             gameObject.GetComponent<AudioSource>().Stop();
             GameObject.Find("VictorySound").GetComponent<AudioSource>().Play();
+            UiDocumentm.Instance.IncrementGamesPlayedAfterGame();
             tkns = score * 0.003f;
             StartCoroutine(SaveGame(true));
             totalScoreVSLabel.text = score.ToString() + "pts";
