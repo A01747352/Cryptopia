@@ -454,11 +454,15 @@ public class CryptoMine : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        
+        CoroutineRunner.Instance.StartCoroutine(SaveGameSession());
+        sessionStart = DateTime.Now;
         if (scene.name != "CryptoMine")
         {
             //game.enabled = false; // Or rootVisualElement.visible = false
             root.style.display = DisplayStyle.None;
             isCryptoMineSceneActive = false;
+            
         }
         else
         {

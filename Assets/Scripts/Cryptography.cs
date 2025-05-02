@@ -214,6 +214,7 @@ private IEnumerator LoadProblem()
         gainedPoints.style.display = DisplayStyle.None;
         if (mistakes == 3)
         {
+            UiDocumentm.Instance.IncrementGamesPlayedAfterGame();
             gameObject.GetComponent<AudioSource>().Stop();
             GameObject.Find("DefeatSound").GetComponent<AudioSource>().Play();
             totalScoreDSLabel.text = score.ToString() + "pts";
@@ -227,6 +228,7 @@ private IEnumerator LoadProblem()
         }
         else if (questionsNum == (totalQuestions + 1) && mistakes < 3) 
         {
+            UiDocumentm.Instance.IncrementGamesPlayedAfterGame();
             gameObject.GetComponent<AudioSource>().Stop();
             GameObject.Find("VictorySound").GetComponent<AudioSource>().Play();
             UiDocumentm.Instance.IncrementGamesPlayedAfterGame();

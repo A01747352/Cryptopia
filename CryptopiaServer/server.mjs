@@ -375,6 +375,7 @@ app.get('/cryptomine/retrieveUserPowerUps/:userId', async (req, res) => {
 
 app.post('/cryptomine/saveSession/:userId', async (req, res) => {
     let userId = req.params.userId;
+    console.log("Guardando sesión de minería:", req.body);
     let { TKNs, startSession, endSession, minedBlocks, clicks, score } = req.body;
     let connection;
     try {
