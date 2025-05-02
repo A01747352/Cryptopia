@@ -20,7 +20,10 @@ public class Shop : MonoBehaviour
     private VisualElement containerDupe;
     private Button okButton;
     private Button okDupe;
+    private VisualElement containerAfford;
+    private Button PoorButton;
     private int userId;
+    private Label qtyLabel;
 
     // URL from the Variables class directly
     private string url = Variables.Variables.url;
@@ -51,7 +54,7 @@ public class Shop : MonoBehaviour
     };
     void Awake()
     {
-        userId = PlayerPrefs.GetInt("UserId", 1);   
+        userId = PlayerPrefs.GetInt("UserId", 1);
     }
 
     void Start()
@@ -67,6 +70,10 @@ public class Shop : MonoBehaviour
         containerDupe = root.Q<VisualElement>("container_dupe");
         okButton = root.Q<Button>("ok");
         okDupe = root.Q<Button>("ffs");
+        containerAfford = root.Q<VisualElement>("container_afford");
+        PoorButton = root.Q<Button>("ok_poor");
+        qtyLabel = root.Q<Label>("qty");
+        StartCoroutine(UpdateQtyLabel());
 
         buyButtons = new Button[]
         {
@@ -121,9 +128,41 @@ public class Shop : MonoBehaviour
             okDupe.clicked += HideDupeContainer;
             okDupe.clicked += HideBackground;
         }
+        if (PoorButton != null)
+        {
+            PoorButton.clicked += HideContainerAfford;
+            PoorButton.clicked += HideBackground;
+        }
 
         HideConfirmationContainer();
         HideSuccessContainer();
+    }
+
+    private IEnumerator UpdateQtyLabel()
+    {
+        if (qtyLabel != null)
+        {
+            UnityWebRequest webRequest = UnityWebRequest.Get($"{url}/cryptoShop/wallet/{userId}");
+            yield return webRequest.SendWebRequest();
+
+            if (webRequest.result == UnityWebRequest.Result.Success)
+            {
+                try
+                {
+                    // Parse the response as a float
+                    float walletCantidad = float.Parse(webRequest.downloadHandler.text);
+                    qtyLabel.text = walletCantidad.ToString("F2"); // Update the label text with two decimal places
+                }
+                catch (FormatException)
+                {
+                    Debug.LogError("Failed to parse walletCantidad from server response. Response: " + webRequest.downloadHandler.text);
+                }
+            }
+            else
+            {
+                Debug.LogError($"Failed to fetch walletCantidad. Error: {webRequest.error}");
+            }
+        }
     }
 
     private void OnBuyButtonClicked(string buttonName)
@@ -176,9 +215,9 @@ public class Shop : MonoBehaviour
 
     private void EnogughTKN()
     {
-        
+
         StartCoroutine(EnoughToBuy(currentItemId));  // Use the manually assigned itemId
-        
+
     }
     private void StartBuy()
     {
@@ -201,7 +240,7 @@ public class Shop : MonoBehaviour
             }
             else
             {
-                Debug.LogError($"Not enough tokens to buy item {currentItemId}.");
+                ShowContainerAfford();  // Show a container indicating the user cannot afford the item
             }
         }
         else
@@ -276,6 +315,16 @@ public class Shop : MonoBehaviour
         if (background != null) background.style.display = DisplayStyle.None;
     }
 
+    private void ShowContainerAfford()
+    {
+        if (containerAfford != null) containerAfford.style.display = DisplayStyle.Flex;  // Show the "cannot afford" container
+        if (background != null) background.style.display = DisplayStyle.Flex;  // Show the background
+    }
+
+    private void HideContainerAfford()
+    {
+        if (containerAfford != null) containerAfford.style.display = DisplayStyle.None;  // Hide the "cannot afford" container
+    }
     void Update()
     {
         // Update logic if needed

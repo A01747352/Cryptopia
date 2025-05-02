@@ -703,7 +703,29 @@ app.get('/cryptoShop/price/:userId/:itemId', async (req, res) => {
     }
 });
 
+app.get('/cryptoShop/wallet/:userId', async (req, res) => {
+    const { userId } = req.params;
+    let connection;
+    try {
+        connection = await dbConnect();
+        const [rows] = await connection.execute(
+            'SELECT cantidad FROM wallet WHERE idUsuario = ? AND idCriptomoneda = 1', [userId]
+        );
 
+        if (rows.length > 0) {
+            res.status(200).send(rows[0].cantidad.toString()); // Send the wallet cantidad as a string
+        } else {
+            res.status(404).send({ error: "Wallet not found" });
+        }
+    } catch (err) {
+        console.error("Error fetching wallet cantidad:", err);
+        res.status(500).send({ error: err.name, message: err.message });
+    } finally {
+        if (connection) {
+            connection.end();
+        }
+    }
+});
 
 
 // Agregar artículo comprado por usuario
