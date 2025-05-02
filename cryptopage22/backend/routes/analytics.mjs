@@ -156,14 +156,8 @@ router.get('/user-ranking', async (req, res) => {
   try {
     connection = await connectDb();
     const [rows] = await connection.execute(`
-      SELECT 
-        u.username, 
-        SUM(pt.puntaje) AS totalPuntaje 
-      FROM usuario u 
-      JOIN partidatrivia pt ON u.Id = pt.idUsuario 
-      GROUP BY u.username 
-      ORDER BY totalPuntaje DESC 
-      LIMIT 5
+      
+select username, puntajeTotal  AS totalPuntaje from userprogress ORDER BY totalPuntaje DESC LIMIT 5;
     `);
     res.json(rows);
   } catch (err) {

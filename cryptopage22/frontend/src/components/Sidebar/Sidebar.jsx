@@ -19,9 +19,6 @@ const Sidebar = () => {
         <Link to="/users" className={location.pathname === '/users' ? 'active' : ''}>
           <span>Users</span>
         </Link>
-        <Link to="/analytics" className={location.pathname === '/analytics' ? 'active' : ''}>
-          <span>Analytics</span>
-        </Link>
         <Link to="/settings" className={location.pathname === '/settings' ? 'active' : ''}>
           <span>Settings</span>
         </Link>

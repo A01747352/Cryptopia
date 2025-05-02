@@ -1,5 +1,3 @@
-//ChartConfig.js
-// Modificaciones para Charts.js para estilos mejorados
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -13,23 +11,31 @@ import {
   Legend
 } from 'chart.js';
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  BarElement,
-  ArcElement,
-  Title,
-  Tooltip,
-  Legend
-);
+// Register Chart.js components
+const registerComponents = () => {
+  ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    BarElement,
+    ArcElement,
+    Title,
+    Tooltip,
+    Legend
+  );
+};
 
-// Configuración global para Chart.js - Añadir en el Dashboard.jsx
-ChartJS.defaults.color = 'var(--text-muted)';
-ChartJS.defaults.font.family = "'Inter', 'Helvetica', 'Arial', sans-serif";
+// Apply global Chart.js configurations
+const applyGlobalConfig = () => {
+  registerComponents();
+  
+  // Global styling
+  ChartJS.defaults.color = 'var(--text-muted)';
+  ChartJS.defaults.font.family = "'Inter', 'Helvetica', 'Arial', sans-serif";
+};
 
-// Ejemplo de configuración para gráficos de barras
+// Bar chart options
 const barChartOptions = {
   responsive: true,
   maintainAspectRatio: false,
@@ -43,7 +49,7 @@ const barChartOptions = {
       },
       ticks: {
         padding: 10,
-        color: 'var(--text-muted)',
+        color: '#ffffff',
         font: {
           size: 11
         }
@@ -55,7 +61,7 @@ const barChartOptions = {
       },
       ticks: {
         padding: 10,
-        color: 'var(--text-muted)',
+        color: '#ffffff',
         font: {
           size: 11
         }
@@ -68,8 +74,8 @@ const barChartOptions = {
     },
     tooltip: {
       backgroundColor: 'var(--bg-card)',
-      titleColor: 'var(--text-light)',
-      bodyColor: 'var(--text-light)',
+      titleColor: '#ffffff',
+      bodyColor: '#ffffff',
       borderColor: 'var(--primary)',
       borderWidth: 1,
       padding: 12,
@@ -83,25 +89,7 @@ const barChartOptions = {
       },
       displayColors: true,
       boxPadding: 6,
-      usePointStyle: true,
-      callbacks: {
-        label: function(context) {
-          const label = context.dataset.label || '';
-          // Fix: Ensure the value is a number before calling toFixed
-          let value = context.raw;
-          let displayValue;
-          
-          // Check if value is a number or can be converted to one
-          if (typeof value === 'number') {
-            displayValue = value.toFixed(2);
-          } else {
-            // If it's not a number, try to convert it or use a default
-            displayValue = parseFloat(value) ? parseFloat(value).toFixed(2) : '0.00';
-          }
-          
-          return `${label}: ${displayValue}`;
-        }
-      }
+      usePointStyle: true
     }
   },
   animation: {
@@ -110,7 +98,7 @@ const barChartOptions = {
   }
 };
 
-// Ejemplo de configuración para gráficos de línea
+
 const lineChartOptions = {
   responsive: true,
   maintainAspectRatio: false,
@@ -124,7 +112,7 @@ const lineChartOptions = {
       },
       ticks: {
         padding: 10,
-        color: 'var(--text-muted)',
+        color: '#ffffff', // texto del eje Y en blanco
         font: {
           size: 11
         }
@@ -136,7 +124,7 @@ const lineChartOptions = {
       },
       ticks: {
         padding: 10,
-        color: 'var(--text-muted)',
+        color: '#ffffff', // texto del eje X en blanco
         font: {
           size: 11
         }
@@ -145,12 +133,15 @@ const lineChartOptions = {
   },
   plugins: {
     legend: {
+      labels: {
+        color: '#ffffff' // texto de la leyenda en blanco
+      },
       display: false
     },
     tooltip: {
       backgroundColor: 'var(--bg-card)',
-      titleColor: 'var(--text-light)',
-      bodyColor: 'var(--text-light)',
+      titleColor: '#ffffff', // título del tooltip en blanco
+      bodyColor: '#ffffff',  // contenido del tooltip en blanco
       borderColor: 'var(--primary)',
       borderWidth: 1,
       padding: 12,
@@ -164,25 +155,7 @@ const lineChartOptions = {
       },
       displayColors: true,
       boxPadding: 6,
-      usePointStyle: true,
-      callbacks: {
-        label: function(context) {
-          const label = context.dataset.label || '';
-          // Fix: Ensure the value is a number before calling toFixed
-          let value = context.raw;
-          let displayValue;
-          
-          // Check if value is a number or can be converted to one
-          if (typeof value === 'number') {
-            displayValue = value.toFixed(2);
-          } else {
-            // If it's not a number, try to convert it or use a default
-            displayValue = parseFloat(value) ? parseFloat(value).toFixed(2) : '0.00';
-          }
-          
-          return `${label}: ${displayValue}`;
-        }
-      }
+      usePointStyle: true
     }
   },
   elements: {
@@ -202,7 +175,8 @@ const lineChartOptions = {
   }
 };
 
-// Ejemplo de configuración para gráficos de dona
+
+// Doughnut chart options
 const doughnutOptions = {
   responsive: true,
   maintainAspectRatio: false,
@@ -210,7 +184,7 @@ const doughnutOptions = {
     legend: {
       position: 'right',
       labels: {
-        color: 'var(--text-muted)',
+        color: '#ffffff', // texto de la leyenda en blanco
         padding: 20,
         font: {
           size: 12
@@ -221,8 +195,8 @@ const doughnutOptions = {
     },
     tooltip: {
       backgroundColor: 'var(--bg-card)',
-      titleColor: 'var(--text-light)',
-      bodyColor: 'var(--text-light)',
+      titleColor: '#ffffff', // título del tooltip en blanco
+      bodyColor: '#ffffff',  // contenido del tooltip en blanco
       borderColor: 'var(--primary)',
       borderWidth: 1,
       padding: 12,
@@ -233,24 +207,6 @@ const doughnutOptions = {
       },
       bodyFont: {
         size: 13
-      },
-      callbacks: {
-        label: function(context) {
-          const label = context.label || '';
-          // Fix: Ensure the value is a number before calling toFixed
-          let value = context.raw;
-          let displayValue;
-          
-          // Check if value is a number or can be converted to one
-          if (typeof value === 'number') {
-            displayValue = value.toFixed(2);
-          } else {
-            // If it's not a number, try to convert it or use a default
-            displayValue = parseFloat(value) ? parseFloat(value).toFixed(2) : '0.00';
-          }
-          
-          return `${label}: ${displayValue}`;
-        }
       }
     }
   },
@@ -265,7 +221,8 @@ const doughnutOptions = {
   }
 };
 
-// Actualiza los colores para ser más vibrantes y modernos
+
+// Modern color palette with vibrant colors
 const modernPalette = [
   '#3b82f6', // Blue (primary)
   '#6366f1', // Indigo (secondary)
@@ -279,4 +236,11 @@ const modernPalette = [
   '#84cc16'  // Lime
 ];
 
-export { barChartOptions, lineChartOptions, doughnutOptions, modernPalette };
+export default {
+  applyGlobalConfig,
+  registerComponents,
+  barChartOptions,
+  lineChartOptions,
+  doughnutOptions,
+  modernPalette
+};

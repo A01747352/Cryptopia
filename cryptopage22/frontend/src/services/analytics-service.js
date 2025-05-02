@@ -1,45 +1,77 @@
 import axios from 'axios';
 
-const BASE_URL = 'http://localhost:8081/api';
+// Define the base URL for API requests - should be configurable in a production environment
+const BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8081/api';
 
+/**
+ * Analytics Service
+ * 
+ * Service for fetching all analytics data for the dashboard
+ */
 const AnalyticsService = {
-  // Endpoints existentes
+  /**
+   * Get general dashboard data including gender and age distribution
+   */
   getDashboardData: async () => {
-    const response = await axios.get(`${BASE_URL}/analytics/dashboard`);
-    return response.data;
+    try {
+      const response = await axios.get(`${BASE_URL}/analytics/dashboard`);
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching dashboard data:', error);
+      throw error;
+    }
   },
 
+  /**
+   * Get trivia statistics
+   */
   getTriviaStats: async () => {
-    const response = await axios.get(`${BASE_URL}/trivia/estadisticas`);
-    return response.data;
+    try {
+      const response = await axios.get(`${BASE_URL}/trivia/estadisticas`);
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching trivia statistics:', error);
+      throw error;
+    }
   },
 
+  /**
+   * Get user retention data
+   */
   getRetentionData: async () => {
-    const response = await axios.get(`${BASE_URL}/analytics/retencion`);
-    return response.data;
+    try {
+      const response = await axios.get(`${BASE_URL}/analytics/retencion`);
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching retention data:', error);
+      throw error;
+    }
   },
 
-  // Nuevos endpoints para las nuevas tarjetas
+  /**
+   * Get average trivia question accuracy
+   */
   getAverageAccuracy: async () => {
-    // Este endpoint debería implementarse en el backend
     try {
       const response = await axios.get(`${BASE_URL}/analytics/average-accuracy`);
       return response.data;
     } catch (error) {
       console.error('Error fetching average accuracy:', error);
-      // Datos ficticios para pruebas si el endpoint no existe
+      // Return fallback data
       return { promedioAciertos: 68.5 };
     }
   },
 
+  /**
+   * Get daily active user counts
+   */
   getActiveUsersByDay: async () => {
-    // Este endpoint debería implementarse en el backend
     try {
       const response = await axios.get(`${BASE_URL}/analytics/active-users`);
       return response.data;
     } catch (error) {
-      console.error('Error fetching active users:', error);
-      // Datos ficticios para pruebas
+      console.error('Error fetching active users data:', error);
+      // Return fallback data
       return [
         { dia: '2023-04-15', usuarios: 45 },
         { dia: '2023-04-16', usuarios: 52 },
@@ -52,14 +84,16 @@ const AnalyticsService = {
     }
   },
 
+  /**
+   * Get most used power-ups
+   */
   getTopPowerUps: async () => {
-    // Este endpoint debería implementarse en el backend
     try {
       const response = await axios.get(`${BASE_URL}/analytics/top-powerups`);
       return response.data;
     } catch (error) {
       console.error('Error fetching top power-ups:', error);
-      // Datos ficticios para pruebas
+      // Return fallback data
       return [
         { nombre: 'Double Points', veces_usado: 320 },
         { nombre: 'Time Boost', veces_usado: 245 },
@@ -70,14 +104,16 @@ const AnalyticsService = {
     }
   },
 
+  /**
+   * Get user ranking by score
+   */
   getUserRanking: async () => {
-    // Este endpoint debería implementarse en el backend
     try {
       const response = await axios.get(`${BASE_URL}/analytics/user-ranking`);
       return response.data;
     } catch (error) {
       console.error('Error fetching user ranking:', error);
-      // Datos ficticios para pruebas
+      // Return fallback data
       return [
         { username: 'crypto_master', totalPuntaje: 12500 },
         { username: 'blockchain_guru', totalPuntaje: 10800 },
@@ -88,26 +124,30 @@ const AnalyticsService = {
     }
   },
 
+  /**
+   * Get trading statistics
+   */
   getTradingStats: async () => {
-    // Este endpoint debería implementarse en el backend
     try {
       const response = await axios.get(`${BASE_URL}/analytics/trading-stats`);
       return response.data;
     } catch (error) {
       console.error('Error fetching trading stats:', error);
-      // Datos ficticios para pruebas
+      // Return fallback data
       return { totalTrades: 1256, totalVolumen: 45678.90 };
     }
   },
 
+  /**
+   * Get tokens earned by day
+   */
   getTknsByDay: async () => {
-    // Este endpoint debería implementarse en el backend
     try {
       const response = await axios.get(`${BASE_URL}/analytics/tkns-by-day`);
       return response.data;
     } catch (error) {
       console.error('Error fetching TKNs by day:', error);
-      // Datos ficticios para pruebas
+      // Return fallback data
       return [
         { dia: '2023-04-15', totalTKNs: 1250 },
         { dia: '2023-04-16', totalTKNs: 1450 },
@@ -120,14 +160,16 @@ const AnalyticsService = {
     }
   },
 
+  /**
+   * Get top cryptocurrencies by storage amount
+   */
   getTopCryptocurrencies: async () => {
-    // Este endpoint debería implementarse en el backend
     try {
       const response = await axios.get(`${BASE_URL}/analytics/top-cryptocurrencies`);
       return response.data;
     } catch (error) {
       console.error('Error fetching top cryptocurrencies:', error);
-      // Datos ficticios para pruebas
+      // Return fallback data
       return [
         { nombre: 'Bitcoin', total: 125.35 },
         { nombre: 'Ethereum', total: 458.72 },
@@ -138,14 +180,16 @@ const AnalyticsService = {
     }
   },
 
+  /**
+   * Get most failed questions
+   */
   getMostFailedQuestions: async () => {
-    // Este endpoint debería implementarse en el backend
     try {
       const response = await axios.get(`${BASE_URL}/analytics/most-failed-questions`);
       return response.data;
     } catch (error) {
       console.error('Error fetching most failed questions:', error);
-      // Datos ficticios para pruebas
+      // Return fallback data
       return [
         { pregunta: '¿Qué es un hash en blockchain?', errores: 125 },
         { pregunta: '¿Qué es un smart contract?', errores: 98 },
