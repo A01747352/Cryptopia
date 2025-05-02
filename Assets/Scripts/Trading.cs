@@ -170,10 +170,6 @@ public class Trading : MonoBehaviour
         traderCryptoIcon.style.backgroundImage = new StyleBackground(Resources.Load<Sprite>($"CryptoIcons/{crypto.nombre}"));
         traderCryptoPrice.text = $"1 {crypto.abreviatura} = " + crypto.precio.ToString() + " TKN";
 
-        tfTokens.SetValueWithoutNotify("0.000000 TKN");
-        tfCryptoCoin.SetValueWithoutNotify("0.000000 " + crypto.abreviatura);
-
-
         bool isUpdating = false; // Flag to prevent feedback loop
 
         tfTokens.RegisterCallback<ChangeEvent<string>>(evt => {
