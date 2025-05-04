@@ -23,5 +23,9 @@
             </engine:VisualElement>
         </engine:VisualElement>
         <engine:Button name="Regresar" class="botonregreso" style="width: 7%; height: 7%; margin-bottom: 40px; margin-top: 40px; margin-right: 40px; margin-left: 40px;" />
+        <engine:VisualElement name="container_success" class="accept" style="flex-grow: 1; position: absolute; background-image: url(&quot;project://database/Assets/NewUI%20w%20coins.psd?fileID=-5140414615619701565&amp;guid=5e86398a4f17edd408778995f9982758&amp;type=3#container_01&quot;); width: 526px; height: 450px; top: 316px; left: 695px; bottom: 216px; right: 695px; color: rgb(255, 255, 255); display: none;">
+            <engine:Label text="Successfully Activated" name="success" style="margin-top: 190px; width: 80%; align-self: center; -unity-font-definition: url(&quot;project://database/Assets/Fonts/PressStart2P-Regular.ttf?fileID=12800000&amp;guid=2eeec31d665c5ed46b90940027895e85&amp;type=3#PressStart2P-Regular&quot;); font-size: 34px; -unity-text-align: middle-center; white-space: normal;" />
+            <engine:Button text="CONTINUE" name="ok" class="accept" style="width: 270px; background-image: url(&quot;project://database/Assets/NewUI.psd?fileID=-7514559138517575200&amp;guid=88580963f0bc34a4993c39e31de83996&amp;type=3#button_02&quot;); height: 65px; align-self: center; margin-top: 45px; -unity-font-definition: url(&quot;project://database/Assets/Fonts/PressStart2P-Regular.ttf?fileID=12800000&amp;guid=2eeec31d665c5ed46b90940027895e85&amp;type=3#PressStart2P-Regular&quot;); font-size: 28px; margin-bottom: 20px;" />
+        </engine:VisualElement>
     </engine:VisualElement>
 </engine:UXML>

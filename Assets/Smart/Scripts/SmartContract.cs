@@ -36,6 +36,7 @@ public class SmartContract : MonoBehaviour
     private int totalScore;
 
     private VisualElement root;
+    private VisualElement containerSuccess;  // Referencia al contenedor del popup
     private Coroutine contractCheckCoroutine = null;
 
     public static SmartContract Instance;
@@ -59,6 +60,7 @@ public class SmartContract : MonoBehaviour
         UIDocument uiDoc = GameObject.Find("Smart").GetComponent<UIDocument>();
         root = uiDoc.rootVisualElement;
 
+        // Referencias de los contratos
         contractTexts = new Label[] {
             root.Q<Label>("TextoC1"),
             root.Q<Label>("TextoC2"),
@@ -73,9 +75,13 @@ public class SmartContract : MonoBehaviour
 
         backButton = root.Q<Button>("Regresar");
 
+        // Referencia al contenedor del popup
+        containerSuccess = root.Q<VisualElement>("container_success");
+
         totalMinedBlocks = PlayerPrefs.GetInt("TotalMinedBlocks", 0);
         totalScore = PlayerPrefs.GetInt("TotalScore", 0);
 
+        // Asignación de eventos a los botones
         for (int i = 0; i < contractButtons.Length; i++)
         {
             int index = i;
@@ -84,6 +90,7 @@ public class SmartContract : MonoBehaviour
 
         backButton.clicked += OnBackButtonClicked;
 
+        // Cargar contratos desde el servidor
         CodeRunner.Instance.StartCoroutine(LoadSmartContractsFromServer());
     }
 
@@ -122,9 +129,8 @@ public class SmartContract : MonoBehaviour
         // Verificar si ya hay un contrato activo
         if (contractCheckCoroutine != null)
         {
-            // Imprimir un mensaje en la consola si ya hay un contrato activo
             Debug.LogWarning("Ya tienes un contrato activo. Completa el contrato actual antes de seleccionar otro.");
-            return; // No se selecciona el nuevo contrato
+            return;
         }
 
         // Si no hay contrato activo, proceder con la selección del contrato
@@ -133,6 +139,9 @@ public class SmartContract : MonoBehaviour
         Debug.Log($"Contrato activado: {contract.descripcion}");
 
         contractCheckCoroutine = CodeRunner.Instance.StartCoroutine(CheckConditionAndAssignReward(contract));
+
+        // Mostrar el popup inmediatamente al activar el contrato
+        ShowSuccessPopup(); 
     }
 
     private IEnumerator CheckConditionAndAssignReward(SmartContractData contract)
@@ -220,6 +229,9 @@ public class SmartContract : MonoBehaviour
         {
             Debug.Log($"Contrato registrado como cumplido: {contract.descripcion}");
             yield return AssignReward(contract.idRecompensa);
+
+            // Mostrar el popup de éxito después de completar el contrato
+            ShowSuccessPopup();
         }
         else
         {
@@ -240,6 +252,20 @@ public class SmartContract : MonoBehaviour
         {
             Debug.LogError($"Error al asignar la recompensa: {request.error}");
         }
+    }
+
+    private void ShowSuccessPopup()
+    {
+        containerSuccess.style.display = DisplayStyle.Flex;  // Mostrar el popup
+
+        // Obtener referencia al botón "CONTINUE" dentro del popup
+        Button continueButton = containerSuccess.Q<Button>("ok");
+        continueButton.clicked += OnContinueButtonClicked;  // Asignar el evento al botón
+    }
+
+    private void OnContinueButtonClicked()
+    {
+        containerSuccess.style.display = DisplayStyle.None;  // Ocultar el popup cuando el usuario haga clic en "CONTINUE"
     }
 
     private void OnBackButtonClicked()

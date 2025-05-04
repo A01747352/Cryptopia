@@ -122,3 +122,12 @@
     transition-duration: 0.1s;
     scale: 1.1 1.1;
 }
+
+.accept {
+}
+
+.accept:hover {
+    scale: 1.1 1.1;
+    transition-timing-function: ease-out-bounce;
+    transition-duration: 0.1s;
+}
