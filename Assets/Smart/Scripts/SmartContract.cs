@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using UnityEngine.Networking;
 using System.Text;
 using Newtonsoft.Json;
+using Unity.VisualScripting;
 
 [System.Serializable]
 public class SmartContractData
@@ -30,7 +31,7 @@ public class SmartContract : MonoBehaviour
 
     private List<SmartContractData> smartContracts = new List<SmartContractData>();
     private string url = Variables.Variables.url;
-    private int userId = 1;
+    private int userId = PlayerPrefs.GetInt("UserId", 1);
 
     private int totalMinedBlocks;
     private int totalScore;
