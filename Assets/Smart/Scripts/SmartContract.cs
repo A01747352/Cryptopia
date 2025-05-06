@@ -31,7 +31,7 @@ public class SmartContract : MonoBehaviour
 
     private List<SmartContractData> smartContracts = new List<SmartContractData>();
     private string url = Variables.Variables.url;
-    private int userId = PlayerPrefs.GetInt("UserId", 1);
+    private int userId;
 
     private int totalMinedBlocks;
     private int totalScore;
@@ -52,6 +52,8 @@ public class SmartContract : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
+
+        userId = PlayerPrefs.GetInt("UserId", 1);
     }
 
     private void Start()
