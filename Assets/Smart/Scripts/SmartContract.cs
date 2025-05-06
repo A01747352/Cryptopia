@@ -154,6 +154,7 @@ public class SmartContract : MonoBehaviour
             {
                 Debug.Log($"Contrato cumplido: {contract.descripcion}");
                 yield return RegisterCompletedContract(contract);
+                contractCheckCoroutine = null; // Añadir esta línea
                 yield break;
             }
 
@@ -217,40 +218,58 @@ public class SmartContract : MonoBehaviour
     private IEnumerator RegisterCompletedContract(SmartContractData contract)
     {
         string jsonBody = $"{{\"userId\": {userId} }}";
-        UnityWebRequest request = new UnityWebRequest($"{url}/smartcontracts/registerCompleted/{contract.idSmartContract}", "POST");
-        byte[] bodyRaw = Encoding.UTF8.GetBytes(jsonBody);
-        request.uploadHandler = new UploadHandlerRaw(bodyRaw);
-        request.downloadHandler = new DownloadHandlerBuffer();
-        request.SetRequestHeader("Content-Type", "application/json");
-
-        yield return request.SendWebRequest();
-
-        if (request.result == UnityWebRequest.Result.Success)
+        using (UnityWebRequest request = new UnityWebRequest($"{url}/smartcontracts/registerCompleted/{contract.idSmartContract}", "POST"))
         {
-            Debug.Log($"Contrato registrado como cumplido: {contract.descripcion}");
-            yield return AssignReward(contract.idRecompensa);
+            byte[] bodyRaw = Encoding.UTF8.GetBytes(jsonBody);
+            request.uploadHandler = new UploadHandlerRaw(bodyRaw);
+            request.downloadHandler = new DownloadHandlerBuffer();
+            request.SetRequestHeader("Content-Type", "application/json");
 
-            // Mostrar el popup de éxito después de completar el contrato
-            ShowSuccessPopup();
-        }
-        else
-        {
-            Debug.LogError($"Error al registrar el contrato como cumplido: {request.error}");
+            yield return request.SendWebRequest();
+
+            if (request.result == UnityWebRequest.Result.Success)
+            {
+                Debug.Log($"Contrato registrado como cumplido: {contract.descripcion}");
+                yield return AssignReward(contract.idRecompensa);
+                ShowSuccessPopup();
+                // Recargar los contratos después de completar uno
+                StartCoroutine(LoadSmartContractsFromServer());
+            }
+            else
+            {
+                Debug.LogError($"Error al registrar el contrato como cumplido: {request.error}");
+            }
         }
     }
 
     private IEnumerator AssignReward(int rewardId)
     {
-        UnityWebRequest request = UnityWebRequest.Get($"{url}/reward/{rewardId}/{userId}");
-        yield return request.SendWebRequest();
+        // Crear el cuerpo de la solicitud
+        var requestData = new Dictionary<string, int>
+        {
+            { "rewardId", rewardId },
+            { "userId", userId }
+        };
+        string jsonBody = JsonConvert.SerializeObject(requestData);
 
-        if (request.result == UnityWebRequest.Result.Success)
+        // Crear la solicitud POST
+        using (UnityWebRequest request = new UnityWebRequest($"{url}/reward/assign", "POST"))
         {
-            Debug.Log("Recompensa asignada correctamente.");
-        }
-        else
-        {
-            Debug.LogError($"Error al asignar la recompensa: {request.error}");
+            byte[] bodyRaw = Encoding.UTF8.GetBytes(jsonBody);
+            request.uploadHandler = new UploadHandlerRaw(bodyRaw);
+            request.downloadHandler = new DownloadHandlerBuffer();
+            request.SetRequestHeader("Content-Type", "application/json");
+
+            yield return request.SendWebRequest();
+
+            if (request.result == UnityWebRequest.Result.Success)
+            {
+                Debug.Log("Recompensa asignada correctamente.");
+            }
+            else
+            {
+                Debug.LogError($"Error al asignar la recompensa: {request.error}");
+            }
         }
     }
 
